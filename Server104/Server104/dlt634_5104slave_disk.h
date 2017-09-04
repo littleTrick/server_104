@@ -51,26 +51,28 @@ typedef enum
 
 /* PUBLIC FUNCTION -----------------------------------------------------------*/
 extern void DLT634_5104_SlaveTask(void* arg);
-extern bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf);
-extern WORD DLT634_5104_SLAVE_ReadData(BYTE port, BYTE *pbuf, WORD count);
-extern WORD DLT634_5104_SLAVE_WriteData(BYTE port, BYTE *pbuf, WORD count);
-extern BYTE DLT634_5104_SLAVE_StopLink(BYTE pdrv);
-extern BYTE DLT634_5104_SLAVE_CheckLink(BYTE pdrv);
+extern bool DLT634_5104_SLAVE_C_REPLY(unsigned char drvid, unsigned char *pbuf);
+extern WORD DLT634_5104_SLAVE_ReadData(unsigned char port, unsigned char *pbuf, WORD count);
+extern WORD DLT634_5104_SLAVE_WriteData(unsigned char port, unsigned char *pbuf, WORD count);
+extern unsigned char DLT634_5104_SLAVE_StopLink(unsigned char pdrv);
+extern unsigned char DLT634_5104_SLAVE_CheckLink(unsigned char pdrv);
 
-extern void DLT634_5104_SLAVE_ReadYxData(BYTE port, WORD addr, WORD num, BYTE *pbuf);
-extern void DLT634_5104_SLAVE_ReadYcData(BYTE port, WORD addr, WORD num, BYTE *pbuf);
-extern void DLT634_5104_SLAVE_HandleCtrlProcess(BYTE port, BYTE *pbuf);
-extern void DLT634_5104_SLAVE_SYNProcess(BYTE port, BYTE *pbuf);
-extern void DLT634_5104_SLAVE_FixedParaProcess(BYTE port, BYTE *pbuf);
-extern void DLT634_5104_SLAVE_FileHandleProcess(BYTE port, BYTE *pbuf);
-extern BYTE DLT634_5104_SLAVE_H_SOE(BYTE pdrv);
-extern void DLT634_5104_SLAVE_R_SOE(BYTE pdrv, BYTE *pbuf);
-extern BYTE DLT634_5104_SLAVE_H_NVA(BYTE pdrv);
-extern void DLT634_5104_SLAVE_R_NVA(BYTE pdrv, BYTE *pbuf);
-extern BYTE DLT634_5104_SLAVE_H_FEvent(BYTE pdrv);
-extern void DLT634_5104_SLAVE_R_FEvent(BYTE pdrv, BYTE *pbuf);
+extern void DLT634_5104_SLAVE_ReadYxData(unsigned char port, WORD addr, WORD num, unsigned char *pbuf);
+extern void DLT634_5104_SLAVE_ReadYcData(unsigned char port, WORD addr, WORD num, unsigned char *pbuf);
+extern void DLT634_5104_SLAVE_HandleCtrlProcess(unsigned char port, unsigned char *pbuf);
+extern void DLT634_5104_SLAVE_SYNProcess(unsigned char port, unsigned char *pbuf);
+extern void DLT634_5104_SLAVE_FixedParaProcess(unsigned char port, unsigned char *pbuf);
+extern void DLT634_5104_SLAVE_FileHandleProcess(unsigned char port, unsigned char *pbuf);
+extern unsigned char DLT634_5104_SLAVE_H_SOE(unsigned char pdrv);
+extern void DLT634_5104_SLAVE_R_SOE(unsigned char pdrv, unsigned char *pbuf);
+extern unsigned char DLT634_5104_SLAVE_H_NVA(unsigned char pdrv);
+extern void DLT634_5104_SLAVE_R_NVA(unsigned char pdrv, unsigned char *pbuf);
+extern unsigned char DLT634_5104_SLAVE_H_FEvent(unsigned char pdrv);
+extern void DLT634_5104_SLAVE_R_FEvent(unsigned char pdrv, unsigned char *pbuf);
 
 extern void DLT634_5104_SlaveInit();
+extern int getClientFd();
+extern void setClientFd(int);
 
 #ifdef __cplusplus
 }

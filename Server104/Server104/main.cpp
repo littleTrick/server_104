@@ -10,12 +10,12 @@
 #include <unistd.h>
 #include <errno.h>
 #include "data_cache.h"
+#include "tcpsocket.h"
 #include "dlt634_5104slave_app.h"
 #include "dlt634_5104slave_disk.h"
 
 using namespace std;
 
-int clientfd;
 Queue circularQueue;//用于存储主站报文
 Queue *ptrQ = &circularQueue;
 
@@ -26,49 +26,27 @@ int main()
 
     DLT634_5104_SlaveInit();
 
-    int sockfd = socket(AF_INET,SOCK_STREAM,0);
-    if (sockfd < 0)
-    {
-        perror("socket");
-        abort();
-    }
-    int value = 1;
-    setsockopt(sockfd,SOL_SOCKET, SO_REUSEADDR, &value, sizeof(int));
+    TCPSocket tcpConnect;
+    tcpConnect.setReuseAddr(true);
+    tcpConnect.bind("INADDR_ANY",2404);
+    tcpConnect.listen();
+    TCPSocket *client = tcpConnect.accept();
 
-    struct sockaddr_in servaddr;
-    memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(2404);
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    int r = bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
-    if(r < 0)
-    {
-        perror("bind");
-    }
-
-    listen(sockfd,10);
-    if(r < 0)
-    {
-        perror("listen");
-    }
-
-    struct sockaddr_in clientaddr;
-    socklen_t clientaddrlen = sizeof(clientaddr);
-    clientfd = accept(sockfd,(struct sockaddr *)&clientaddr,&clientaddrlen);
-
-    if(clientfd <= 0)
+    setClientFd(client->fd());
+    if(client == NULL)
     {
         printf("client falied connect");
     }
     else
     {
-        printf("client success connect fd = %d \n",clientfd);
+        printf("client success connect fd = %d \n",client->fd());
         while(1)
         {
-            ssize_t n = read(clientfd, buff, 255);
+            int n = client->read(buff,255);
+           // ssize_t n = read(clientfd, buff, 255);
             if(n < 0)
             {
-                printf("read error client return number  = %d,errno = %d\n",n,errno);
+                printf("read error client return number  = %d,errno = %d\n",(int)n,errno);
                 return -1;
             }
             if(n == 0)
@@ -78,7 +56,7 @@ int main()
             }
             else
             {
-                printf("%d \n",n);
+                printf("%d \n",(int)n);
                 for(int i= 0;i < n;i++)
                 {
                     printf("%02X ",buff[i]);
@@ -93,7 +71,6 @@ int main()
             }
             printf("\n");
         }
-
     }
 
     return 0;

@@ -30,11 +30,11 @@
 #include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
-#include "dataCache.h"
+#include "data_cache.h"
 #include "dlt634_5104slave_app.h"
 #include "dlt634_5104slave_disk.h"
 
-extern int clientfd;
+static int s_clientfd;
 /* PRIVATE VARIABLES ----------------------------------------------------------*/
 /* PUBLIC VARIABLES ----------------------------------------------------------*/
 
@@ -42,6 +42,17 @@ extern int clientfd;
 /* PRIVATE FUNCTION PROTOTYPES -----------------------------------------------*/
 
 /* PUBLIC FUNCTION PROTOTYPES -----------------------------------------------*/
+
+int getClientFd()
+{
+    return s_clientfd;
+}
+
+void setClientFd(int clientfd)
+{
+    s_clientfd = clientfd;
+}
+
 /* -----------------------------------------------------------------------------
 ** 函数名称: DLT634_5104WriteData
 ** 功能描述: 向通信接口写数据
@@ -125,7 +136,7 @@ BYTE DLT634_5104_SLAVE_CheckLink(BYTE pdrv)
     switch(pdrv)
     {
         case 0:
-            if(clientfd > 0)
+            if(getClientFd() > 0)
             {res = TRUE;}
         break;
         default:
