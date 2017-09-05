@@ -77,6 +77,13 @@ WORD DLT634_5104_SLAVE_WriteData(BYTE pdrv, BYTE *pbuf, WORD count)
     {
         case 0:
             len = WriteX(pbuf, count, DLT634_5104Slave_Pad[pdrv].Port);
+            if(len != 0)
+            {
+            printf("the pbuf in Writex is ");
+            for(int i = 0;i < len;i++)
+                printf("%02x ",*(pbuf++));
+            printf("\n");
+            }
         break;
 		default:
         break;
@@ -108,6 +115,13 @@ WORD DLT634_5104_SLAVE_ReadData(BYTE pdrv, BYTE *pbuf, WORD count)
     {
         case 0:
             len = Readx(pbuf, count, DLT634_5104Slave_Pad[pdrv].Port);
+            if(len != 0)
+            {
+            printf("the pbuf in Readx is ");
+            for(int i = 0;i < len;i++)
+                printf("%02x ",*(pbuf++));
+            printf("\n");
+            }
         break;
         default:
         break;
@@ -258,43 +272,43 @@ void DLT634_5104_SLAVE_SYNProcess(BYTE pdrv, BYTE *pbuf)
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/Array(Value)
 void DLT634_5104_SLAVE_ReadYxData(BYTE pdrv, WORD addr, WORD num, BYTE *pbuf)//读YXDATA
 { 
-//	BYTE buf[256];
-//	memset(&buf,0,sizeof(buf));
+    BYTE buf[256];
+    memset(&buf,0,sizeof(buf));
 	
-//    switch (pdrv)
-//    {
-//        case 0:
-//            DBRead_YX(addr, num, buf);
-//            memcpy(pbuf,buf,buf[0]);
-//            pbuf[0] += 1;
-//            pbuf[10] = 0;
-//            memcpy(&pbuf[11],&buf[10],pbuf[0]-11);
-//            //转换成104,02版
-//        break;
-//        default:
-//        break;
-//    }
+    switch (pdrv)
+    {
+        case 0:
+            DBRead_YX(addr, num, buf);
+            memcpy(pbuf,buf,buf[0]);
+            pbuf[0] += 1;
+            pbuf[10] = 0;
+            memcpy(&pbuf[11],&buf[10],pbuf[0]-11);
+            //转换成104,02版
+        break;
+        default:
+        break;
+   }
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/Array(Value)
 void DLT634_5104_SLAVE_ReadYcData(BYTE pdrv, WORD addr, WORD num, BYTE *pbuf)//读YCDATA
 { 
-//	BYTE buf[256];
-//	memset(&buf,0,sizeof(buf));
+    BYTE buf[256];
+    memset(&buf,0,sizeof(buf));
 	
-//    switch (pdrv)
-//    {
-//        case 0:
-//            DBRead_YC(addr, num, buf);
-//            memcpy(pbuf,buf,buf[0]);
-//            pbuf[0] += 1;
-//            pbuf[10] = 0;
-//            memcpy(&pbuf[11],&buf[10],pbuf[0]-11);
-//            //转换成104,02版
-//        break;
-//        default:
-//        break;
-//    }
+    switch (pdrv)
+    {
+        case 0:
+            DBRead_YC(addr, num, buf);
+            memcpy(pbuf,buf,buf[0]);
+            pbuf[0] += 1;
+            pbuf[10] = 0;
+            memcpy(&pbuf[11],&buf[10],pbuf[0]-11);
+            //转换成104,02版
+        break;
+        default:
+        break;
+    }
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/sty/Array
@@ -674,7 +688,7 @@ void handle()
 ** 日　  期: 
 ** ---------------------------------------------------------------------------*/
 //void DLT634_5104_SlaveInit(void* arg)
-extern void DLT634_5104_SlaveInit()
+void DLT634_5104_SlaveInit()
 {
     //OS_ERR err;
     BYTE pdrv;
@@ -700,18 +714,6 @@ extern void DLT634_5104_SlaveInit()
     it.it_interval = tv_interval;
     it.it_value = tv_value;
     setitimer(ITIMER_REAL, &it ,NULL);
-
-
-
-//    for (;;)
-//    {
-//        results = OSFlagPend(&DLT104SlaveApp_Event, TIME100MS+FBOOP+FCOS+FSOE+FTXAVAIL+FTXNEXT, 0, OS_OPT_PEND_FLAG_SET_ANY | OS_OPT_PEND_FLAG_CONSUME, 0, &err);
-
-//        if (results & TIME100MS) // 定时处理区(100MS)
-//        {
-           // DLT634_5104_SLAVE_Clock(pdrv);
-//        }
-//    }
 }
 
 //#endif /* END DLT634_5104_SLAVE_CFG */

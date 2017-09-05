@@ -26,6 +26,11 @@ int main()
 
     DLT634_5104_SlaveInit();
 
+    unsigned char pbuf = 'a';
+    uint8_t *pBuf = &pbuf;
+    DBWrite_YX(pBuf);
+    DBWrite_YC(pBuf);
+
     TCPSocket tcpConnect;
     tcpConnect.setReuseAddr(true);
     tcpConnect.bind("INADDR_ANY",2404);
@@ -43,7 +48,6 @@ int main()
         while(1)
         {
             int n = client->read(buff,255);
-           // ssize_t n = read(clientfd, buff, 255);
             if(n < 0)
             {
                 printf("read error client return number  = %d,errno = %d\n",(int)n,errno);
@@ -56,20 +60,21 @@ int main()
             }
             else
             {
+                printf("\n");
                 printf("%d \n",(int)n);
                 for(int i= 0;i < n;i++)
                 {
-                    printf("%02X ",buff[i]);
+                    //printf("%02X ",buff[i]);
                     AddQ(ptrQ,buff[i]);
                 }
                 printf("\n");
             }
-            printf("the queue is:");
-            for(int i= 1;i <= n;i++)
-            {
-                printf("%02X ",ptrQ->data[i]);
-            }
-            printf("\n");
+//            printf("the queue is:");
+//            for(int i= ptrQ->front + 1;i <= ptrQ->rear;i++)
+//            {
+//                printf("%02X ",ptrQ->data[i]);//ptrQ->data[i]
+//            }
+//            printf("\n");
         }
     }
 

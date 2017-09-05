@@ -85,11 +85,13 @@ typedef struct{
 void AddQ(Queue *ptrQ,uint8_t item);
 uint8_t DeleteQ(Queue *ptrQ);
 //主站的读写、链接处理
+extern void DLT634_5104_SlaveInit();
 extern int Readx(uint8_t *pbuf, uint16_t count, uint8_t port);
 extern int WriteX(uint8_t *pbuf, uint16_t count,uint8_t port);
 extern void ShutDown();
 
-
+extern void DBWrite_YX(uint8_t *pBuf);
+extern void DBWrite_YC(uint8_t *pBuf);
 
 //定义报文结构体
 #pragma pack(push,1)
@@ -109,12 +111,12 @@ typedef struct
     struct STATUS
     {
         uint8_t Length;
+        union SYMBOL
+        {
+            uint8_t priority;
+            uint8_t Lock_ID;
+        }symbol;
     }status;
-    union SYMBOL
-    {
-        uint8_t priority;
-        uint8_t Lock_ID;
-    }symbol;
 
     struct HEAD
     {
@@ -283,7 +285,6 @@ typedef struct
                        uint8_t QDS;
                    }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-2)/5];
                }SQ1;
-
            }C_9;
 
            union
@@ -437,7 +438,6 @@ typedef struct
 }_DATABASE_PASDU;
 
 #pragma pack(pop)
-
 
 #ifdef __cplusplus
 }

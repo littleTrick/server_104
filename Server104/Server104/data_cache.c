@@ -75,7 +75,6 @@ int readTCP(unsigned char *pbuf, unsigned short size)
             break;
         }
         *(pbuf++) = DeleteQ(ptrQ);
-        printf("%02x ",pbuf[len]);
     }
     return len;
 }
@@ -129,22 +128,143 @@ int WriteX(unsigned char *pbuf, unsigned short count, unsigned char port)
     return len;
 }
 
+//写入总召唤的遥信报文
+void DBWrite_YX( uint8_t *pBuf)
+{
+    uint32_t addr;
+
+    memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
+    DATABASE_RXTemp.status.Length =0x0A;
+    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
+    DATABASE_RXTemp.Head.VSQ =0x82;
+    DATABASE_RXTemp.Head.COT_L =0x14;
+    DATABASE_RXTemp.Head.COT_H =0x00;
+    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
+    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x01;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x01;
+
+
+   // memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+   // switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+    //{
+    //case 0:
+        switch (DATABASE_RXTemp.Head.TypeID)
+        {
+        case _DATABASE_M_SP_NA_1:
+            if(DATABASE_RXTemp.Head.VSQ&0x80)
+            {
+                addr = DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H&0xff;
+                addr = (addr<<8)|(DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L&0xff);
+                printf("yx addr is %d   ",addr);
+                if((addr>=_DATABASE_YX_START_ADDR)&&(addr + (DATABASE_RXTemp.Head.VSQ&0x7f) <= _DATABASE_YX_START_ADDR + _DATABASE_YX_TOTAL_NUM))
+                {
+                    memcpy(&YXDB[addr - _DATABASE_YX_START_ADDR],&DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value,(DATABASE_RXTemp.Head.VSQ&0x7f));
+                }
+                printf("YXDB is :");
+                for(int i = 0; i < _DATABASE_YX_TOTAL_NUM; i++)
+                    printf("%d ",YXDB[i]);
+                printf("\n");
+            }
+            break;
+        default:
+            break;
+        }
+    //    break;
+   // default:
+     //   break;
+   // }
+}
+
 //读取总召唤遥信报文,信息地址为addr+num,存储到pbuf指向的地方
-unsigned char DBRead_YX(unsigned short addr,unsigned char num,unsigned char *pbuf)
+uint8_t DBRead_YX(unsigned short addr,uint8_t num,uint8_t *pbuf)
 {
     memset(&DATABASE_TXTemp,0,sizeof(_DATABASE_PASDU));
 
-    if((addr>=_DATABASE_YX_START_ADDR)&&(addr + num <= _DATABASE_YX_START_ADDR + _DATABASE_YX_TOTAL_NUM))
+    if((addr >= _DATABASE_YX_START_ADDR)&&(addr + num <= _DATABASE_YX_START_ADDR + _DATABASE_YX_TOTAL_NUM))
         {
             DATABASE_TXTemp.status.Length = sizeof(DATABASE_TXTemp.status) + sizeof(DATABASE_TXTemp.Head) + 2 + num*1;
             DATABASE_TXTemp.Head.COT_L = _DATABASE_COT_INTROGEN;
             DATABASE_TXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
             DATABASE_TXTemp.Head.VSQ = num|0x80;
             DATABASE_TXTemp.Data.C_1.SQ1.InfoAddr_H = (addr>>8)&0xFF;
-            DATABASE_TXTemp.Data.C_1.SQ1.InfoAddr_L = addr&0xFF;
+            DATABASE_TXTemp.Data.C_1.SQ1.InfoAddr_L = addr&0xFF;          
             memcpy(&DATABASE_TXTemp.Data.C_1.SQ1.Array[0].Value,&YXDB[addr - _DATABASE_YX_START_ADDR],num);
             memcpy(pbuf,&DATABASE_TXTemp,DATABASE_TXTemp.status.Length);
             return(TRUE);
+    }
+    return(FALSE);
+}
+
+//写入遥测报文
+void DBWrite_YC(uint8_t *pBuf)
+{
+    uint32_t addr;
+
+    memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
+    DATABASE_RXTemp.status.Length =0x0A;
+    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+    DATABASE_RXTemp.Head.VSQ =0x82;
+    DATABASE_RXTemp.Head.COT_L =0x14;
+    DATABASE_RXTemp.Head.COT_H =0x00;
+    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_L =0x05;
+    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_H =0x40;
+    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].Value =0x11;
+    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].QDS = 0x00;
+    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].Value =0x11;
+    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].QDS = 0x00;
+
+//	memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+//	switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+//	{
+        //case NULL_ID:
+            switch (DATABASE_RXTemp.Head.TypeID)
+            {
+            case _DATABASE_M_ME_NC_1:
+                if(DATABASE_RXTemp.Head.VSQ&0x80)
+                {
+                    addr = DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_H&0xff;
+                    addr = (addr<<8)|(DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_L&0xff);
+                    printf("yc addr is %d   ",addr);
+                    if((addr>=_DATABASE_YC_START_ADDR)&&(addr + (DATABASE_RXTemp.Head.VSQ&0x7f) <= _DATABASE_YC_START_ADDR + _DATABASE_YC_TOTAL_NUM))
+                    {
+                        memcpy(&YCDB[addr - _DATABASE_YC_START_ADDR],&DATABASE_RXTemp.Data.C_13.SQ1.Array[0],(sizeof(YCSTRU)*(DATABASE_RXTemp.Head.VSQ&0x7f)));
+                    }
+                    printf("YCDB is :");
+                    for(int i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
+                        printf("%d ",YCDB[i]);
+                    printf("\n");
+                }
+                break;
+            default:
+                break;
+            //}
+//            break;
+//        default:
+//            break;
+    }
+}
+
+//读取遥测报文
+uint8_t DBRead_YC(uint32_t addr,uint8_t num,uint8_t *pbuf)
+{
+    memset(&DATABASE_TXTemp,0,sizeof(_DATABASE_PASDU));
+
+    if((addr>=_DATABASE_YC_START_ADDR)&&(addr + num <= _DATABASE_YC_START_ADDR + _DATABASE_YC_TOTAL_NUM))
+    {
+        DATABASE_TXTemp.status.Length = sizeof(DATABASE_TXTemp.status) + sizeof(DATABASE_TXTemp.Head) + 2 + num*sizeof(YCSTRU);
+        DATABASE_TXTemp.Head.COT_L = _DATABASE_COT_INTROGEN;
+        DATABASE_TXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+        DATABASE_TXTemp.Head.VSQ = num|0x80;
+        DATABASE_TXTemp.Data.C_13.SQ1.InfoAddr_H = (addr>>8)&0xFF;
+        DATABASE_TXTemp.Data.C_13.SQ1.InfoAddr_L = addr&0xFF;
+        memcpy(&DATABASE_TXTemp.Data.C_1.SQ1.Array[0].Value,&YCDB[addr - _DATABASE_YC_START_ADDR],num*sizeof(YCSTRU));
+        memcpy(pbuf,&DATABASE_TXTemp,DATABASE_TXTemp.status.Length);
+        return(TRUE);
     }
     return(FALSE);
 }

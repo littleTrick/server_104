@@ -857,7 +857,7 @@ void DLT634_5104_SLAVE_AppProcess(BYTE pdrv, struct DLT634_5104SLAVE_AppMsg* Msg
                     break;                        
                         
                 case DLT634_5104SLAVE_C_IC_NA_1:	// <100>总召唤或分组召唤
-									  DLT104SlaveApp[pdrv].Data1Flag |= DLT634_5104SLAVE_CALLALLDATA;
+                                    DLT104SlaveApp[pdrv].Data1Flag |= DLT634_5104SLAVE_CALLALLDATA;
 								    DLT104SlaveApp[pdrv].AllDataFlag = 0;
                     break;
                         
@@ -1172,7 +1172,7 @@ static void DLT634_5104_SLAVE_DecodeIFrame(BYTE pdrv)
     
     pAPCI = (struct DLT634_5104SLAVE_PAPCI*)DLT104SlaveLink[pdrv].RxdBuf;
     
-    if (!DLT104SlaveLink[pdrv].Connect)  
+    if (!DLT104SlaveLink[pdrv].Connect)
     {
         return;
     }
@@ -1648,7 +1648,7 @@ void DLT634_5104_SLAVE_NetTest(BYTE pdrv)
 {
   //#if (PHY_LAN8720_CFG || PHY_ENC28J60_CFG)  
     
-    if (DLT634_5104_SLAVE_CheckLink(pdrv))//是否链接
+    if (!DLT634_5104_SLAVE_CheckLink(pdrv))//是否链接
     {            
         DLT634_5104_AppInitReset(pdrv);				
         DLT104SlaveApp[pdrv].Connect = FALSE;
