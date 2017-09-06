@@ -74,7 +74,7 @@ extern "C"{
 #define  _DATABASE_NVASENDNUM      2
 #define  _DATABASE_EVENTLIMIT      32
 
-#define  MAX_DEV_MUN               1           //最大外接设备数量
+#define  MAX_DEV_MUN               2           //最大外接设备数量
 //存储主站的循环队列
 #define MaxSize 2048
 typedef struct{
@@ -95,6 +95,7 @@ extern void DatabaseInit();
 extern void DBWrite_YX(uint8_t *pBuf);
 extern void DBWrite_YC(uint8_t *pBuf);
 extern void DBWrite_SOE(uint8_t *pBuf);
+extern void DBWrite_NVA(uint8_t *pBuf);
 //定义报文结构体
 #pragma pack(push,1)
 typedef struct
@@ -323,7 +324,7 @@ typedef struct
                    {
                        uint8_t InfoAddr_L;
                        uint8_t InfoAddr_H;
-                       uint32_t Value;
+                       float Value;
                        uint8_t QDS;
                    }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD))/7];
                }SQ0;

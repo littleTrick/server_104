@@ -61,16 +61,22 @@ void DatabaseInit()
     uint32_t i;
 
     DBCFGS.SOE_IN = SOEDB;
-    for(i=0;i<MAX_DEV_MUN;i++)
-    {DBCFGS.SOE_OUT[i] = SOEDB;}
+    for(i = 0;i < MAX_DEV_MUN;i++)
+    {
+        DBCFGS.SOE_OUT[i] = SOEDB;
+    }
 
     DBCFGS.NVA_IN = NVADB;
-    for(i=0;i<MAX_DEV_MUN;i++)
-    {DBCFGS.NVA_OUT[i] = NVADB;}
+    for(i = 0;i < MAX_DEV_MUN;i++)
+    {
+        DBCFGS.NVA_OUT[i] = NVADB;
+    }
 
     DBCFGS.FEvent_IN = FEventDB;
-    for(i=0;i<MAX_DEV_MUN;i++)
-    {DBCFGS.FEvent_OUT[i] = FEventDB;}
+    for(i = 0;i < MAX_DEV_MUN;i++)
+    {
+        DBCFGS.FEvent_OUT[i] = FEventDB;
+    }
 }
 
 void AddQ(Queue *ptrQ,unsigned char item)
@@ -387,6 +393,7 @@ uint8_t DBCheck_SOE(uint8_t ID)
 {
     if((ID <= MAX_DEV_MUN) && (DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN))
     {
+        printf("the soe number is: %d \n",(DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN));
         return(TRUE);
     }
     return(FALSE);
@@ -398,9 +405,9 @@ uint8_t DBRead_SOE(uint8_t ID,uint8_t *pbuf)
     uint8_t i,num = 0;
 
     memset(&DATABASE_TXTemp,0,sizeof(_DATABASE_PASDU));
-    if((ID <= MAX_DEV_MUN) && (DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN))
+    if((ID<=MAX_DEV_MUN)&&(DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN))
     {
-        for(i = 0;(i < _DATABASE_SOESENDNUM) && (DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN);i++)
+        for(i=0;(i<_DATABASE_SOESENDNUM)&&(DBCFGS.SOE_OUT[ID] != DBCFGS.SOE_IN);i++)
         {
             memcpy(&DATABASE_TXTemp.Data.C_30.SQ0.Array[i],DBCFGS.SOE_OUT[ID],sizeof(SOE_t));
             if(++DBCFGS.SOE_OUT[ID] >= SOEDB + _DATABASE_SOELIMIT)
@@ -417,6 +424,118 @@ uint8_t DBRead_SOE(uint8_t ID,uint8_t *pbuf)
         memcpy(pbuf,&DATABASE_TXTemp,DATABASE_TXTemp.status.Length);
         return(TRUE);
     }
+    return(FALSE);
+}
 
+void DBWrite_NVA(uint8_t *pBuf)
+{
+    uint8_t i;
+    uint32_t addr;
+
+    memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
+//	memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+    DATABASE_RXTemp.status.Length = 0x14;
+    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+    DATABASE_RXTemp.Head.VSQ =0x02;//信息地址不连续
+    DATABASE_RXTemp.Head.COT_L =0x03;
+    DATABASE_RXTemp.Head.COT_H =0x00;
+    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_L =0x09;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_H =0x40;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].Value = 6.6;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].QDS = 0x11;
+
+
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_L =0x10;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_H =0x40;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].Value = 8.8;
+    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].QDS = 0x11;
+
+//    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+//    {
+//        case NULL_ID:
+            switch (DATABASE_RXTemp.Head.TypeID)
+            {
+            case _DATABASE_M_ME_NC_1:
+                if(!(DATABASE_RXTemp.Head.VSQ&0x80))
+                {
+                    for(i=0;i<(DATABASE_RXTemp.Head.VSQ&0xff);i++)
+                    {
+                        addr = DATABASE_RXTemp.Data.C_13.SQ0.Array[i].InfoAddr_H&0xff;
+                        addr = (addr<<8)|(DATABASE_RXTemp.Data.C_13.SQ0.Array[i].InfoAddr_L&0xff);
+                        printf("nva addr is %d   ",addr);
+                        if((addr>=_DATABASE_YC_START_ADDR)&&(addr<_DATABASE_YC_START_ADDR+_DATABASE_YC_TOTAL_NUM))
+                        {
+                            YCDB[addr - _DATABASE_YC_START_ADDR].Value = DATABASE_RXTemp.Data.C_13.SQ0.Array[i].Value;
+                            YCDB[addr - _DATABASE_YC_START_ADDR].QDS = DATABASE_RXTemp.Data.C_13.SQ0.Array[i].QDS;
+                        }
+                        memcpy(DBCFGS.NVA_IN,&DATABASE_RXTemp.Data.C_13.SQ0.Array[i],sizeof(NVA));
+                        if(++DBCFGS.NVA_IN >= NVADB + _DATABASE_NVALIMIT)
+                        {
+                            DBCFGS.NVA_IN = NVADB;
+                        }
+                        printf("nva is :");
+                        for(int i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
+                            printf("%d ",YCDB[i]);
+                        printf("\n");
+                    }
+                }
+                break;
+            default:
+                break;
+            }
+//            break;
+//        default:
+//            break;
+//    }
+}
+
+uint8_t DBCheck_NVA(uint8_t ID)
+{
+    if((ID <= MAX_DEV_MUN) && (DBCFGS.NVA_OUT[ID] != DBCFGS.NVA_IN))
+    {
+        return(TRUE);
+    }
+    return(FALSE);
+}
+
+uint8_t DBReset_NVA(uint8_t ID)
+{
+    if(ID <= MAX_DEV_MUN)
+    {
+        DBCFGS.NVA_OUT[ID] = DBCFGS.NVA_IN;
+        return(TRUE);
+    }
+    return(FALSE);
+}
+
+uint8_t DBRead_NVA(uint8_t ID,uint8_t *pbuf)
+{
+    uint8_t i;
+    uint8_t num = 0;
+
+    memset(&DATABASE_TXTemp,0,sizeof(_DATABASE_PASDU));
+
+    if((ID <= MAX_DEV_MUN) && (DBCFGS.NVA_OUT[ID] != DBCFGS.NVA_IN))
+    {
+        for(i = 0;(i < _DATABASE_NVASENDNUM) && (DBCFGS.NVA_OUT[ID] != DBCFGS.NVA_IN);i++)
+        {
+            memcpy(&DATABASE_TXTemp.Data.C_13.SQ0.Array[i],DBCFGS.NVA_OUT[ID],sizeof(NVA));
+            if(++DBCFGS.NVA_OUT[ID] >= NVADB + _DATABASE_NVALIMIT)
+            {
+                DBCFGS.NVA_OUT[ID] = NVADB;
+            }
+            num++;
+        }
+        DATABASE_TXTemp.status.Length = sizeof(DATABASE_TXTemp.status) + sizeof(DATABASE_TXTemp.Head) + num*sizeof(NVA);
+        DATABASE_TXTemp.status.symbol.Lock_ID = ID;
+        DATABASE_TXTemp.Head.COT_L = _DATABASE_COT_SPONT;
+        DATABASE_TXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+        DATABASE_TXTemp.Head.VSQ = num&0x7f;
+        memcpy(pbuf,&DATABASE_TXTemp,DATABASE_TXTemp.status.Length);
+
+        return(TRUE);
+    }
     return(FALSE);
 }

@@ -32,6 +32,7 @@ int main()
     DBWrite_YX(pBuf);
     DBWrite_YC(pBuf);
     DBWrite_SOE(pBuf);
+    DBWrite_NVA(pBuf);
 
     TCPSocket tcpConnect;
     tcpConnect.setReuseAddr(true);

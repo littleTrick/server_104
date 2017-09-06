@@ -1833,13 +1833,13 @@ void DLT634_5104_SLAVE_ReadMISIData(BYTE pdrv, BYTE Flag)
         else
         {
         
-                DLT634_5104_SLAVE_ReadMISIData(pdrv, TRUE); // 链路层数据查询
+            DLT634_5104_SLAVE_ReadMISIData(pdrv, TRUE); // 链路层数据查询
 
-                DLT634_5104_SLAVE_SendProcess(pdrv);	// 发送数据				
-                        
-                DLT634_5104_SLAVE_LinkOnTimer(pdrv); // 链路层定时器
-                                                
-                DLT634_5104_SLAVE_NetTest(pdrv); // 网络判断 
+            DLT634_5104_SLAVE_SendProcess(pdrv);	// 发送数据
+
+            DLT634_5104_SLAVE_LinkOnTimer(pdrv); // 链路层定时器
+
+            DLT634_5104_SLAVE_NetTest(pdrv); // 网络判断
         }					
 	  }      
 }
