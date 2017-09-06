@@ -26,10 +26,12 @@ int main()
 
     DLT634_5104_SlaveInit();
 
+    DatabaseInit();
     unsigned char pbuf = 'a';
     uint8_t *pBuf = &pbuf;
     DBWrite_YX(pBuf);
     DBWrite_YC(pBuf);
+    DBWrite_SOE(pBuf);
 
     TCPSocket tcpConnect;
     tcpConnect.setReuseAddr(true);

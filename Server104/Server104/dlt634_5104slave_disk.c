@@ -411,41 +411,41 @@ void DLT634_5104_SLAVE_FixedParaProcess(BYTE pdrv, BYTE *pbuf)
 //    }
 }
 
-BYTE DLT634_5104_SLAVE_H_SOE(BYTE pdrv)//≈–∂œ «∑Ò”–soe
+uint8_t DLT634_5104_SLAVE_H_SOE(uint8_t pdrv)//≈–∂œ «∑Ò”–soe
 { 
-//    switch(pdrv)
-//    {
-//        case 0:
-//            return(DBCheck_SOE(DLT634_5104Slave_Pad[pdrv].Port));
-//            default:
-//        break;
-//    }
+    switch(pdrv)
+    {
+        case 0:
+            return(DBCheck_SOE(DLT634_5104Slave_Pad[pdrv].Port));
+            default:
+        break;
+    }
     return(FALSE);
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array(InfoAddr_L/InfoAddr_M/InfoAddr_H/Value/CP56Time2a)
-void DLT634_5104_SLAVE_R_SOE(BYTE pdrv, BYTE *pbuf)//∂¡soe
+void DLT634_5104_SLAVE_R_SOE(uint8_t pdrv, uint8_t *pbuf)//∂¡soe
 { 
-//    BYTE buf[256];
-//    BYTE i;
+    uint8_t buf[256];
+    uint8_t i;
 
-//    memset(buf,0,sizeof(buf));
+    memset(buf,0,sizeof(buf));
 
-//    switch(pdrv)
-//    {
-//        case 0:
-//            DBRead_SOE(DLT634_5104Slave_Pad[pdrv].Port,buf);
-//            memcpy(pbuf,buf,buf[0]);
-//            for(i=0;i<buf[3];i++)
-//            {
-//                memcpy(&pbuf[11+i*11],&buf[10+i*10],buf[0]-10-i*10);
-//                pbuf[10+i*11] = 0;
-//            }
-//            pbuf[0] += buf[3];
-//        break;
-//        default:
-//        break;
-//    }
+    switch(pdrv)
+    {
+        case 0:
+            DBRead_SOE(DLT634_5104Slave_Pad[pdrv].Port,buf);
+            memcpy(pbuf,buf,buf[0]);
+            for(i=0;i<buf[3];i++)
+            {
+                memcpy(&pbuf[11+i*11],&buf[10+i*10],buf[0]-10-i*10);
+                pbuf[10+i*11] = 0;
+            }
+            pbuf[0] += buf[3];
+        break;
+        default:
+        break;
+    }
 }
 
 BYTE DLT634_5104_SLAVE_H_NVA(BYTE pdrv)//≈–∂œ «∑Ò”–NVA
