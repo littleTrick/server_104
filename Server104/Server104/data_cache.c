@@ -47,12 +47,14 @@ typedef struct
 
 #pragma pack(pop)
 
+_DATABASE_CP56Time2a_t SysTime; //系统时间
+
 static DBCONFIG DBCFGS; // 数据库配置指针
 static unsigned char YXDB[_DATABASE_YX_TOTAL_NUM]; // 遥信数据库
 static YCSTRU YCDB[_DATABASE_YC_TOTAL_NUM]; // 遥测数据库
 static SOE_t SOEDB[_DATABASE_SOELIMIT]; // SOE数据库
 static NVA NVADB[_DATABASE_NVALIMIT]; // NVA数据库
-static FEvent FEventDB[_DATABASE_EVENTLIMIT]; // NVA数据库
+static FEvent FEventDB[_DATABASE_EVENTLIMIT]; // NVA数据库,暂时未使用
 static _DATABASE_PASDU DATABASE_TXTemp;
 static _DATABASE_PASDU DATABASE_RXTemp;
 
@@ -213,7 +215,7 @@ void DBWrite_YX( uint8_t *pBuf)
    // }
 }
 
-//读取总召唤遥信报文,信息地址为addr+num,存储到pbuf指向的地方
+//读取总召唤遥信报文,信息地址为addr+num,存储到pbuf指向的地方,重组１０４报文
 uint8_t DBRead_YX(unsigned short addr,uint8_t num,uint8_t *pbuf)
 {
     memset(&DATABASE_TXTemp,0,sizeof(_DATABASE_PASDU));
@@ -399,7 +401,7 @@ uint8_t DBCheck_SOE(uint8_t ID)
     return(FALSE);
 }
 
-//读取ＳＯＥ数值
+//读取ＳＯＥ数值，设备ＩＤ读取ＳＯＥ数据至pbuf中
 uint8_t DBRead_SOE(uint8_t ID,uint8_t *pbuf)
 {
     uint8_t i,num = 0;
@@ -539,3 +541,36 @@ uint8_t DBRead_NVA(uint8_t ID,uint8_t *pbuf)
     }
     return(FALSE);
 }
+
+
+//LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/
+BYTE DBSend(BYTE *pbuf)
+{
+    BYTE res = 0;
+    switch(pbuf[1]&0x0f)//Lock_ID
+    {
+        //case NULL_ID:
+        //    DBAcceptHandle(pbuf);
+         //   break;
+        case NET1_ID:
+            res = DLT634_5104_SLAVE_C_REPLY(NET1_ID, pbuf);
+            break;
+//        case USART6_ID:
+//			OSQPost((OS_Q *)&DLT101MasterApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO | OS_OPT_POST_NO_SCHED, &err);
+//			OSFlagPost (&DLT101MasterApp_Event, PARAFIX | FTXNEXT, OS_OPT_POST_FLAG_SET, &err);
+//            res = DLT634_5101_MASTER_C_REPLY(USART6_ID, pbuf);
+//            break;
+//        case UART8_ID:
+//            res = DLT634_5101_SLAVE_C_REPLY(UART8_ID, pbuf);
+//			OSQPost((OS_Q *)&DLT101SlaveApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO|OS_OPT_POST_NO_SCHED, &err);
+//			OSFlagPost((OS_FLAG_GRP *)&DLT101SlaveApp_Event, (OS_FLAGS)PARAFIX, (OS_OPT)OS_OPT_POST_FLAG_SET, (OS_ERR *)&err);
+//           break;
+//        case N25QXXX_ID:
+//#if N25QXXX_CFG
+//            N25QXXX_REPLY(pbuf);
+//#endif
+//        break;
+    }
+    return(res);
+}
+

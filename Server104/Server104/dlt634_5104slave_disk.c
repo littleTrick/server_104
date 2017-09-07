@@ -248,25 +248,25 @@ void DLT634_5104_SLAVE_HandleCtrlProcess(BYTE pdrv, BYTE *pbuf)
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/CP56Time2a
 void DLT634_5104_SLAVE_SYNProcess(BYTE pdrv, BYTE *pbuf)
 {
-//	BYTE buf[256];
+    BYTE buf[256];
 	
-//	memset(buf,0,sizeof(buf));
-//	memcpy(buf,pbuf,pbuf[0]);
-//	memcpy(&buf[10],&pbuf[11],pbuf[0]-11);
-//	buf[0] -= 1;
-//	//转换成101,02版
+    memset(buf,0,sizeof(buf));
+    memcpy(buf,pbuf,pbuf[0]);
+    memcpy(&buf[10],&pbuf[11],pbuf[0]-11);
+    buf[0] -= 1;
+    //转换成101,02版
 	
-//    switch (pdrv)
-//    {
-//    case 0:
-//        buf[1] = (DLT634_5104Slave_Pad[pdrv].Port<<4)|USART6_ID;
-//        DBSend(buf);
-//    break;
-//    case 1:
-//    break;
-//    default:
-//    break;
-//    }
+    switch (pdrv)
+    {
+    case 0:
+        buf[1] = (DLT634_5104Slave_Pad[pdrv].Port << 4)|NET1_ID;
+        DBSend(buf);
+    break;
+    case 1:
+    break;
+    default:
+    break;
+    }
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/Array(Value)
@@ -525,19 +525,19 @@ void DLT634_5104_SLAVE_R_FEvent(BYTE pdrv, BYTE *pbuf)//读FEvent
 
 bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//其他设备回复
 { 
-//    BYTE buf[256];
-//    BYTE i;
-//    BYTE temp1,temp2;
+    BYTE buf[256];
+    BYTE i;
+    BYTE temp1,temp2;
 
-//    memset(buf,0,sizeof(buf));
-//    memcpy(buf,pbuf,pbuf[0]);
-//    //转换成104,02版
-//    bool res;
-//    switch(drvid)
-//    {
-//        case NET1_ID:
-//        switch(pbuf[2])
-//        {
+    memset(buf,0,sizeof(buf));
+    memcpy(buf,pbuf,pbuf[0]);
+    //转换成104,02版
+    bool res;
+    switch(drvid)
+    {
+        case NET1_ID:
+        switch(pbuf[2]) //TI
+        {
 //            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/SCO_L/SCO_H
 //            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/DCO_L/DCO_H
 //            case 45:case 46://遥控
@@ -546,11 +546,11 @@ bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//其他设备回复
 //                buf[0] += 1;
 //            break;
 //            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/CP56Time2a
-//            case 103://对时
-//                memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
-//                buf[10] = 0;
-//                buf[0] += 1;
-//            break;
+            case 103://对时
+                memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
+                buf[10] = 0;
+                buf[0] += 1;
+            break;
 //            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/sty/Array
 //            case 210://文件服务
 //                memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
@@ -598,13 +598,13 @@ bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//其他设备回复
 //                {
 //                }
 //            break;
-//        }
-//        res = DLT634_5104_SLAVE_Reply(DLT634_5104_NET1_ID, buf); //回复
-//        break;
-//        default:
-//        break;
-//    }
-//    return(res);
+        }
+        res = DLT634_5104_SLAVE_Reply(DLT634_5104_NET1_ID, buf); //回复
+        break;
+        default:
+        break;
+    }
+    return(res);
     return false;//zi ji e wai jia de
 }
 
