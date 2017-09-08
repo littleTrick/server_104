@@ -180,8 +180,8 @@ void DBWrite_YX( uint8_t *pBuf)
     DATABASE_RXTemp.Head.PubAddr_H =0x00;
     DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
     DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x01;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x01;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x00;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x00;
 
 
    // memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
@@ -194,7 +194,7 @@ void DBWrite_YX( uint8_t *pBuf)
             if(DATABASE_RXTemp.Head.VSQ&0x80)
             {
                 addr = DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H&0xff;
-                addr = (addr<<8)|(DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L&0xff);
+                addr = (addr << 8)|(DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L&0xff);
                 printf("yx addr is %d   ",addr);
                 if((addr>=_DATABASE_YX_START_ADDR)&&(addr + (DATABASE_RXTemp.Head.VSQ&0x7f) <= _DATABASE_YX_START_ADDR + _DATABASE_YX_TOTAL_NUM))
                 {
@@ -544,14 +544,14 @@ uint8_t DBRead_NVA(uint8_t ID,uint8_t *pbuf)
 
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/
-BYTE DBSend(BYTE *pbuf)
+uint8_t DBSend(uint8_t *pbuf)
 {
-    BYTE res = 0;
+    uint8_t res = 0;
     switch(pbuf[1]&0x0f)//Lock_ID
     {
-        //case NULL_ID:
-        //    DBAcceptHandle(pbuf);
-         //   break;
+//        case NULL_ID:
+//            DBAcceptHandle(pbuf);
+//            break;
         case NET1_ID:
             res = DLT634_5104_SLAVE_C_REPLY(NET1_ID, pbuf);
             break;

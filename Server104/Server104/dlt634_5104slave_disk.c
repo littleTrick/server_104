@@ -27,6 +27,7 @@
 ** ---------------------------------------------------------------------------*/
 
 //#if APP_TASK_DLT634_5104_SLAVE_CFG
+#include <stdio.h>
 #include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
@@ -69,9 +70,9 @@ void setClientFd(int clientfd)
 ** ÐÞ¸ÄÄÚÈÝ: 
 ** ÈÕ¡¡  ÆÚ: 
 ** ---------------------------------------------------------------------------*/
-WORD DLT634_5104_SLAVE_WriteData(BYTE pdrv, BYTE *pbuf, WORD count)
+uint16_t DLT634_5104_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
-    WORD len = 0; 
+    uint16_t len = 0;
 	
     switch (pdrv)
     {
@@ -107,9 +108,9 @@ WORD DLT634_5104_SLAVE_WriteData(BYTE pdrv, BYTE *pbuf, WORD count)
 ** ÐÞ¸ÄÄÚÈÝ:
 ** ÈÕ¡¡  ÆÚ: 
 ** ---------------------------------------------------------------------------*/
-WORD DLT634_5104_SLAVE_ReadData(BYTE pdrv, BYTE *pbuf, WORD count)
+uint16_t DLT634_5104_SLAVE_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
-	WORD len = 0;  
+    uint16_t len = 0;
 	
     switch(pdrv)
     {
@@ -143,9 +144,9 @@ WORD DLT634_5104_SLAVE_ReadData(BYTE pdrv, BYTE *pbuf, WORD count)
 ** ÐÞ¸ÄÄÚÈÝ:
 ** ÈÕ¡¡  ÆÚ: 
 ** ---------------------------------------------------------------------------*/
-BYTE DLT634_5104_SLAVE_CheckLink(BYTE pdrv)
+uint8_t DLT634_5104_SLAVE_CheckLink(uint8_t pdrv)
 { 
-    BYTE res = FALSE;  
+    uint8_t res = FALSE;
 
     switch(pdrv)
     {
@@ -173,7 +174,7 @@ BYTE DLT634_5104_SLAVE_CheckLink(BYTE pdrv)
 ** ÐÞ¸ÄÄÚÈÝ:
 ** ÈÕ¡¡  ÆÚ: 
 ** ---------------------------------------------------------------------------*/
-BYTE DLT634_5104_SLAVE_StopLink(BYTE pdrv)
+uint8_t DLT634_5104_SLAVE_StopLink(uint8_t pdrv)
 { 
     //OS_ERR err;
 
@@ -207,27 +208,27 @@ BYTE DLT634_5104_SLAVE_StopLink(BYTE pdrv)
 ** ---------------------------------------------------------------------------*/
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/SCO_L/SCO_H
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/DCO_L/DCO_H
-void DLT634_5104_SLAVE_HandleCtrlProcess(BYTE pdrv, BYTE *pbuf)
+void DLT634_5104_SLAVE_HandleCtrlProcess(uint8_t pdrv, uint8_t *pbuf)
 {
-//    BYTE buf[256];
+    uint8_t buf[256];
 
-//    memset(buf,0,sizeof(buf));
-//    memcpy(buf,pbuf,pbuf[0]);
-//    memcpy(&buf[10],&pbuf[11],pbuf[0]-11);
-//    buf[0] -= 1;
-//    //×ª»»³É101,02°æ
+    memset(buf,0,sizeof(buf));
+    memcpy(buf,pbuf,pbuf[0]);
+    memcpy(&buf[10],&pbuf[11],pbuf[0]-11);
+    buf[0] -= 1;
+    //×ª»»³É101,02°æ
 
-//    switch (pdrv)
-//    {
-//        case 0:
-//            buf[1] = (DLT634_5104Slave_Pad[pdrv].Port<<4)|USART6_ID;
-//            DBSend(buf);
-//        break;
-//        case 1:
-//        break;
-//        default:
-//        break;
-//    }
+    switch (pdrv)
+    {
+        case 0:
+            buf[1] = (DLT634_5104Slave_Pad[pdrv].Port<<4)|NET1_ID;
+            DBSend(buf);
+        break;
+        case 1:
+        break;
+        default:
+        break;
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -246,9 +247,9 @@ void DLT634_5104_SLAVE_HandleCtrlProcess(BYTE pdrv, BYTE *pbuf)
 ** ÈÕ¡¡  ÆÚ: 
 ** ---------------------------------------------------------------------------*/
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/CP56Time2a
-void DLT634_5104_SLAVE_SYNProcess(BYTE pdrv, BYTE *pbuf)
+void DLT634_5104_SLAVE_SYNProcess(uint8_t pdrv, uint8_t *pbuf)
 {
-    BYTE buf[256];
+    uint8_t buf[256];
 	
     memset(buf,0,sizeof(buf));
     memcpy(buf,pbuf,pbuf[0]);
@@ -270,9 +271,9 @@ void DLT634_5104_SLAVE_SYNProcess(BYTE pdrv, BYTE *pbuf)
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/Array(Value)
-void DLT634_5104_SLAVE_ReadYxData(BYTE pdrv, WORD addr, WORD num, BYTE *pbuf)//¶ÁYXDATA
+void DLT634_5104_SLAVE_ReadYxData(uint8_t pdrv, uint16_t addr, uint16_t num, uint8_t *pbuf)//¶ÁYXDATA
 { 
-    BYTE buf[256];
+    uint8_t buf[256];
     memset(&buf,0,sizeof(buf));
 	
     switch (pdrv)
@@ -291,9 +292,9 @@ void DLT634_5104_SLAVE_ReadYxData(BYTE pdrv, WORD addr, WORD num, BYTE *pbuf)//¶
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/Array(Value)
-void DLT634_5104_SLAVE_ReadYcData(BYTE pdrv, WORD addr, WORD num, BYTE *pbuf)//¶ÁYCDATA
+void DLT634_5104_SLAVE_ReadYcData(uint8_t pdrv, uint16_t addr, uint16_t num, uint8_t *pbuf)//¶ÁYCDATA
 { 
-    BYTE buf[256];
+    uint8_t buf[256];
     memset(&buf,0,sizeof(buf));
 	
     switch (pdrv)
@@ -448,7 +449,7 @@ void DLT634_5104_SLAVE_R_SOE(uint8_t pdrv, uint8_t *pbuf)//¶Ásoe
     }
 }
 
-BYTE DLT634_5104_SLAVE_H_NVA(BYTE pdrv)//ÅÐ¶ÏÊÇ·ñÓÐNVA
+uint8_t DLT634_5104_SLAVE_H_NVA(uint8_t pdrv)//ÅÐ¶ÏÊÇ·ñÓÐNVA
 { 
     switch(pdrv)
     {
@@ -461,10 +462,10 @@ BYTE DLT634_5104_SLAVE_H_NVA(BYTE pdrv)//ÅÐ¶ÏÊÇ·ñÓÐNVA
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array(InfoAddr_L/InfoAddr_M/InfoAddr_H/Value/QDS)
-void DLT634_5104_SLAVE_R_NVA(BYTE pdrv, BYTE *pbuf)//¶ÁNVA
+void DLT634_5104_SLAVE_R_NVA(uint8_t pdrv, uint8_t *pbuf)//¶ÁNVA
 { 
-    BYTE buf[256];
-    BYTE i;
+    uint8_t buf[256];
+    uint8_t i;
 
     memset(buf,0,sizeof(buf));
 
@@ -485,7 +486,7 @@ void DLT634_5104_SLAVE_R_NVA(BYTE pdrv, BYTE *pbuf)//¶ÁNVA
     }
 }
 
-BYTE DLT634_5104_SLAVE_H_FEvent(BYTE pdrv)//ÅÐ¶ÏÊÇ·ñÓÐFEvent
+uint8_t DLT634_5104_SLAVE_H_FEvent(uint8_t pdrv)//ÅÐ¶ÏÊÇ·ñÓÐFEvent
 { 
 //	switch(pdrv)
 //	{
@@ -498,7 +499,7 @@ BYTE DLT634_5104_SLAVE_H_FEvent(BYTE pdrv)//ÅÐ¶ÏÊÇ·ñÓÐFEvent
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array
-void DLT634_5104_SLAVE_R_FEvent(BYTE pdrv, BYTE *pbuf)//¶ÁFEvent
+void DLT634_5104_SLAVE_R_FEvent(uint8_t pdrv, uint8_t *pbuf)//¶ÁFEvent
 { 
 //	BYTE buf[256];
 //	BYTE i;
@@ -523,11 +524,11 @@ void DLT634_5104_SLAVE_R_FEvent(BYTE pdrv, BYTE *pbuf)//¶ÁFEvent
 //	}
 }
 
-bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//ÆäËûÉè±¸»Ø¸´
+bool DLT634_5104_SLAVE_C_REPLY(uint8_t drvid, uint8_t *pbuf)//ÆäËûÉè±¸»Ø¸´
 { 
-    BYTE buf[256];
-    BYTE i;
-    BYTE temp1,temp2;
+    uint8_t buf[256];
+    uint8_t i;
+    uint8_t temp1,temp2;
 
     memset(buf,0,sizeof(buf));
     memcpy(buf,pbuf,pbuf[0]);
@@ -538,14 +539,14 @@ bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//ÆäËûÉè±¸»Ø¸´
         case NET1_ID:
         switch(pbuf[2]) //TI
         {
-//            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/SCO_L/SCO_H
-//            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/DCO_L/DCO_H
-//            case 45:case 46://Ò£¿Ø
-//                memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
-//                buf[10] = 0;
-//                buf[0] += 1;
-//            break;
-//            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/CP56Time2a
+            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/SCO_L/SCO_H
+            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/DCO_L/DCO_H
+            case 45:case 46://Ò£¿Ø
+                memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
+                buf[10] = 0;
+                buf[0] += 1;
+            break;
+            //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_M/InfoAddr_H/CP56Time2a
             case 103://¶ÔÊ±
                 memcpy(&buf[11],&pbuf[10],pbuf[0]-10);
                 buf[10] = 0;
@@ -605,7 +606,6 @@ bool DLT634_5104_SLAVE_C_REPLY(BYTE drvid, BYTE *pbuf)//ÆäËûÉè±¸»Ø¸´
         break;
     }
     return(res);
-    return false;//zi ji e wai jia de
 }
 
 /* -----------------------------------------------------------------------------           
@@ -691,7 +691,7 @@ void handle()
 void DLT634_5104_SlaveInit()
 {
     //OS_ERR err;
-    BYTE pdrv;
+    uint8_t pdrv;
  //   DWORD results = 0;
 
     pdrv = DLT634_5104_NET1_ID;
