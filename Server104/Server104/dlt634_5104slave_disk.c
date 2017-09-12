@@ -690,9 +690,7 @@ void handle()
 //void DLT634_5104_SlaveInit(void* arg)
 void DLT634_5104_SlaveInit()
 {
-    //OS_ERR err;
     uint8_t pdrv;
- //   DWORD results = 0;
 
     pdrv = DLT634_5104_NET1_ID;
 
