@@ -34,12 +34,21 @@
 
 /* PRIVATE VARIABLES ----------------------------------------------------------*/
 /* PUBLIC VARIABLES ----------------------------------------------------------*/
-
+static int s_serialfd;
 
 /* PRIVATE FUNCTION PROTOTYPES -----------------------------------------------*/
 
 /* PUBLIC FUNCTION PROTOTYPES -----------------------------------------------*/
-//link
+int getSerialFd()
+{
+    return s_serialfd;
+}
+
+void setSerialFd(int serialfd)
+{
+    s_serialfd = serialfd;
+}
+
 /* -----------------------------------------------------------------------------
 ** 函数名称: DLT634_5101_MASTER_ReadData
 ** 功能描述: 读数据
@@ -213,15 +222,15 @@ void DLT634_5101_MASTER_C_SR(uint8_t pdrv, uint8_t *pbuf)//定值参数
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/Array(Value)
 void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			DBWrite_YX(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+    switch(pdrv)
+    {
+        case 0:
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|0;//TRANSIT_DEV0;
+            DBWrite_YX(pbuf);
+            break;
+        default:
+            break;
+    }
 }
 
 /* -----------------------------------------------------------------------------

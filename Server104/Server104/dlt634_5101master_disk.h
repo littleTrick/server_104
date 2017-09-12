@@ -64,6 +64,8 @@ extern uint8_t DLT634_5101_MASTER_C_REPLY(uint8_t drvid,uint8_t *pbuf);
 
 //extern void DLT634_5101_MasterTask(void* arg);
 extern void DLT634_5101_MasterTask();
+extern int getSerialFd();
+extern void setSerialFd(int );
 
 #ifdef __cplusplus
 }

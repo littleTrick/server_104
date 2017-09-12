@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdint.h>
-#include <dlt634_5104slave_disk.h>
+#include "dlt634_5104slave_disk.h"
+#include "dlt634_5101master_disk.h"
 #include "data_cache.h"
 
 extern Queue *ptrQ;
+extern Queue *ptr_101master;
 
 #pragma pack(push,1)
 typedef struct
@@ -136,14 +138,82 @@ void ShutDown()
         setClientFd(-1);
     }
 }
+//从底层设备中读取数据
+/* -----------------------------------------------------------------------------
+** 函数名称: readSerialPort1
+** 功能描述: 从底层设备port端口读取count个数据
+** 输　  入: 设备号port、读取数据个数count
+** 输　  出: 读出的数据存储到pbuf中
+** 全局变量: 无
+** 调用模块: readTCP（）
+** 作　  者: Mrs.Ly
+** 日　  期: 2017.09.12
+** -----------------------------------------------------------------------------
+** 修 改 人:
+** 修改内容:
+** 日　  期:
+** ---------------------------------------------------------------------------*/
+int readSerialPort1(unsigned char *pbuf, unsigned short size)
+{
+    int len;
+    for(len = 0; len < size;len++)
+    {
+        if(ptr_101master->rear == ptr_101master->front)
+        {
+            break;
+        }
+        *(pbuf++) = DeleteQ(ptr_101master);
+    }
+    return len;
+}
 
+/* -----------------------------------------------------------------------------
+** 函数名称: writeSerialPort1
+** 功能描述: 将buff中count个数据写入ｐｏｒｔ端口中
+** 输　  入: 设备号port、读取数据个数count
+** 输　  出: 读出的数据存储到pbuf中
+** 全局变量: 无
+** 调用模块: readTCP（）
+** 作　  者: Mrs.Ly
+** 日　  期: 2017.09.12
+** -----------------------------------------------------------------------------
+** 修 改 人:
+** 修改内容:
+** 日　  期:
+** ---------------------------------------------------------------------------*/
+int writeSerialPort1(const char *data, int sz)
+{
+    int nwrite = write(getSerialFd(),data,sz);
+    if(nwrite < 0)
+    {
+        printf("write error serial fd");
+    }
+    return nwrite;
+}
 //从主站中读取数据
+/* -----------------------------------------------------------------------------
+** 函数名称: Readx
+** 功能描述: 从设备port读取count个数据
+** 输　  入: 设备号port、读取数据个数count
+** 输　  出: 读出的数据存储到pbuf中
+** 全局变量: 无
+** 调用模块: readTCP（）
+** 作　  者: Mrs.Ly
+** 日　  期: 2017.09.12
+** -----------------------------------------------------------------------------
+** 修 改 人:
+** 修改内容:
+** 日　  期:
+** ---------------------------------------------------------------------------*/
 int Readx(unsigned char *pbuf, unsigned short count, unsigned char port)
 {
     unsigned short len = 0;
 
     switch (port)
     {
+        case MASTER_101_DEV0:
+            len = readSerialPort1(pbuf, count);
+            break;
         case 1:
             len = readTCP(pbuf, count);
             break;
@@ -158,6 +228,9 @@ int WriteX(unsigned char *pbuf, unsigned short count, unsigned char port)
 
     switch (port)
     {
+        case MASTER_101_DEV0:
+            len = writeSerialPort1(pbuf, count);
+            break;
         case 1:
             len = writeTCP(pbuf, count);
             break;

@@ -98,18 +98,10 @@ bool SerialPort::openPort(const char *portName)
  *parameter:char buff[], int size
  *describe:read serial data
  -------------------------------------------------*/
-int SerialPort::readPort(char buff[], int size)
+int SerialPort::readPort(unsigned char buff[], int size)
 {
-    int loopTime = 5;
-    int readNum = 0;
-    while(loopTime--)
-    {
-        serialData_ = read(fd_,buff,size);
-//        qDebug() << serialData_ << endl;
-        readNum++;
+    return read(fd_,buff,size);
 
-    }
-    return readNum;
 }
 
 /*-------------------------------------------------

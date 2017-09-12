@@ -44,15 +44,13 @@ extern "C"{
 /* Enum ----------------------------------------------------------------------*/
 typedef enum
 {
-    DLT634_5104_NET1_ID = 0 //104内部网络端口１
+    DLT634_5104_NET1_ID = 0
 }DLT634_5104_DISK;
 
 typedef enum
 {
 
-    NET1_ID = 0,     //数据缓存识别网络端口１
-    NULL_ID,
-    USART6_ID
+    NET1_ID = 0    //数据缓存识别网络端口１
 
 
 }DEVICE_ID;
@@ -82,6 +80,7 @@ extern void DLT634_5104_SLAVE_R_FEvent(unsigned char pdrv, unsigned char *pbuf);
 extern void DLT634_5104_SlaveInit();
 extern int getClientFd();
 extern void setClientFd(int);
+
 
 #ifdef __cplusplus
 }
