@@ -41,10 +41,10 @@ extern "C"{
 
 /* PUBLIC VARIABLE -----------------------------------------------------------*/
 
-typedef enum
-{
-    MASTER_101_DEV0 = 0
-}DLT634_5101_DISK;
+//typedef enum
+//{
+//    MASTER_101_DEV0 = 0 //底层串口设备０
+//}DLT634_5101_DISK;
 
 
 /* PUBLIC FUNCTION DECLARATION -----------------------------------------------*/

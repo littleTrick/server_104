@@ -32,7 +32,7 @@
 /* PUBLIC VARIABLE -----------------------------------------------------------*/
 enum
 {
-    DLT634_5101MASTER_DISK0 = 0,
+    DLT634_5101MASTER_DISK0 = 0, //the first 101 master programm
     _DLT634_5101MASTER_VOLUMES
 };
 /* Number of volumes (logical drives) to be used.*/

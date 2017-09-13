@@ -12,6 +12,17 @@ extern "C"{
 #define  TRUE      !FALSE
 #endif
 
+//定义设备编号
+typedef enum
+{
+    NULL_ID = 0,    //数据缓存区
+    NET1_ID = 1,    //网口１
+    NET2_ID = 2,    //网口２
+    USART1_ID = 3,  //串口设备１
+    N25QXXX_ID = 4, //文件存储
+    MAX_DEV_MUN
+}DEV_ID;
+
 /* TI类型标识 ******************************************************************/
 //监视方向过程信息
 #define   _DATABASE_M_SP_NA_1   1            // 单点信息
@@ -74,7 +85,7 @@ extern "C"{
 #define  _DATABASE_NVASENDNUM      2
 #define  _DATABASE_EVENTLIMIT      32
 
-#define  MAX_DEV_MUN               2            //最大外接设备数量
+#define  MAX_DEV_MUN               5            //最大外接设备数量
 
 #define  MaxSize                   2048         //存储主站的循环队列
 

@@ -225,7 +225,7 @@ void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
     switch(pdrv)
     {
         case 0:
-            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|0;//TRANSIT_DEV0;
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;//TRANSIT_DEV0;
             DBWrite_YX(pbuf);
             break;
         default:
@@ -252,18 +252,18 @@ void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/Array(Value)
 void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf)//写YCDATA
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			if(pbuf[3]&0x80)//SQ==0为变化遥测
-//			{DBWrite_YC(pbuf);}
-//			else
-//			{DBWrite_NVA(pbuf);}
-//			break;
-//		default:
-//			break;
-//	}
+	switch(pdrv)
+	{
+		case 0:
+			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;
+			if(pbuf[3]&0x80)//SQ==0为变化遥测
+			{DBWrite_YC(pbuf);}
+			else
+			{DBWrite_NVA(pbuf);}
+			break;
+		default:
+			break;
+	}
 }
 
 /* -----------------------------------------------------------------------------
@@ -284,15 +284,15 @@ void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf)//写YCDATA
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array(InfoAddr_L/InfoAddr_H/Value/CP56Time2a)
 void DLT634_5101_MASTER_W_SOE(uint8_t pdrv, uint8_t *pbuf)//写soe
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			DBWrite_SOE(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+	switch(pdrv)
+	{
+		case 0:
+			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;
+			DBWrite_SOE(pbuf);
+			break;
+		default:
+			break;
+	}
 }
 
 /* -----------------------------------------------------------------------------

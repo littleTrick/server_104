@@ -81,7 +81,8 @@ uint16_t DLT634_5104_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count
             if(len != 0)
             {
             printf("the pbuf in Writex is ");
-            for(int i = 0;i < len;i++)
+            int i;
+            for(i = 0;i < len;i++)
                 printf("%02x ",*(pbuf++));
             printf("\n");
             }
@@ -119,7 +120,8 @@ uint16_t DLT634_5104_SLAVE_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
             if(len != 0)
             {
             printf("the pbuf in Readx is ");
-            for(int i = 0;i < len;i++)
+            int i;
+            for(i = 0;i < len;i++)
                 printf("%02x ",*(pbuf++));
             printf("\n");
             }
@@ -221,7 +223,7 @@ void DLT634_5104_SLAVE_HandleCtrlProcess(uint8_t pdrv, uint8_t *pbuf)
     switch (pdrv)
     {
         case 0:
-            buf[1] = (DLT634_5104Slave_Pad[pdrv].Port<<4)|NET1_ID;
+            buf[1] = (DLT634_5104Slave_Pad[pdrv].Port<<4)|USART1_ID;// send to serial 1
             DBSend(buf);
         break;
         case 1:
@@ -260,7 +262,7 @@ void DLT634_5104_SLAVE_SYNProcess(uint8_t pdrv, uint8_t *pbuf)
     switch (pdrv)
     {
     case 0:
-        buf[1] = (DLT634_5104Slave_Pad[pdrv].Port << 4)|NET1_ID;
+        buf[1] = (DLT634_5104Slave_Pad[pdrv].Port << 4)|USART1_ID;//send to serail 1
         DBSend(buf);
     break;
     case 1:
@@ -631,7 +633,7 @@ void DLT634_5104_ParaInit(BYTE pdrv)
 //                   (OS_FLAGS)0,
 //                   (OS_ERR *)&err);
 
-    DLT634_5104Slave_Pad[pdrv].Port = 1;//NET1_ID; // device端口号
+    DLT634_5104Slave_Pad[pdrv].Port = NET1_ID; // device端口号
 
     DLT634_5104Slave_Pad[pdrv].LinkAddress = 0x01; // salve链路地址
     DLT634_5104Slave_Pad[pdrv].PubAddress  = 0x01; // 公共地址

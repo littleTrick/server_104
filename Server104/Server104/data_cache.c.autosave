@@ -243,18 +243,18 @@ void DBWrite_YX( uint8_t *pBuf)
 {
     uint32_t addr;
 
-    memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
-    DATABASE_RXTemp.status.Length =0x0A;
-    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
-    DATABASE_RXTemp.Head.VSQ =0x82;
-    DATABASE_RXTemp.Head.COT_L =0x14;
-    DATABASE_RXTemp.Head.COT_H =0x00;
-    DATABASE_RXTemp.Head.PubAddr_L =0x01;
-    DATABASE_RXTemp.Head.PubAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
-    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x00;
+//    memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
+//    DATABASE_RXTemp.status.Length =0x0A;
+//    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
+//    DATABASE_RXTemp.Head.VSQ =0x82;
+//    DATABASE_RXTemp.Head.COT_L =0x14;
+//    DATABASE_RXTemp.Head.COT_H =0x00;
+//    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+//    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
+//    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x00;
+//    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x00;
 
 
    // memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
