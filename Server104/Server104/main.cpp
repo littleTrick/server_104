@@ -1,6 +1,7 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -41,18 +42,18 @@ Queue *ptrQ = &circularQueue;
 
 void* thread_main_104slave(void*)
 {
-    unsigned char buff[255];
+    uint8_t buff[255];
     circularQueue.front = circularQueue.rear = 0;
 
     DLT634_5104_SlaveInit();//１０４从站初始化与定时启动
 
     DatabaseInit();//数据缓存区初始化
-    unsigned char pbuf = 'a';
-    uint8_t *pBuf = &pbuf;
-    DBWrite_YX(pBuf);
-    DBWrite_YC(pBuf);
-    DBWrite_SOE(pBuf);
-    DBWrite_NVA(pBuf);
+//    unsigned char pbuf = 'a';
+//    uint8_t *pBuf = &pbuf;
+//    DBWrite_YX(pBuf);
+//    DBWrite_YC(pBuf);
+//    DBWrite_SOE(pBuf);
+//    DBWrite_NVA(pBuf);
 
     TCPSocket tcpConnect;//网络套接字建立连接
     tcpConnect.setReuseAddr(true);
@@ -60,19 +61,20 @@ void* thread_main_104slave(void*)
     tcpConnect.listen();
     TCPSocket *client = tcpConnect.accept();
 
-    setClientFd(client->fd());
     if(client == NULL)
     {
         printf("client falied connect");
     }
     else
     {
+        setClientFd(client->fd());
         printf("client success connect fd = %d \n",client->fd());
         while(1)
         {
             int n = client->read(buff,255);
             if(n < 0)
             {
+                //#if _DEBUG
                 printf("read error client return number  = %d,errno = %d\n",(int)n,errno);
                 pthread_exit(NULL);
             }
@@ -116,12 +118,14 @@ Queue *ptr_101master = &circular_queue_101master;
 
 void* thread_main_101master(void*)
 {
-    unsigned char buff[255];
+    uint8_t buff[255];
     DLT634_5101_MasterTask();//101主站初始化与定时运行
     SerialPort serialPort;//建立串口链接
-    bool flag = serialPort.openPort("/dev/ttyS2");
-    serialPort.SetSerialAttribs(B115200,1);
-    serialPort.SetBlocking(0);
+    const char *portname = "/dev/ttyS2";
+    serialPort.fd_ = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+    bool flag = serialPort.fd_;
+    //bool flag = serialPort.openPort("/dev/ttyS2");
+    serialPort.SetSerialAttribs(B9600,0);//mo parity
     
     setSerialFd(serialPort.fd_);
     if(!flag)
@@ -135,7 +139,7 @@ void* thread_main_101master(void*)
             int n = serialPort.readPort(buff,255);
             if(n < 0)
             {
-                printf("read error client return number  = %d,errno = %d\n",(int)n,errno);
+                printf("read error from serial1 return number  = %d,errno = %d\n",(int)n,errno);
                 pthread_exit(NULL);
             }
             if(n == 0)
@@ -151,6 +155,7 @@ void* thread_main_101master(void*)
                 {
                     //printf("%02X ",buff[i]);
                     AddQ(ptr_101master,buff[i]);
+                    std::cout << buff[i];
                 }
                 printf("\n");
             }
@@ -164,26 +169,27 @@ void* thread_main_101master(void*)
 int main()
 {
     pthread_t ntid_104slave;
-    if (pthread_create(&ntid_104slave,NULL,thread_main_104slave,NULL))//创建１０４从站线程
+    if (pthread_create(&ntid_104slave, NULL, thread_main_104slave, NULL))//创建１０４从站线程
     {
         std::cout << "fail to create pthread" << std::endl;
     }
     else
     {
         std::cout << std::endl;
-        std::cout << "thread id=" << (unsigned int)ntid_104slave << std::endl;
+        std::cout << "thread id =" << (unsigned int)ntid_104slave << std::endl;
     }
 
     pthread_t ntid_101master;
-    if (pthread_create(&ntid_101master,NULL,thread_main_101master,NULL))//创建１０１主站线程
+    if (pthread_create(&ntid_101master, NULL, thread_main_101master, NULL))//创建１０１主站线程
     {
         std::cout << "fail to create pthread" <<std::endl;
     }
     else
     {
         std::cout << std::endl;
-        std::cout << "thread id=" << (unsigned int)ntid_101master << std::endl;
+        std::cout << "thread id =" << (unsigned int)ntid_101master << std::endl;
     }
+
     while(1)
     {
         sleep(30000);

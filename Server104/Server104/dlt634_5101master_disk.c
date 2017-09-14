@@ -225,7 +225,7 @@ void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
     switch(pdrv)
     {
         case 0:
-            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|0;//TRANSIT_DEV0;
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;//TRANSIT_DEV0;
             DBWrite_YX(pbuf);
             break;
         default:
@@ -252,18 +252,18 @@ void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/Array(Value)
 void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf)//写YCDATA
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			if(pbuf[3]&0x80)//SQ==0为变化遥测
-//			{DBWrite_YC(pbuf);}
-//			else
-//			{DBWrite_NVA(pbuf);}
-//			break;
-//		default:
-//			break;
-//	}
+    switch(pdrv)
+    {
+        case 0:
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;
+            if(pbuf[3]&0x80)//SQ==0为变化遥测
+            {DBWrite_YC(pbuf);}
+            else
+            {DBWrite_NVA(pbuf);}
+            break;
+        default:
+            break;
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -284,15 +284,15 @@ void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf)//写YCDATA
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array(InfoAddr_L/InfoAddr_H/Value/CP56Time2a)
 void DLT634_5101_MASTER_W_SOE(uint8_t pdrv, uint8_t *pbuf)//写soe
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			DBWrite_SOE(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+    switch(pdrv)
+    {
+        case 0:
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;
+            DBWrite_SOE(pbuf);
+            break;
+        default:
+            break;
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -400,22 +400,22 @@ void DLT634_5101_MASTER_F_SR(uint8_t pdrv, uint8_t *pbuf)//软件升级
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/
 uint8_t DLT634_5101_MASTER_C_REPLY(uint8_t drvid,uint8_t *pbuf)//其他设备回复
 {
-//	uint8_t res;
-//	switch(drvid)
-//	{
-//		case MASTER_101_DEV0:
-//			res = DLT634_5101_MASTER_REPLY(DLT634_5101MASTER_DISK0, pbuf);
-//			if(!res)//加载不成功，返回否定回答
-//			{
-//				pbuf[1] = ((pbuf[1]&0x0f)<<4)|((pbuf[1]&0xf0)>>4);
-//				pbuf[4] = 47;
-//				DBSend(pbuf);
-//			}
-//			break;
-//		default:
-//			break;
-//	}
-//	return(res);
+    uint8_t res;
+    switch(drvid)
+    {
+        case USART1_ID:
+            res = DLT634_5101_MASTER_REPLY(DLT634_5101MASTER_DISK0, pbuf);
+            if(!res)//加载不成功，返回否定回答
+            {
+                pbuf[1] = ((pbuf[1]&0x0f)<<4)|((pbuf[1]&0xf0)>>4);
+                pbuf[4] = 47;
+                DBSend(pbuf);
+            }
+            break;
+        default:
+            break;
+    }
+    return(res);
 }
 
 /* -----------------------------------------------------------------------------

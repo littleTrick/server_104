@@ -751,7 +751,7 @@ static void DLT634_5101_MASTER_AppProcess(uint8_t pdrv,uint8_t Control)
                 DLT634_5101Master_App[pdrv].LinkFlag |= _DLT634_5101MASTER_INITEND;
                 DLT634_5101Master_App[pdrv].LinkFlag |= _DLT634_5101MASTER_SENDABLE;
                 DLT634_5101Master_App[pdrv].Data1Flag |= _DLT634_5101MASTER_CALLALLDATA;
-                DLT634_5101Master_App[pdrv].Data1Flag |= _DLT634_5101MASTER_READTIME;
+//                DLT634_5101Master_App[pdrv].Data1Flag |= _DLT634_5101MASTER_READTIME;
                 DLT634_5101Master_App[pdrv].TimeOutTick_Devid = DLT634_5101Master_Pad[pdrv].DevidValue;
                 break;
             

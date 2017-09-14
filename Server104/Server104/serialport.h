@@ -7,7 +7,7 @@ public:
     SerialPort();
     int fd_;
 
-    void SetSerialAttribs(int speed, int parity);
+    int SetSerialAttribs(int speed, int parity);
     void SetBlocking(int shouldBlock);
     bool openPort(const char *portName);
     int readPort(unsigned char buff[], int size);

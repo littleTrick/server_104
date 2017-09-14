@@ -16,70 +16,45 @@ SerialPort::SerialPort()
  *parameter: baud rate,parity
  *describe: set serial basic infomation
  ----------------------------------------------*/
-void SerialPort::SetSerialAttribs(int speed, int parity)
-{
-    struct termios ttyS;
-    memset(&ttyS,0,sizeof(ttyS)); //set 0 to every bit of ttyS
-    if(tcgetattr(fd_,&ttyS) != 0)
-    {
-        printf("errors%d from tcgetattr",errno);
-    }
-
-    /**set baud rate of read and write**/
-    cfsetispeed(&ttyS,speed);
-    cfsetospeed(&ttyS,speed);
-
-    /****set data bit*********/
-    ttyS.c_cflag &= ~CSIZE; //shielding data bit
-    ttyS.c_cflag |= CS8;    //data bit is 8
-
-    ttyS.c_cflag &= ~CSTOPB; //stop bit is 1
-    ttyS.c_cflag &= ~(PARENB|PARODD); //no parity
-    ttyS.c_cflag |= parity;
-    ttyS.c_cflag &= ~CRTSCTS; //close harware control flow
-
-    ttyS.c_iflag &= ~IGNBRK; //disable break processing
-    ttyS.c_lflag = 0;        //disable local mode
-
-    ttyS.c_oflag = 0;         //disable output mode
-    ttyS.c_cc[VMIN] = 0;      //read dosn't block
-    ttyS.c_cc[VTIME] = 5;     //0.5s time out
-
-    ttyS.c_iflag &= ~(IXON | IXOFF | IXANY); //close flow control
-
-    ttyS.c_cflag |= (CLOCAL | CREAD); //ignore mode control
-
-    tcflush(fd_,TCIOFLUSH);   //clear io data of curent
-
-    if(tcsetattr(fd_,TCSANOW,&ttyS) != 0)  //save the settings
-    {
-        printf("error%d from tcsetattr",errno );
-    }
-
-}
-
-/*-------------------------------------------------
- *function name:SetBlock
- *parameter:0 should not Block,1 should Block
- *describe:user select should block or not
- -------------------------------------------------*/
-void SerialPort::SetBlocking(int shouldBlock)
+int SerialPort::SetSerialAttribs(int speed, int parity)
 {
     struct termios tty;
-    memset(&tty,0,sizeof(tty));
-    if(tcgetattr(fd_,&tty) != 0)
+    memset (&tty, 0, sizeof tty);
+    if (tcgetattr (fd_, &tty) != 0)
     {
-        printf("error%d from tggetattr",errno);
+        printf("error %d from tcgetattr", errno);
+        return -1;
     }
 
-    tty.c_cc[VMIN] = shouldBlock?1:0;
-    tty.c_cc[VTIME] = 5;
+    cfsetospeed (&tty, speed);
+    cfsetispeed (&tty, speed);
 
-    if(tcsetattr(fd_,TCSANOW,&tty) != 0)
+    tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
+    // disable IGNBRK for mismatched speed tests; otherwise receive break
+    // as \000 chars
+    tty.c_iflag &= ~IGNBRK;         // disable break processing
+    tty.c_lflag = 0;                // no signaling chars, no echo,
+    // no canonical processing
+    tty.c_oflag = 0;                // no remapping, no delays
+    tty.c_cc[VMIN]  = 1;            // read doesn't block
+    tty.c_cc[VTIME] = 50;            // 0.5 seconds read timeout
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
+
+    tty.c_cflag |= (CLOCAL | CREAD);// ignore modem controls,
+    // enable reading
+    tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
+    tty.c_cflag |= parity;
+    tty.c_cflag &= ~CSTOPB;
+    tty.c_cflag &= ~CRTSCTS;
+
+    if (tcsetattr (fd_, TCSANOW, &tty) != 0)
     {
-        printf("error%d setting term attributes",errno);
+        printf ("error %d from tcsetattr", errno);
+        return -1;
     }
+    return 0;
 }
+
 
 bool SerialPort::openPort(const char *portName)
 {
@@ -101,7 +76,6 @@ bool SerialPort::openPort(const char *portName)
 int SerialPort::readPort(unsigned char buff[], int size)
 {
     return read(fd_,buff,size);
-
 }
 
 /*-------------------------------------------------
@@ -111,16 +85,7 @@ int SerialPort::readPort(unsigned char buff[], int size)
  -------------------------------------------------*/
 int SerialPort::writePort(char buff[], int size)
 {
-    int writeNum = write(fd_,buff,size);
-    if(writeNum != -1)
-    {
-        printf("write data to serial successfully ! and the number is :%d \n",writeNum);
-    }
-    else
-    {
-        printf("falied to write data to serial ! and the number is :%d \n",writeNum);
-    }
-    return writeNum;
+    return write(fd_,buff,size);
 }
 
 void SerialPort::closePort()

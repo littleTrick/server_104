@@ -253,14 +253,14 @@ void DBWrite_YX( uint8_t *pBuf)
     DATABASE_RXTemp.Head.PubAddr_H =0x00;
     DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
     DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x00;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x01;
+    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x01;
 
 
-   // memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
-   // switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
-    //{
-    //case 0:
+    //memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+//    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+//    {
+//    case 0:
         switch (DATABASE_RXTemp.Head.TypeID)
         {
         case _DATABASE_M_SP_NA_1:
@@ -283,10 +283,10 @@ void DBWrite_YX( uint8_t *pBuf)
         default:
             break;
         }
-    //    break;
-   // default:
-     //   break;
-   // }
+//        break;
+//    default:
+//        break;
+//    }
 }
 
 //读取总召唤遥信报文,信息地址为addr+num,存储到pbuf指向的地方,重组１０４报文
@@ -315,24 +315,24 @@ void DBWrite_YC(uint8_t *pBuf)
     uint32_t addr;
 
     memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
-    DATABASE_RXTemp.status.Length =0x0C;
-    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
-    DATABASE_RXTemp.Head.VSQ =0x82;
-    DATABASE_RXTemp.Head.COT_L =0x14;
-    DATABASE_RXTemp.Head.COT_H =0x00;
-    DATABASE_RXTemp.Head.PubAddr_L =0x01;
-    DATABASE_RXTemp.Head.PubAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_L =0x05;
-    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_H =0x40;
-    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].Value =0x11;
-    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].QDS = 0x00;
-    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].Value =0x11;
-    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].QDS = 0x00;
+//    DATABASE_RXTemp.status.Length =0x0C;
+//    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+//    DATABASE_RXTemp.Head.VSQ =0x82;
+//    DATABASE_RXTemp.Head.COT_L =0x14;
+//    DATABASE_RXTemp.Head.COT_H =0x00;
+//    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+//    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_L =0x05;
+//    DATABASE_RXTemp.Data.C_13.SQ1.InfoAddr_H =0x40;
+//    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].Value =0x11;
+//    DATABASE_RXTemp.Data.C_13.SQ1.Array[0].QDS = 0x00;
+//    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].Value =0x11;
+//    DATABASE_RXTemp.Data.C_13.SQ1.Array[1].QDS = 0x00;
 
-//	memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
-//	switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
-//	{
-        //case NULL_ID:
+    memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+    {
+        case NULL_ID:
             switch (DATABASE_RXTemp.Head.TypeID)
             {
             case _DATABASE_M_ME_NC_1:
@@ -354,10 +354,10 @@ void DBWrite_YC(uint8_t *pBuf)
                 break;
             default:
                 break;
-            //}
-//            break;
-//        default:
-//            break;
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -388,38 +388,38 @@ void DBWrite_SOE(uint8_t *pBuf)
     uint32_t addr;
 
     memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
-    DATABASE_RXTemp.status.Length = 0x1A;
-    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_TB_1;
-    DATABASE_RXTemp.Head.VSQ =0x02;//信息地址不连续
-    DATABASE_RXTemp.Head.COT_L =0x03;
-    DATABASE_RXTemp.Head.COT_H =0x00;
-    DATABASE_RXTemp.Head.PubAddr_L =0x01;
-    DATABASE_RXTemp.Head.PubAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].InfoAddr_L =0x05;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].Value =0x01;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Years = 0x11;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Months = 0x07;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.DayofWeekMonth = 0x07;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Hours = 0x07;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Minutes = 0x07;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Milliseconds_L = 0x07;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Milliseconds_H = 0x07;
+//    DATABASE_RXTemp.status.Length = 0x1A;
+//    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_TB_1;
+//    DATABASE_RXTemp.Head.VSQ =0x02;//信息地址不连续
+//    DATABASE_RXTemp.Head.COT_L =0x03;
+//    DATABASE_RXTemp.Head.COT_H =0x00;
+//    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+//    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].InfoAddr_L =0x05;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].InfoAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].Value =0x01;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Years = 0x11;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Months = 0x07;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.DayofWeekMonth = 0x07;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Hours = 0x07;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Minutes = 0x07;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Milliseconds_L = 0x07;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[0].CP56Time2a.Milliseconds_H = 0x07;
 
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].InfoAddr_L =0x10;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].Value =0x02;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Years = 0x11;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Months = 0x08;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.DayofWeekMonth = 0x08;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Hours = 0x08;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Minutes = 0x08;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Milliseconds_L = 0x08;
-    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Milliseconds_H = 0x08;
-    //memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
-    //switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
-    //{
-       // case NULL_ID:
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].InfoAddr_L =0x10;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].InfoAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].Value =0x02;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Years = 0x11;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Months = 0x08;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.DayofWeekMonth = 0x08;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Hours = 0x08;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Minutes = 0x08;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Milliseconds_L = 0x08;
+//    DATABASE_RXTemp.Data.C_30.SQ0.Array[1].CP56Time2a.Milliseconds_H = 0x08;
+    memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+    {
+        case NULL_ID:
             switch (DATABASE_RXTemp.Head.TypeID)
             {
             case _DATABASE_M_SP_TB_1:
@@ -460,10 +460,10 @@ void DBWrite_SOE(uint8_t *pBuf)
             default:
                 break;
             }
-//            break;
-//        default:
-//            break;
-//	}
+            break;
+        default:
+            break;
+    }
 }
 
 //判断ＳＯＥ是否有数值
@@ -511,28 +511,28 @@ void DBWrite_NVA(uint8_t *pBuf)
     uint32_t addr;
 
     memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
-//	memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
-    DATABASE_RXTemp.status.Length = 0x14;
-    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
-    DATABASE_RXTemp.Head.VSQ =0x02;//信息地址不连续
-    DATABASE_RXTemp.Head.COT_L =0x03;
-    DATABASE_RXTemp.Head.COT_H =0x00;
-    DATABASE_RXTemp.Head.PubAddr_L =0x01;
-    DATABASE_RXTemp.Head.PubAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_L =0x09;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_H =0x40;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].Value = 6.6;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].QDS = 0x11;
+    memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+//    DATABASE_RXTemp.status.Length = 0x14;
+//    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_ME_NC_1;
+//    DATABASE_RXTemp.Head.VSQ =0x02;//信息地址不连续
+//    DATABASE_RXTemp.Head.COT_L =0x03;
+//    DATABASE_RXTemp.Head.COT_H =0x00;
+//    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+//    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_L =0x09;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].InfoAddr_H =0x40;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].Value = 6.6;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[0].QDS = 0x11;
 
 
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_L =0x10;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_H =0x40;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].Value = 8.8;
-    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].QDS = 0x11;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_L =0x10;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].InfoAddr_H =0x40;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].Value = 8.8;
+//    DATABASE_RXTemp.Data.C_13.SQ0.Array[1].QDS = 0x11;
 
-//    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
-//    {
-//        case NULL_ID:
+    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+    {
+        case NULL_ID:
             switch (DATABASE_RXTemp.Head.TypeID)
             {
             case _DATABASE_M_ME_NC_1:
@@ -564,10 +564,10 @@ void DBWrite_NVA(uint8_t *pBuf)
             default:
                 break;
             }
-//            break;
-//        default:
-//            break;
-//    }
+            break;
+        default:
+            break;
+    }
 }
 
 uint8_t DBCheck_NVA(uint8_t ID)
@@ -632,6 +632,8 @@ uint8_t DBSend(uint8_t *pbuf)
         case NET1_ID:
             res = DLT634_5104_SLAVE_C_REPLY(NET1_ID, pbuf);
             break;
+        case USART1_ID:
+            res = DLT634_5101_MASTER_C_REPLY(USART1_ID, pbuf);
 //        case USART6_ID:
 //			OSQPost((OS_Q *)&DLT101MasterApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO | OS_OPT_POST_NO_SCHED, &err);
 //			OSFlagPost (&DLT101MasterApp_Event, PARAFIX | FTXNEXT, OS_OPT_POST_FLAG_SET, &err);
