@@ -66,9 +66,14 @@ TCPSocket *TCPSocket::accept()
     }
 }
 
-int TCPSocket::read(unsigned char *buff, size_t size)
+int TCPSocket::read(char *buff, size_t size)
 {
     return ::read(fd_, buff, size);
+}
+
+int TCPSocket::write(const char *data, size_t len)
+{
+	return ::write(fd_, data, len);
 }
 
 void TCPSocket::setReuseAddr(bool b)

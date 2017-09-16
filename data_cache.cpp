@@ -4,6 +4,8 @@
 #include "dlt634_5104slave_disk.h"
 #include "dlt634_5101master_disk.h"
 #include "data_cache.h"
+#include "queue.h"
+#include "types.h"
 
 extern Queue *ptrQ;
 extern Queue *ptr_101master;
@@ -83,44 +85,17 @@ void DatabaseInit()
     }
 }
 
-void AddQ(Queue *ptrQ,unsigned char item)
-{
-    if((ptrQ->rear + 1) % MaxSize  == ptrQ->front)
-    {
-        printf("the queue is full");
-    }
-    else
-    {
-        ptrQ->rear = (ptrQ->rear + 1) % MaxSize;
-        ptrQ->data[ptrQ->rear] = item;
-
-    }
-}
-
-unsigned char DeleteQ(Queue *ptrQ)
-{
-    ptrQ->front = (ptrQ->front + 1) % MaxSize;
-    return ptrQ->data[ptrQ->front];
-}
-
 //从网络读取数据,从从循环队列中读取数据
 int readTCP(unsigned char *pbuf, unsigned short size)
 {
     int len;
-    //if(size)
-    //{
-    //printf(" write to loop queque successfully :");
     for(len = 0; len < size;len++)
     {
-        if(ptrQ->rear == ptrQ->front)
-        {
-            break;
-        }
-        *(pbuf++) = DeleteQ(ptrQ);
+		if (ptrQ->Empty()) 
+			break;
+        *(pbuf++) = ptrQ->Dequeue();
         printf("%02X ",*pbuf);
     }
-    //printf("\n");
-   // }
     return len;
 }
 
@@ -172,11 +147,12 @@ int readSerialPort1(unsigned char *pbuf, unsigned short size)
     //printf("the queque from serial port is :");
     for(len = 0; len < size;len++)
     {
-        if(ptr_101master->rear == ptr_101master->front)
-        {
-            break;
-        }
-        *(pbuf++) = DeleteQ(ptr_101master);
+		if (ptr_101master->Empty())
+		{
+			printf("%s:%d the 101 queue is empty\n", __func__, __LINE__);
+			break;
+		}
+        *(pbuf++) = ptr_101master->Dequeue();
       //  printf("%02X ",*pbuf);
     }
     return len;
@@ -245,17 +221,17 @@ int Readx(unsigned char *pbuf, unsigned short count, unsigned char port)
 }
 
 //写入数据到外设中
-int WriteX(const char *pbuf, unsigned short count, unsigned char port)
+int WriteX(uint8_t *pbuf, unsigned short count, unsigned char port)
 {
     unsigned short len = 0;
 
     switch (port)
     {
         case USART1_ID:
-            len = writeSerialPort1(pbuf, count);
+            len = writeSerialPort1((const char*)pbuf, count);
             break;
         case NET1_ID:
-            len = writeTCP(pbuf, count);
+            len = writeTCP((const char*)pbuf, count);
             break;
     }
     return len;

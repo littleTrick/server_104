@@ -1817,7 +1817,7 @@ void DLT634_5104_SLAVE_ReadMISIData(BYTE pdrv, BYTE Flag)
     DLT634_5104_SLAVE_SearchValidFrame(pdrv); 
 }
 
-  void DLT634_5104_SLAVE_Clock(BYTE pdrv)
+void DLT634_5104_SLAVE_Clock(BYTE pdrv)
 {
 	  DLT104SlaveLink[pdrv].ClockCounter++;
 	  if (DLT104SlaveLink[pdrv].ClockCounter >= DLT634_5104Slave_Pad[pdrv].ClockTimers)

@@ -25,12 +25,13 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-
+#include <stdio.h>
 #include <sys/time.h>
 #include <signal.h>
 #include "dlt634_5101master_disk.h"
 #include "dlt634_5101master_app.h"
 #include "data_cache.h"
+#include "types.h"
 
 /* PRIVATE VARIABLES ----------------------------------------------------------*/
 /* PUBLIC VARIABLES ----------------------------------------------------------*/
@@ -222,13 +223,12 @@ void DLT634_5101_MASTER_C_SR(uint8_t pdrv, uint8_t *pbuf)//定值参数
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/Array(Value)
 void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf)//写YXDATA
 { 
-    printf("****************************** \n");
-    printf("DBWrite_YX　ｉｓ used successful! \n");
+    printf("DBWrite_YX　is used successful! \n");
 
     switch(pdrv)
     {
         case 0:
-            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|NULL_ID;//TRANSIT_DEV0;
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4) | NULL_ID;//TRANSIT_DEV0;
             DBWrite_YX(pbuf);
             break;
         default:
@@ -497,18 +497,6 @@ void start()
 void DLT634_5101_MasterTask()
 {	
 	DLT634_5101_MASTER_INIT(DLT634_5101MASTER_DISK0);
-
-    signal(SIGALRM,start);
-    struct timeval tv_interval;
-    tv_interval.tv_sec = 0;
-    tv_interval.tv_usec = 100000;//100ms
-    struct timeval tv_value;
-    tv_value.tv_sec = 0;
-    tv_value.tv_usec = 100000;//100ms
-    struct itimerval it;
-    it.it_interval = tv_interval;
-    it.it_value = tv_value;
-    setitimer(ITIMER_REAL, &it ,NULL);
 }
 
 /* END OF FILE ---------------------------------------------------------------*/

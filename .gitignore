@@ -1,3 +1,5 @@
 build-Server104-Local_PC-Debug/
 build-Server104-Local_PC-Release/
 *.o
+*.d
+

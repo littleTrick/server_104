@@ -28,12 +28,14 @@
 
 //#if APP_TASK_DLT634_5104_SLAVE_CFG
 #include <stdio.h>
+#include <pthread.h>
 #include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
 #include "data_cache.h"
 #include "dlt634_5104slave_app.h"
 #include "dlt634_5104slave_disk.h"
+#include "types.h"
 
 static int s_clientfd;
 /* PRIVATE VARIABLES ----------------------------------------------------------*/
@@ -529,8 +531,6 @@ void DLT634_5104_SLAVE_R_FEvent(uint8_t pdrv, uint8_t *pbuf)//读FEvent
 bool DLT634_5104_SLAVE_C_REPLY(uint8_t drvid, uint8_t *pbuf)//其他设备回复
 { 
     uint8_t buf[256];
-    uint8_t i;
-    uint8_t temp1,temp2;
 
     memset(buf,0,sizeof(buf));
     memcpy(buf,pbuf,pbuf[0]);
@@ -673,7 +673,7 @@ void DLT634_5104_ParaInit(BYTE pdrv)
 ** ---------------------------------------------------------------------------*/
 void handle()
 {
-    printf("handle(): thread id:%ul", (unsigned long)pthread_self());
+    printf("handle(): thread id:%lu\n", (unsigned long)pthread_self());
     DLT634_5104_SLAVE_Clock(0);
 }
 /* -----------------------------------------------------------------------------
@@ -699,22 +699,7 @@ void DLT634_5104_SlaveInit()
 
     DLT634_5104_ParaInit(pdrv);
 
-    if (!DLT634_5104_SLAVE_AppInit(pdrv))
-    {
-        return;
-    }
-
-    signal(SIGALRM,handle);
-    struct timeval tv_interval;
-    tv_interval.tv_sec = 0;
-    tv_interval.tv_usec = 10000;
-    struct timeval tv_value;
-    tv_value.tv_sec = 0;
-    tv_value.tv_usec = 10000;
-    struct itimerval it;
-    it.it_interval = tv_interval;
-    it.it_value = tv_value;
-    setitimer(ITIMER_REAL, &it ,NULL);
+    DLT634_5104_SLAVE_AppInit(pdrv);
 }
 
 //#endif /* END DLT634_5104_SLAVE_CFG */

@@ -89,19 +89,11 @@ typedef enum
 
 #define  MaxSize                   2048         //存储主站的循环队列
 
-typedef struct{
-    uint8_t data[MaxSize];
-    int rear;
-    int front;
-} Queue;
-
-void AddQ(Queue *ptrQ,uint8_t item);
-uint8_t DeleteQ(Queue *ptrQ);
 //主站的读写、链接处理
 
 extern void DLT634_5104_SlaveInit();
 extern int Readx(uint8_t *pbuf, uint16_t count, uint8_t port);
-extern int WriteX(const char *pbuf, uint16_t count,uint8_t port);
+extern int WriteX(uint8_t *pbuf, uint16_t count,uint8_t port);
 extern void ShutDown();
 
 extern void DatabaseInit();

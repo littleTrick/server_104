@@ -12,8 +12,8 @@ public:
     bool bind(const std::string &host, int port);
     bool listen();
     TCPSocket *accept();
-    int read(unsigned char *buff, size_t size);
-
+    int read(char *buff, size_t size);
+	int write(const char *buff, size_t size);
     void setReuseAddr(bool b);
     int fd()const
     {
