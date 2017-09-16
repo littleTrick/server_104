@@ -119,11 +119,12 @@ void* thread_main_101master(void*)
     uint8_t buff[255];
     DLT634_5101_MasterTask();//101主站初始化与定时运行
     SerialPort serialPort;//建立串口链接
-    const char *portname = "/dev/ttyS2";
-    serialPort.fd_ = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+    //const char *portname = "/dev/ttyS2";
+//    serialPort.fd_ = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+    serialPort.fd_= open("/tmp/fack_serial", O_RDWR);
     bool flag = serialPort.fd_;
     //bool flag = serialPort.openPort("/dev/ttyS2");
-    serialPort.SetSerialAttribs(B9600,0);//mo parity
+    //serialPort.SetSerialAttribs(B9600,0);//mo parity
     
     setSerialFd(serialPort.fd_);
     if(!flag)
@@ -134,7 +135,8 @@ void* thread_main_101master(void*)
     else
     {   while(1)
         {
-            int n = serialPort.readPort(buff,255);
+            //int n = serialPort.readPort(buff,255);
+            int n = read(serialPort.fd_, buff, 255);
             if(n < 0)
             {
                 printf("read error from serial1 return number  = %d,errno = %d\n",(int)n,errno);
