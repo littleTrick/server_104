@@ -1,5 +1,7 @@
 build-Server104-Local_PC-Debug/
 build-Server104-Local_PC-Release/
+tags
+*.swp
 *.o
 *.d
 
