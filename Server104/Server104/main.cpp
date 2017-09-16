@@ -42,18 +42,13 @@ Queue *ptrQ = &circularQueue;
 
 void* thread_main_104slave(void*)
 {
+    printf("104 thread id %lu", (unsigned long)pthread_self());
     uint8_t buff[255];
     circularQueue.front = circularQueue.rear = 0;
 
     DLT634_5104_SlaveInit();//１０４从站初始化与定时启动
 
     DatabaseInit();//数据缓存区初始化
-//    unsigned char pbuf = 'a';
-//    uint8_t *pBuf = &pbuf;
-//    DBWrite_YX(pBuf);
-//    DBWrite_YC(pBuf);
-//    DBWrite_SOE(pBuf);
-//    DBWrite_NVA(pBuf);
 
     TCPSocket tcpConnect;//网络套接字建立连接
     tcpConnect.setReuseAddr(true);
@@ -85,12 +80,13 @@ void* thread_main_104slave(void*)
             }
             else
             {
-                printf("104 salve\n");
-                printf("%d \n",(int)n);
+                printf("----------------------- \n");
+                printf("104 salve %d \n",n);
                 for(int i = 0;i < n;i++)
                 {
-                    //printf("%02X ",buff[i]);
+                    printf("%02X ",buff[i]);
                     AddQ(ptrQ,buff[i]);
+                    //printf("%02X ",circularQueue.data[i]);已证实数据已进入循环队列
                 }
                 printf("\n");
             }
@@ -118,6 +114,8 @@ Queue *ptr_101master = &circular_queue_101master;
 
 void* thread_main_101master(void*)
 {
+    printf("101 thread id %lu\n",(unsigned long)pthread_self());
+    circular_queue_101master.front = circular_queue_101master.rear = 0;
     uint8_t buff[255];
     DLT634_5101_MasterTask();//101主站初始化与定时运行
     SerialPort serialPort;//建立串口链接
@@ -149,13 +147,12 @@ void* thread_main_101master(void*)
             }
             else
             {
-                printf("101salve \n");
-                printf("%d \n",(int)n);
+                printf("*******************************\n");
+                printf("101 master numberis : %d \n",n);
                 for(int i= 0;i < n;i++)
                 {
-                    //printf("%02X ",buff[i]);
+                    printf("%02X ",buff[i]);
                     AddQ(ptr_101master,buff[i]);
-                    std::cout << buff[i];
                 }
                 printf("\n");
             }
@@ -168,6 +165,7 @@ void* thread_main_101master(void*)
 
 int main()
 {
+    void *tret;
     pthread_t ntid_104slave;
     if (pthread_create(&ntid_104slave, NULL, thread_main_104slave, NULL))//创建１０４从站线程
     {
@@ -190,11 +188,15 @@ int main()
         std::cout << "thread id =" << (unsigned int)ntid_101master << std::endl;
     }
 
-    while(1)
-    {
-        sleep(30000);
-    }
+    pthread_join(ntid_104slave,&tret);//阻塞至线程结束
+    pthread_join(ntid_101master,&tret);
 
-    return 0;
+    exit(0);
+//    while(1)
+//    {
+//        sleep(30000);
+//    }
+
+//    return 0;
 }
 

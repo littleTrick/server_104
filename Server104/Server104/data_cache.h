@@ -101,7 +101,7 @@ uint8_t DeleteQ(Queue *ptrQ);
 
 extern void DLT634_5104_SlaveInit();
 extern int Readx(uint8_t *pbuf, uint16_t count, uint8_t port);
-extern int WriteX(uint8_t *pbuf, uint16_t count,uint8_t port);
+extern int WriteX(const char *pbuf, uint16_t count,uint8_t port);
 extern void ShutDown();
 
 extern void DatabaseInit();

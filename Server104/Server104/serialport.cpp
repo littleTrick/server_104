@@ -33,6 +33,8 @@ int SerialPort::SetSerialAttribs(int speed, int parity)
     // disable IGNBRK for mismatched speed tests; otherwise receive break
     // as \000 chars
     tty.c_iflag &= ~IGNBRK;         // disable break processing
+    tty.c_iflag &= ~ICRNL;          //close the 0D mapping to 0A
+    tty.c_iflag &= ~INLCR;          //close the 0A mapping to 0D
     tty.c_lflag = 0;                // no signaling chars, no echo,
     // no canonical processing
     tty.c_oflag = 0;                // no remapping, no delays

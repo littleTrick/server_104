@@ -6,13 +6,13 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -Wall -Wextra -Werror
 
 SOURCES += main.cpp \
-    dlt634_5104slave_disk.c \
-    dlt634_5104slave_app.c \
-    data_cache.c \
     tcpsocket.cpp \
-    dlt634_5101master_disk.c \
+    serialport.cpp \
     dlt634_5101master_app.c \
-    serialport.cpp
+    dlt634_5101master_disk.c \
+    dlt634_5104slave_app.c \
+    dlt634_5104slave_disk.c \
+    data_cache.c
 
 HEADERS += \
     logging.h \

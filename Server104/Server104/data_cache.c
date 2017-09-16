@@ -103,10 +103,13 @@ unsigned char DeleteQ(Queue *ptrQ)
     return ptrQ->data[ptrQ->front];
 }
 
-//从网络读取数据
+//从网络读取数据,从从循环队列中读取数据
 int readTCP(unsigned char *pbuf, unsigned short size)
 {
     int len;
+    //if(size)
+    //{
+    //printf(" write to loop queque successfully :");
     for(len = 0; len < size;len++)
     {
         if(ptrQ->rear == ptrQ->front)
@@ -114,18 +117,28 @@ int readTCP(unsigned char *pbuf, unsigned short size)
             break;
         }
         *(pbuf++) = DeleteQ(ptrQ);
+        printf("%02X ",*pbuf);
     }
+    //printf("\n");
+   // }
     return len;
 }
 
 //网络写数
 int writeTCP(const char *data, int sz)
 {
+    printf("I am ready to write to TCP port, and the message is : \n");
     ssize_t nwrite = write(getClientFd(),data,sz);
     if(nwrite < 0)
     {
         printf("write error clint fd");
     }
+    int i ;
+    for(i= 0;i < nwrite;i++)
+    {
+        printf("%02X ",data[i]);
+    }
+    printf("\n");
     return nwrite;
 }
 
@@ -156,6 +169,7 @@ void ShutDown()
 int readSerialPort1(unsigned char *pbuf, unsigned short size)
 {
     int len;
+    //printf("the queque from serial port is :");
     for(len = 0; len < size;len++)
     {
         if(ptr_101master->rear == ptr_101master->front)
@@ -163,6 +177,7 @@ int readSerialPort1(unsigned char *pbuf, unsigned short size)
             break;
         }
         *(pbuf++) = DeleteQ(ptr_101master);
+      //  printf("%02X ",*pbuf);
     }
     return len;
 }
@@ -183,11 +198,19 @@ int readSerialPort1(unsigned char *pbuf, unsigned short size)
 ** ---------------------------------------------------------------------------*/
 int writeSerialPort1(const char *data, int sz)
 {
+    printf("I am ready to write to serial port, and the message is : \n");
     int nwrite = write(getSerialFd(),data,sz);
     if(nwrite < 0)
     {
         printf("write error serial fd");
     }
+    int i ;
+    for(i= 0;i < nwrite;i++)
+    {
+        printf("%02X ",data[i]);
+    }
+    printf("\n");
+
     return nwrite;
 }
 //从主站中读取数据
@@ -221,8 +244,8 @@ int Readx(unsigned char *pbuf, unsigned short count, unsigned char port)
     return len;
 }
 
-//写入数据到主站中
-int WriteX(unsigned char *pbuf, unsigned short count, unsigned char port)
+//写入数据到外设中
+int WriteX(const char *pbuf, unsigned short count, unsigned char port)
 {
     unsigned short len = 0;
 
@@ -242,25 +265,23 @@ int WriteX(unsigned char *pbuf, unsigned short count, unsigned char port)
 void DBWrite_YX( uint8_t *pBuf)
 {
     uint32_t addr;
-
     memset(&DATABASE_RXTemp,0,sizeof(_DATABASE_PASDU));
-    DATABASE_RXTemp.status.Length =0x0A;
-    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
-    DATABASE_RXTemp.Head.VSQ =0x82;
-    DATABASE_RXTemp.Head.COT_L =0x14;
-    DATABASE_RXTemp.Head.COT_H =0x00;
-    DATABASE_RXTemp.Head.PubAddr_L =0x01;
-    DATABASE_RXTemp.Head.PubAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
-    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x01;
-    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x01;
+//    DATABASE_RXTemp.status.Length =0x0A;
+//    DATABASE_RXTemp.Head.TypeID = _DATABASE_M_SP_NA_1;
+//    DATABASE_RXTemp.Head.VSQ =0x82;
+//    DATABASE_RXTemp.Head.COT_L =0x14;
+//    DATABASE_RXTemp.Head.COT_H =0x00;
+//    DATABASE_RXTemp.Head.PubAddr_L =0x01;
+//    DATABASE_RXTemp.Head.PubAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_L =0x03;
+//    DATABASE_RXTemp.Data.C_1.SQ1.InfoAddr_H =0x00;
+//    DATABASE_RXTemp.Data.C_1.SQ1.Array[0].Value =0x01;
+//    DATABASE_RXTemp.Data.C_1.SQ1.Array[1].Value =0x01;
 
-
-    //memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
-//    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
-//    {
-//    case 0:
+    memcpy(&DATABASE_RXTemp,pBuf,pBuf[0]);
+    switch(DATABASE_RXTemp.status.symbol.Lock_ID&0x0f)
+    {
+    case 0:
         switch (DATABASE_RXTemp.Head.TypeID)
         {
         case _DATABASE_M_SP_NA_1:
@@ -283,10 +304,10 @@ void DBWrite_YX( uint8_t *pBuf)
         default:
             break;
         }
-//        break;
-//    default:
-//        break;
-//    }
+        break;
+    default:
+        break;
+    }
 }
 
 //读取总召唤遥信报文,信息地址为addr+num,存储到pbuf指向的地方,重组１０４报文
@@ -346,10 +367,10 @@ void DBWrite_YC(uint8_t *pBuf)
                         memcpy(&YCDB[addr - _DATABASE_YC_START_ADDR],&DATABASE_RXTemp.Data.C_13.SQ1.Array[0],(sizeof(YCSTRU)*(DATABASE_RXTemp.Head.VSQ&0x7f)));
                     }
                     printf("YCDB is :");
-                    int i;
-                    for(i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
-                        printf("%d ",YCDB[i]);
-                    printf("\n");
+//                    int i;
+//                    for(i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
+//                        printf("%d ",YCDB[i]);
+//                    printf("\n");
                 }
                 break;
             default:
@@ -554,10 +575,10 @@ void DBWrite_NVA(uint8_t *pBuf)
                             DBCFGS.NVA_IN = NVADB;
                         }
                         printf("nva is :");
-                        int i;
-                        for(i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
-                            printf("%d ",YCDB[i]);
-                        printf("\n");
+//                        int i;
+//                        for(i = 0; i < _DATABASE_YC_TOTAL_NUM; i++)
+//                            printf("%d ",YCDB[i]);
+//                        printf("\n");
                     }
                 }
                 break;
