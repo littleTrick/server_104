@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
@@ -80,4 +81,27 @@ void TCPSocket::setReuseAddr(bool b)
 {
     int value = b;
     setsockopt(fd_,SOL_SOCKET, SO_REUSEADDR, &value, sizeof(int));
+}
+
+void TCPSocket::setblocking(bool b)
+{
+    int flags, s;
+    flags = fcntl(fd_, F_GETFL, 0);
+    if (flags == -1)
+    {
+        perror ("fcntl");
+        abort();
+    }
+    
+    if (b)
+        flags |= O_NONBLOCK;
+    else
+        flags &= ~O_NONBLOCK;
+
+    s = fcntl (fd_, F_SETFL, flags);
+    if (s == -1)
+    {
+        perror ("fcntl");
+        abort();
+    }
 }

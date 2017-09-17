@@ -15,6 +15,7 @@ public:
     int read(char *buff, size_t size);
 	int write(const char *buff, size_t size);
     void setReuseAddr(bool b);
+    void setblocking(bool b);
     int fd()const
     {
         return fd_;

@@ -1,15 +1,15 @@
-CC = gcc
-CXX = g++
+CC = arm-none-linux-gnueabi-gcc
+CXX = arm-none-linux-gnueabi-g++
 CFLAGS   = -Wall -MMD
 CXXFLAGS = -Wall -MMD
 LDFLAGS  = -lpthread
 
 
-SRCS=$(shell ls *.c *.cpp)
+SRCS=$(shell ls *.c *.cpp *.cc)
 OBJS=$(addsuffix .o, $(basename $(SRCS)))
 TARGET=Server104
 
-all:Server104
+all:clean Server104
 
 Server104:$(OBJS)
 	@echo "Linking $@"
