@@ -25,7 +25,7 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef	_DLT634_5104SLAVE_LINK_H_
+#ifndef    _DLT634_5104SLAVE_LINK_H_
 #define _DLT634_5104SLAVE_LINK_H_
 
 #ifdef __cplusplus
@@ -60,7 +60,7 @@ struct DLT634_5104SLAVE_AppMsg
 struct DLT634_5104SLAVE_PAD
 {
     unsigned char   Port;            //端口
-	
+    
     unsigned char   CotSize;      // 传输原因字节长度
     unsigned char   PubAddrSize;  // 链路公共地址字节长度
     unsigned char   LinkAddrSize; // 链路地址占用字节  
@@ -76,11 +76,11 @@ struct DLT634_5104SLAVE_PAD
 
     unsigned short  YX_AllNum;    // 遥信总数
     unsigned short  YX_FirstAddr; // 遥信首地址
-    unsigned short  YX_FrameNum;	// 遥信每组数量
-    unsigned short  YC_AllNum;		// 遥测总数
+    unsigned short  YX_FrameNum;    // 遥信每组数量
+    unsigned short  YC_AllNum;        // 遥测总数
     unsigned short  YC_FirstAddr; // 遥信首地址
     unsigned short  YC_FrameNum;  // 遥测每组数量
-	
+    
     unsigned short  TickValue[4]; // IEC104 4个延时时钟
     unsigned long   ClockTimers;  // 调用超出次数，程序执行一次，控制运行周期
 };

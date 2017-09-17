@@ -61,7 +61,7 @@ void* thread_main_101(void *)
     char buff[255];
     while (1)
     {
-        int nevents = epoll_wait(epfd, events, 2, -1);
+        int nevents = epoll_wait(epfd, events, 1, 100);
         if (nevents < 0)
         {
             perror("epoll_wait");
@@ -69,8 +69,7 @@ void* thread_main_101(void *)
         }
         if (nevents == 0)
         {
-                printf("101 thread timeout %s\n", Timestamp::current().to_string());
-                DLT634_5101_MASTER_Clock(0);
+            DLT634_5101_MASTER_Clock(0);
             continue;
         }
 

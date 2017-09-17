@@ -19,54 +19,54 @@ public:
     static Timestamp current();
 
     Timestamp add(const Timestamp &rhs) const {
-		return add_microseconds(rhs.microseconds());
-	}
+        return add_microseconds(rhs.microseconds());
+    }
 
-	Timestamp add_seconds(int64_t s) const {
-		return add_microseconds(s * kMicroSecondsPerSecond);
-	}
+    Timestamp add_seconds(int64_t s) const {
+        return add_microseconds(s * kMicroSecondsPerSecond);
+    }
 
-	Timestamp add_microseconds(int64_t us) const {
-		return Timestamp(microseconds_ + us);
-	}
+    Timestamp add_microseconds(int64_t us) const {
+        return Timestamp(microseconds_ + us);
+    }
 
-	Timestamp operator + (const Timestamp &rhs) const { 
-		return add(rhs);
-	}
+    Timestamp operator + (const Timestamp &rhs) const { 
+        return add(rhs);
+    }
 
-	void operator += (const Timestamp &rhs) {
-		*this = *this + rhs;
-	}
+    void operator += (const Timestamp &rhs) {
+        *this = *this + rhs;
+    }
 
 private:
     static const char *kFormat;
 
     int64_t microseconds_; // micro seconds(us)
-	mutable char stime_[32];
+    mutable char stime_[32];
 };
 
 inline bool operator == (const Timestamp &lhs, const Timestamp &rhs) {
-	return lhs.microseconds() == rhs.microseconds();
+    return lhs.microseconds() == rhs.microseconds();
 }
 
 inline bool operator != (const Timestamp &lhs, const Timestamp &rhs) {
-	return !(lhs == rhs);
+    return !(lhs == rhs);
 }
 
 inline bool operator < (const Timestamp &lhs, const Timestamp &rhs) {
-	return lhs.microseconds() < rhs.microseconds();
+    return lhs.microseconds() < rhs.microseconds();
 }
 
 inline bool operator <= (const Timestamp &lhs, const Timestamp &rhs) {
-	return (lhs < rhs) || (lhs == rhs);
+    return (lhs < rhs) || (lhs == rhs);
 }
 
 inline bool operator > (const Timestamp &lhs, const Timestamp &rhs) {
-	return !(lhs <= rhs);
+    return !(lhs <= rhs);
 }
 
 inline bool operator >= (const Timestamp &lhs, const Timestamp &rhs) {
-	return (lhs > rhs) || (lhs == rhs);
+    return (lhs > rhs) || (lhs == rhs);
 }
 
 #endif 

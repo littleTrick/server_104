@@ -10,12 +10,12 @@
 
 MockSerialPort::~MockSerialPort()
 {
-	Close();
+    Close();
 }
 
 bool MockSerialPort::Open()
 {
-	return true;
+    return true;
 }
 
 int MockSerialPort::Read(char *buff, int size)
@@ -25,17 +25,17 @@ int MockSerialPort::Read(char *buff, int size)
 
 int MockSerialPort::Write(const char *buff, int size)
 {
-	char output[1024];
-	char *p = output;
-	char *e = p + sizeof(output);
-	p += snprintf(p, e-p, "[^^^^]");
-	for (int i = 0; i < size; i++) {
-		p += snprintf(p, e-p, "%02X", buff[i]);
-	}
-	p += snprintf(p, e-p, "<EOF>");
-	printf("%s\n", output);
+    char output[1024];
+    char *p = output;
+    char *e = p + sizeof(output);
+    p += snprintf(p, e-p, "[^^^^]");
+    for (int i = 0; i < size; i++) {
+        p += snprintf(p, e-p, "%02X", buff[i]);
+    }
+    p += snprintf(p, e-p, "<EOF>");
+    printf("%s\n", output);
 
-	return e - p;
+    return e - p;
 }
 
 void MockSerialPort::Close()
@@ -45,13 +45,13 @@ void MockSerialPort::Close()
 
 bool MockSerialPort::SetSpeed(int speed)
 {
-	(void)speed;
-	return true;
+    (void)speed;
+    return true;
 }
 
 bool MockSerialPort::SetParity(bool parity)
 {
-	(void)parity;
-	return true;
+    (void)parity;
+    return true;
 }
 

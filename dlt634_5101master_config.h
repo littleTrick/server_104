@@ -25,7 +25,7 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef	_DLT634_5101MASTER_CONFIG_H_
+#ifndef    _DLT634_5101MASTER_CONFIG_H_
 #define _DLT634_5101MASTER_CONFIG_H_
 
 
@@ -38,16 +38,16 @@ enum
 
 /* Number of volumes (logical drives) to be used.*/
 #define _DLT634_5101MASTER_LPDUSIZE  256
-#define _DLT634_5101MASTER_STOREDATA1NUM	20
+#define _DLT634_5101MASTER_STOREDATA1NUM    20
 
 #define  _DLT634_5101MASTER_NUMOF_MAXRETRY              0x03 // 默认DL/T634.5101_2002规约链路建立最多连接次数
 
 //LINK_FLAG
 #define  _DLT634_5101MASTER_REQSTATUS                   0x00000001
 #define  _DLT634_5101MASTER_RECONFIRM                   0x00000002
-#define  _DLT634_5101MASTER_ASKSTATUS               	0x00000004
-#define  _DLT634_5101MASTER_ASKRELINK               	0x00000008
-#define  _DLT634_5101MASTER_INITEND                 	0x00001000
+#define  _DLT634_5101MASTER_ASKSTATUS                   0x00000004
+#define  _DLT634_5101MASTER_ASKRELINK                   0x00000008
+#define  _DLT634_5101MASTER_INITEND                     0x00001000
 
 #define  _DLT634_5101MASTER_SENDABLE                   0x10000000// 平衡
 
@@ -60,9 +60,9 @@ enum
 //DL/T634.5101_2002规约
 
 /* 链路层帧修饰词***************************************************************/
-#define  _DLT634_5101MASTER_STARTCODE10	                     0x10	// 起始码
-#define  _DLT634_5101MASTER_STARTCODE68	                     0x68	// 起始码
-#define  _DLT634_5101MASTER_ENDCODE                           0x16	// 终止码
+#define  _DLT634_5101MASTER_STARTCODE10                         0x10    // 起始码
+#define  _DLT634_5101MASTER_STARTCODE68                         0x68    // 起始码
+#define  _DLT634_5101MASTER_ENDCODE                           0x16    // 终止码
 
 /* 链路层控制域定义************************************************************/
 //前4位
@@ -75,13 +75,13 @@ enum
 #define  _DLT634_5101MASTER_DIR                           0x80 // 传输方向位
 
 //链路层主站向子站传输功能码定义
-#define   _DLT634_5101MASTER_M_FUN0             	0           // 复位远方链路
+#define   _DLT634_5101MASTER_M_FUN0                 0           // 复位远方链路
 #define   _DLT634_5101MASTER_M_FUN2              2           // 测试链路功能 
-#define   _DLT634_5101MASTER_M_FUN3              3	          // 发送确认命令
-#define   _DLT634_5101MASTER_M_FUN4             	4	          // 发送不确认命令
-#define   _DLT634_5101MASTER_M_FUN8              8	          // 请求响应确定访问状态
-#define   _DLT634_5101MASTER_M_FUN9             	9	          // 召唤链路状态
-#define   _DLT634_5101MASTER_M_FUN10             10	        // 召唤1级用户数据 
+#define   _DLT634_5101MASTER_M_FUN3              3              // 发送确认命令
+#define   _DLT634_5101MASTER_M_FUN4                 4              // 发送不确认命令
+#define   _DLT634_5101MASTER_M_FUN8              8              // 请求响应确定访问状态
+#define   _DLT634_5101MASTER_M_FUN9                 9              // 召唤链路状态
+#define   _DLT634_5101MASTER_M_FUN10             10            // 召唤1级用户数据 
 #define   _DLT634_5101MASTER_M_FUN11             11          // 召唤2级用户数据
 
 //*链路层子站向主站传输功能码定义 

@@ -76,7 +76,7 @@ typedef enum
 #define  _DATABASE_YC_TOTAL_NUM     24
 
 /* 应用层信息体起始地址定义 ---------------------------------------------------*/
-#define  _DATABASE_YX_START_ADDR   0x0001	    // 遥信起始地址
+#define  _DATABASE_YX_START_ADDR   0x0001        // 遥信起始地址
 #define  _DATABASE_YC_START_ADDR   0x4001       // 遥测起始地址
 
 #define  _DATABASE_SOELIMIT        32
@@ -107,11 +107,11 @@ typedef struct
 {
     uint8_t Milliseconds_L;   // D7-D0
     uint8_t Milliseconds_H;   // D7-D0
-    uint8_t Minutes;			// D5-D0
-    uint8_t Hours;			// D4-D0
-    uint8_t DayofWeekMonth;	// WEEK(D7-D5)MONTH(D4-D0)
-    uint8_t Months;			// D3-D0
-    uint8_t Years;			// D6-D0
+    uint8_t Minutes;            // D5-D0
+    uint8_t Hours;            // D4-D0
+    uint8_t DayofWeekMonth;    // WEEK(D7-D5)MONTH(D4-D0)
+    uint8_t Months;            // D3-D0
+    uint8_t Years;            // D6-D0
 }_DATABASE_CP56Time2a_t;
 
 typedef struct
@@ -138,7 +138,7 @@ typedef struct
 
     union
        {
-           uint8_t	buff[256-sizeof(struct STATUS)-sizeof(struct HEAD)];
+           uint8_t    buff[256-sizeof(struct STATUS)-sizeof(struct HEAD)];
            struct
            {
                uint8_t InfoAddr_L;

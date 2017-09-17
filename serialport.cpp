@@ -10,15 +10,15 @@
 
 SerialPort::~SerialPort()
 {
-	Close();
+    Close();
 }
 
 bool SerialPort::Open()
 {
-	if (fd_ >= 0) {
-		printf("%s alreay opened\n", name_.c_str());
-		return false;
-	}
+    if (fd_ >= 0) {
+        printf("%s alreay opened\n", name_.c_str());
+        return false;
+    }
 
     fd_ = open(name_.c_str(), O_RDWR|O_NOCTTY|O_NDELAY);
     if(fd_ == -1)
@@ -27,13 +27,13 @@ bool SerialPort::Open()
         return false;
     }
 
-	// set default properties
+    // set default properties
     struct termios tty;
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (fd_, &tty) != 0)
     {
         printf("tcgetattr error: %s\n", strerror(errno));
-		return false;
+        return false;
     }
 
     cfsetospeed (&tty, kDefaultSpeed);
@@ -62,9 +62,9 @@ bool SerialPort::Open()
     if (tcsetattr (fd_, TCSANOW, &tty) != 0)
     {
         printf ("tcsetattr error: %s\n", strerror(errno));
-		return false;
+        return false;
     }
-	return true;
+    return true;
 }
 
 int SerialPort::Read(char *buff, int size)
@@ -79,10 +79,10 @@ int SerialPort::Write(const char *buff, int size)
 
 void SerialPort::Close()
 {
-	if (fd_ >= 0) {
-		printf("closing %s\n", name_.c_str());
-    	close(fd_);
-	}
+    if (fd_ >= 0) {
+        printf("closing %s\n", name_.c_str());
+        close(fd_);
+    }
 }
 
 bool SerialPort::SetSpeed(int speed)
@@ -91,7 +91,7 @@ bool SerialPort::SetSpeed(int speed)
     if (tcgetattr (fd_, &tty) != 0)
     {
         printf("error %d from tcgetattr", errno);
-		return false;
+        return false;
     }
 
     cfsetospeed (&tty, speed);
@@ -100,9 +100,9 @@ bool SerialPort::SetSpeed(int speed)
     if (tcsetattr (fd_, TCSANOW, &tty) != 0)
     {
         printf ("error %d from tcsetattr", errno);
-		return false;
+        return false;
     }
-	return true;
+    return true;
 }
 
 bool SerialPort::SetParity(bool parity)
@@ -111,7 +111,7 @@ bool SerialPort::SetParity(bool parity)
     if (tcgetattr (fd_, &tty) != 0)
     {
         printf("error %d from tcgetattr", errno);
-		return false;
+        return false;
     }
 
     tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
@@ -120,8 +120,8 @@ bool SerialPort::SetParity(bool parity)
     if (tcsetattr (fd_, TCSANOW, &tty) != 0)
     {
         printf ("error %d from tcsetattr", errno);
-		return false;
+        return false;
     }
-	return true;
+    return true;
 }
 

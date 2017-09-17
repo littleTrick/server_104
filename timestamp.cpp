@@ -7,10 +7,10 @@ const char *Timestamp::kFormat = "%4d-%02d-%02d %02d:%02d:%02d.%06d";
 const char *Timestamp::to_string() const
 {
     struct tm tm_time;
-	time_t seconds = microseconds_ / kMicroSecondsPerSecond;
+    time_t seconds = microseconds_ / kMicroSecondsPerSecond;
     localtime_r(&seconds, &tm_time);
     snprintf(stime_, sizeof stime_, 
-			 kFormat,
+             kFormat,
              tm_time.tm_year + 1900,
              tm_time.tm_mon + 1,
              tm_time.tm_mday,

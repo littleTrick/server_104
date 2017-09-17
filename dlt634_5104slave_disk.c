@@ -75,7 +75,7 @@ void setClientFd(int clientfd)
 uint16_t DLT634_5104_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
     uint16_t len = 0;
-	
+    
     switch (pdrv)
     {
         case 0:
@@ -89,10 +89,10 @@ uint16_t DLT634_5104_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count
             printf("\n");
             }
         break;
-		default:
+        default:
         break;
-	}
-	return(len);
+    }
+    return(len);
 }
 
 /* -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ uint16_t DLT634_5104_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count
 uint16_t DLT634_5104_SLAVE_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
     uint16_t len = 0;
-	
+    
     switch(pdrv)
     {
         case 0:
@@ -131,7 +131,7 @@ uint16_t DLT634_5104_SLAVE_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
         default:
         break;
     }
-	return(len);
+    return(len);
 }
 
 /* -----------------------------------------------------------------------------
@@ -254,13 +254,13 @@ void DLT634_5104_SLAVE_HandleCtrlProcess(uint8_t pdrv, uint8_t *pbuf)
 void DLT634_5104_SLAVE_SYNProcess(uint8_t pdrv, uint8_t *pbuf)
 {
     uint8_t buf[256];
-	
+    
     memset(buf,0,sizeof(buf));
     memcpy(buf,pbuf,pbuf[0]);
     memcpy(&buf[10],&pbuf[11],pbuf[0]-11);
     buf[0] -= 1;
     //转换成101,02版
-	
+    
     switch (pdrv)
     {
     case 0:
@@ -279,7 +279,7 @@ void DLT634_5104_SLAVE_ReadYxData(uint8_t pdrv, uint16_t addr, uint16_t num, uin
 { 
     uint8_t buf[256];
     memset(&buf,0,sizeof(buf));
-	
+    
     switch (pdrv)
     {
         case 0:
@@ -300,7 +300,7 @@ void DLT634_5104_SLAVE_ReadYcData(uint8_t pdrv, uint16_t addr, uint16_t num, uin
 { 
     uint8_t buf[256];
     memset(&buf,0,sizeof(buf));
-	
+    
     switch (pdrv)
     {
         case 0:
@@ -355,7 +355,7 @@ void DLT634_5104_SLAVE_FileHandleProcess(BYTE pdrv, BYTE *pbuf)
 //写定值//LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/SN_L/SN_H/PI//Array(InfoAddr_L/InfoAddr_M/InfoAddr_H/Tag/Len/Value)
 //固化定值//LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/SN1_L/SN1_H/PI
 void DLT634_5104_SLAVE_FixedParaProcess(BYTE pdrv, BYTE *pbuf)
-{	
+{    
 //    BYTE buf[256];
 //    BYTE i;
 //    BYTE temp1,temp2;
@@ -363,7 +363,7 @@ void DLT634_5104_SLAVE_FixedParaProcess(BYTE pdrv, BYTE *pbuf)
 //    memset(buf,0,sizeof(buf));
 //    memcpy(buf,pbuf,pbuf[0]);
 //    //转换成101,02版
-	
+    
 //    switch(pdrv)
 //    {
 //    case 0:
@@ -492,40 +492,40 @@ void DLT634_5104_SLAVE_R_NVA(uint8_t pdrv, uint8_t *pbuf)//读NVA
 
 uint8_t DLT634_5104_SLAVE_H_FEvent(uint8_t pdrv)//判断是否有FEvent
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			return(DBCheck_FEvent(DLT634_5104Slave_Pad[pdrv].Port));
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            return(DBCheck_FEvent(DLT634_5104Slave_Pad[pdrv].Port));
+//        default:
+//            break;
+//    }
     return(FALSE);
 }
 
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array
 void DLT634_5104_SLAVE_R_FEvent(uint8_t pdrv, uint8_t *pbuf)//读FEvent
 { 
-//	BYTE buf[256];
-//	BYTE i;
-//	BYTE temp1,temp2;
-	
-//	memset(buf,0,sizeof(buf));
-	
-//	switch(pdrv)
-//	{
-//		case 0:
-//			DBRead_FEvent(DLT634_5104Slave_Pad[pdrv].Port,buf);
-//			memcpy(pbuf,buf,buf[0]);
-//			for(temp1=0,temp2=0,i=0;i<buf[10+buf[7]*10];i++)
-//			{
-//				memcpy(&pbuf[10+buf[7]*10+5+7*i],&buf[10+buf[7]*10+4+6*i],buf[0]-10-buf[7]*10-4-6*i);
-//				pbuf[10+buf[7]*10+4+7*i] = 0;
-//			}
-//			pbuf[0] += buf[10+buf[7]*10];
-//			break;
-//		default:
-//			break;
-//	}
+//    BYTE buf[256];
+//    BYTE i;
+//    BYTE temp1,temp2;
+    
+//    memset(buf,0,sizeof(buf));
+    
+//    switch(pdrv)
+//    {
+//        case 0:
+//            DBRead_FEvent(DLT634_5104Slave_Pad[pdrv].Port,buf);
+//            memcpy(pbuf,buf,buf[0]);
+//            for(temp1=0,temp2=0,i=0;i<buf[10+buf[7]*10];i++)
+//            {
+//                memcpy(&pbuf[10+buf[7]*10+5+7*i],&buf[10+buf[7]*10+4+6*i],buf[0]-10-buf[7]*10-4-6*i);
+//                pbuf[10+buf[7]*10+4+7*i] = 0;
+//            }
+//            pbuf[0] += buf[10+buf[7]*10];
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 bool DLT634_5104_SLAVE_C_REPLY(uint8_t drvid, uint8_t *pbuf)//其他设备回复

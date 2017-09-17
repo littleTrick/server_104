@@ -9,18 +9,18 @@
 class MutexGuard
 {
 public:
-	MutexGuard(pthread_mutex_t *mutex) : mutex_(mutex)
-	{
-		pthread_mutex_lock(mutex_);
-	}
+    MutexGuard(pthread_mutex_t *mutex) : mutex_(mutex)
+    {
+        pthread_mutex_lock(mutex_);
+    }
 
-	~MutexGuard()
-	{
-		pthread_mutex_unlock(mutex_);
-	}
+    ~MutexGuard()
+    {
+        pthread_mutex_unlock(mutex_);
+    }
 
 private:
-	pthread_mutex_t *mutex_;
+    pthread_mutex_t *mutex_;
 };
 
 #endif

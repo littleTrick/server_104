@@ -91,8 +91,8 @@ int readTCP(unsigned char *pbuf, unsigned short size)
     int len;
     for(len = 0; len < size;len++)
     {
-		if (ptrQ->Empty()) 
-			break;
+        if (ptrQ->Empty()) 
+            break;
         *(pbuf++) = ptrQ->Dequeue();
         printf("%02X ",*pbuf);
     }
@@ -147,11 +147,10 @@ int readSerialPort1(unsigned char *pbuf, unsigned short size)
     //printf("the queque from serial port is :");
     for(len = 0; len < size;len++)
     {
-		if (ptr_101master->Empty())
-		{
-			printf("%s:%d the 101 queue is empty\n", __func__, __LINE__);
-			break;
-		}
+        if (ptr_101master->Empty())
+        {
+            break;
+        }
         *(pbuf++) = ptr_101master->Dequeue();
       //  printf("%02X ",*pbuf);
     }
@@ -632,14 +631,14 @@ uint8_t DBSend(uint8_t *pbuf)
         case USART1_ID:
             res = DLT634_5101_MASTER_C_REPLY(USART1_ID, pbuf);
 //        case USART6_ID:
-//			OSQPost((OS_Q *)&DLT101MasterApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO | OS_OPT_POST_NO_SCHED, &err);
-//			OSFlagPost (&DLT101MasterApp_Event, PARAFIX | FTXNEXT, OS_OPT_POST_FLAG_SET, &err);
+//            OSQPost((OS_Q *)&DLT101MasterApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO | OS_OPT_POST_NO_SCHED, &err);
+//            OSFlagPost (&DLT101MasterApp_Event, PARAFIX | FTXNEXT, OS_OPT_POST_FLAG_SET, &err);
 //            res = DLT634_5101_MASTER_C_REPLY(USART6_ID, pbuf);
 //            break;
 //        case UART8_ID:
 //            res = DLT634_5101_SLAVE_C_REPLY(UART8_ID, pbuf);
-//			OSQPost((OS_Q *)&DLT101SlaveApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO|OS_OPT_POST_NO_SCHED, &err);
-//			OSFlagPost((OS_FLAG_GRP *)&DLT101SlaveApp_Event, (OS_FLAGS)PARAFIX, (OS_OPT)OS_OPT_POST_FLAG_SET, (OS_ERR *)&err);
+//            OSQPost((OS_Q *)&DLT101SlaveApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO|OS_OPT_POST_NO_SCHED, &err);
+//            OSFlagPost((OS_FLAG_GRP *)&DLT101SlaveApp_Event, (OS_FLAGS)PARAFIX, (OS_OPT)OS_OPT_POST_FLAG_SET, (OS_ERR *)&err);
 //           break;
 //        case N25QXXX_ID:
 //#if N25QXXX_CFG

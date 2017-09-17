@@ -11,14 +11,14 @@ int main(int /*argc*/, char ** /*argv*/)
     if (pthread_create(&tid_104, NULL, thread_main_104, NULL))
     {
         perror("pthread_create");
-		return -1;
+        return -1;
     }
 
     pthread_t tid_101;
     if (pthread_create(&tid_101, NULL, thread_main_101, NULL))
     {
         perror("pthread_create");
-		return -1;
+        return -1;
     }
 
     pthread_join(tid_104, NULL);//阻塞至线程结束

@@ -25,7 +25,7 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef	_DLT634_5101MASTER_DISK_H_
+#ifndef    _DLT634_5101MASTER_DISK_H_
 #define _DLT634_5101MASTER_DISK_H_
 
 #ifdef __cplusplus

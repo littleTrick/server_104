@@ -68,17 +68,17 @@ void setSerialFd(int serialfd)
 ** ---------------------------------------------------------------------------*/
 uint16_t DLT634_5101_MASTER_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
-	uint16_t len = 0;  
-	
-	switch(pdrv)
-	{
-		case 0:
-			len = Readx(pbuf, count, DLT634_5101Master_Pad[pdrv].Port);
-			break;
-		default:
-			break;
-	}
-	return(len);
+    uint16_t len = 0;  
+    
+    switch(pdrv)
+    {
+        case 0:
+            len = Readx(pbuf, count, DLT634_5101Master_Pad[pdrv].Port);
+            break;
+        default:
+            break;
+    }
+    return(len);
 }
 
 /* -----------------------------------------------------------------------------
@@ -99,17 +99,17 @@ uint16_t DLT634_5101_MASTER_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count
 ** ---------------------------------------------------------------------------*/
 uint16_t DLT634_5101_MASTER_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count)
 { 
-	uint16_t len = 0; 
-	
-	switch(pdrv)
-	{
-		case 0:
-			len = WriteX(pbuf,count,DLT634_5101Master_Pad[pdrv].Port);
-			break;
-		default:
-			break;
-	}
-	return(len);
+    uint16_t len = 0; 
+    
+    switch(pdrv)
+    {
+        case 0:
+            len = WriteX(pbuf,count,DLT634_5101Master_Pad[pdrv].Port);
+            break;
+        default:
+            break;
+    }
+    return(len);
 }
 
 //app
@@ -132,15 +132,15 @@ uint16_t DLT634_5101_MASTER_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t coun
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/DCO_L/DCO_H
 void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf)//遥控
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//			DBSend(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+//            DBSend(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -161,15 +161,15 @@ void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf)//遥控
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/CP56Time2a
 void DLT634_5101_MASTER_C_CS(uint8_t pdrv, uint8_t *pbuf)//对时
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//			DBSend(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+//            DBSend(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -194,15 +194,15 @@ void DLT634_5101_MASTER_C_CS(uint8_t pdrv, uint8_t *pbuf)//对时
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/SN_L/SN_H/PI_L/PI_H//Array(InfoAddr_L/InfoAddr_H/Tag/Len/Value)
 void DLT634_5101_MASTER_C_SR(uint8_t pdrv, uint8_t *pbuf)//定值参数
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//			DBSend(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+//            DBSend(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -316,15 +316,15 @@ void DLT634_5101_MASTER_W_SOE(uint8_t pdrv, uint8_t *pbuf)//写soe
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/Array
 void DLT634_5101_MASTER_W_FEvent(uint8_t pdrv, uint8_t *pbuf)//写FEvent
 {
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
-//			DBWrite_FEvent(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|TRANSIT_DEV0;
+//            DBWrite_FEvent(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -345,15 +345,15 @@ void DLT634_5101_MASTER_W_FEvent(uint8_t pdrv, uint8_t *pbuf)//写FEvent
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/sty/Array
 void DLT634_5101_MASTER_F_FR(uint8_t pdrv, uint8_t *pbuf)//文件读写
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//			DBSend(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+//            DBSend(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -374,15 +374,15 @@ void DLT634_5101_MASTER_F_FR(uint8_t pdrv, uint8_t *pbuf)//文件读写
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/CTYPE
 void DLT634_5101_MASTER_F_SR(uint8_t pdrv, uint8_t *pbuf)//软件升级
 { 
-//	switch(pdrv)
-//	{
-//		case 0:
-//			pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//			DBSend(pbuf);
-//			break;
-//		default:
-//			break;
-//	}
+//    switch(pdrv)
+//    {
+//        case 0:
+//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+//            DBSend(pbuf);
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -438,7 +438,7 @@ uint8_t DLT634_5101_MASTER_C_REPLY(uint8_t drvid,uint8_t *pbuf)//其他设备回复
 void DLT634_5101_MASTER_INIT(uint8_t pdrv)//初始化
 {
     switch(pdrv)
-	{
+    {
         case 0:
             DLT634_5101Master_Pad[pdrv].Port = USART1_ID;
             DLT634_5101Master_Pad[pdrv].IEC_DIR = 0;
@@ -458,7 +458,7 @@ void DLT634_5101_MASTER_INIT(uint8_t pdrv)//初始化
             break;
         default:
             break;
-	}
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -495,8 +495,8 @@ void start()
 ** 日　  期: 
 ** ---------------------------------------------------------------------------*/
 void DLT634_5101_MasterTask()
-{	
-	DLT634_5101_MASTER_INIT(DLT634_5101MASTER_DISK0);
+{    
+    DLT634_5101_MASTER_INIT(DLT634_5101MASTER_DISK0);
 }
 
 /* END OF FILE ---------------------------------------------------------------*/

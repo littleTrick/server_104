@@ -25,15 +25,15 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef	_DLT634_5104SLAVE_CONFIG_H_
+#ifndef    _DLT634_5104SLAVE_CONFIG_H_
 #define _DLT634_5104SLAVE_CONFIG_H_
 
 
 /* PUBLIC VARIABLE -----------------------------------------------------------*/
-#define  DLT634_5104SLAVE_VOLUMES	 2   // 设备数量
+#define  DLT634_5104SLAVE_VOLUMES     2   // 设备数量
 /* Number of volumes (logical drives) to be used.*/
-#define  DLT634_5104SLAVE_STOREDATA1NUM	10
-#define  DLT634_5104SLAVE_STOREDATA2NUM	10
+#define  DLT634_5104SLAVE_STOREDATA1NUM    10
+#define  DLT634_5104SLAVE_STOREDATA2NUM    10
 
 //LINK_FLAG
 // EVENT
@@ -45,16 +45,16 @@
 #define  DLT634_5104SLAVE_SENDOVER                   0x00000004
 
 /* 应用层特定参数 */ 
-#undef    DLT634_5104SLAVE_COTByte	                                // 定义传输原因字节数 
-#undef    DLT634_5104SLAVE_PUBADDRBYTE							    // 定义公共地址字节数
-#define   DLT634_5104SLAVE_BROADCASTADDR	         0xFFFF
+#undef    DLT634_5104SLAVE_COTByte                                    // 定义传输原因字节数 
+#undef    DLT634_5104SLAVE_PUBADDRBYTE                                // 定义公共地址字节数
+#define   DLT634_5104SLAVE_BROADCASTADDR             0xFFFF
 #define   DLT634_5104SLAVE_INFOADDR3BYTE
 
 //1级数据状态
 #define  DLT634_5104SLAVE_HAVEINITEND                0x00000001
-#define	 DLT634_5104SLAVE_HAVECOS	                 0x00000002
-#define  DLT634_5104SLAVE_HAVESOE	                 0x00000004
-#define  DLT634_5104SLAVE_HAVEFA	                 0x00000008
+#define     DLT634_5104SLAVE_HAVECOS                     0x00000002
+#define  DLT634_5104SLAVE_HAVESOE                     0x00000004
+#define  DLT634_5104SLAVE_HAVEFA                     0x00000008
 #define  DLT634_5104SLAVE_HAVEYK                     0x00000010
 #define  DLT634_5104SLAVE_FNextYK                    0x00000020
 #define  DLT634_5104SLAVE_CALLALLDATA                0x00000040
@@ -63,24 +63,24 @@
 #define  DLT634_5104SLAVE_APP_SYN                    0x00000200
 #define  DLT634_5104SLAVE_APP_DD                     0x00000400
 #define  DLT634_5104SLAVE_CallTimeDelay              0x00000800
-#define  DLT634_5104SLAVE_CallReadData	             0x00001000
+#define  DLT634_5104SLAVE_CallReadData                 0x00001000
 #define  DLT634_5104SLAVE_FreezeDD                   0x00002000
 #define  DLT634_5104SLAVE_CallParaSet                0x00004000
 #define  DLT634_5104SLAVE_CallReset                  0x00008000
 #define  DLT634_5104SLAVE_CallSetNVA                 0x00010000
 #define  DLT634_5104SLAVE_CallTest                   0x00020000
-#define  DLT634_5104SLAVE_HaveNVA	                 0x00040000
+#define  DLT634_5104SLAVE_HaveNVA                     0x00040000
 #define  DLT634_5104SLAVE_PARADZOPERATE              0x00080000
-#define  DLT634_5104SLAVE_PARADZREAD 	             0x00400000 // 读参数和定值
+#define  DLT634_5104SLAVE_PARADZREAD                  0x00400000 // 读参数和定值
 #define  DLT634_5104SLAVE_HaveHisDD                  0x00800000
 #define  DLT634_5104SLAVE_HAVEEVENT                  0x01000000
 #define  DLT634_5104SLAVE_UpgradeReply               0x02000000
 //基本规约配置
 /* Define Parameter ----------------------------------------------------------*/
 #define  DLT634_5104SLAVE_ASDUSIZE                   249
-#define  DLT634_5104SLAVE_LPDUSIZE	                 (255)	  // 链路层发送报文的最大长度   
-#define  DLT634_5104SLAVE_APDUSIZE	                 253       // 应用层收发缓冲区的最大长度
-#define  DLT634_5104SLAVE_FRAMEBUFSIZE	             256       // 链路层接收缓冲区的最大长度
+#define  DLT634_5104SLAVE_LPDUSIZE                     (255)      // 链路层发送报文的最大长度   
+#define  DLT634_5104SLAVE_APDUSIZE                     253       // 应用层收发缓冲区的最大长度
+#define  DLT634_5104SLAVE_FRAMEBUFSIZE                 256       // 链路层接收缓冲区的最大长度
 
 /*************************************************************************************************************************************/
 //DL/T634.5104_2002规约
@@ -116,10 +116,10 @@
 
 /* 基本内容定义 --------------------------------------------------------------*/
 // PTick
-#define  DLT634_5104SLAVE_T0FLAG		                 0x0001
-#define  DLT634_5104SLAVE_T1FLAG		                 0x0002
-#define  DLT634_5104SLAVE_T2FLAG		                 0x0004
-#define  DLT634_5104SLAVE_T3FLAG		                 0x0008
+#define  DLT634_5104SLAVE_T0FLAG                         0x0001
+#define  DLT634_5104SLAVE_T1FLAG                         0x0002
+#define  DLT634_5104SLAVE_T2FLAG                         0x0004
+#define  DLT634_5104SLAVE_T3FLAG                         0x0008
 
 /* -----------------------------------------------------------------------------
  * IEC60870-5-104规定两个参数K和W：
@@ -130,7 +130,7 @@
 #define  DLT634_5104SLAVE_K                               12
 #define  DLT634_5104SLAVE_W                               8
 /* 链路层帧修饰词***************************************************************/
-#define  DLT634_5104SLAVE_STARTCODE68	                  0x68	// 起始码
+#define  DLT634_5104SLAVE_STARTCODE68                      0x68    // 起始码
 
 /* 链路层 --------------------------------------------------------------------*/
 #define  DLT634_5104SLAVE_S_FRAME                         0x01
@@ -143,19 +143,19 @@
 #define  DLT634_5104SLAVE_U_TESTFRCON                     0x83
 
 /* 链路层到应用层的命令(WORD)Link_Command内容 */ 
-#define  DLT634_5104SLAVE_LINK_CALLDATA		              1	  // I数据针
-#define  DLT634_5104SLAVE_LINK_APPCON		              2	  // S确认针
-#define  DLT634_5104SLAVE_LINK_WORK		                  3
+#define  DLT634_5104SLAVE_LINK_CALLDATA                      1      // I数据针
+#define  DLT634_5104SLAVE_LINK_APPCON                      2      // S确认针
+#define  DLT634_5104SLAVE_LINK_WORK                          3
 #define  DLT634_5104SLAVE_LINK_NOWORK                     4    // 链路未工作
 
 //链路层主站向子站传输功能码定义
-#define  DLT634_5104SLAVE_M_FUN0             	0           // 复位远方链路
+#define  DLT634_5104SLAVE_M_FUN0                 0           // 复位远方链路
 #define  DLT634_5104SLAVE_M_FUN2                2           // 测试链路功能
-#define  DLT634_5104SLAVE_M_FUN3                3	          // 发送确认命令
-#define  DLT634_5104SLAVE_M_FUN4             	4	          // 发送不确认命令
-#define  DLT634_5104SLAVE_M_FUN8                8	          // 请求响应确定访问状态
-#define  DLT634_5104SLAVE_M_FUN9             	9	          // 召唤链路状态
-#define  DLT634_5104SLAVE_M_FUN10               10	        // 召唤1级用户数据
+#define  DLT634_5104SLAVE_M_FUN3                3              // 发送确认命令
+#define  DLT634_5104SLAVE_M_FUN4                 4              // 发送不确认命令
+#define  DLT634_5104SLAVE_M_FUN8                8              // 请求响应确定访问状态
+#define  DLT634_5104SLAVE_M_FUN9                 9              // 召唤链路状态
+#define  DLT634_5104SLAVE_M_FUN10               10            // 召唤1级用户数据
 #define  DLT634_5104SLAVE_M_FUN11               11          // 召唤2级用户数据
 
 #define  DLT634_5104SLAVE_LINK_RESETRDL         0         // 复位远方链路

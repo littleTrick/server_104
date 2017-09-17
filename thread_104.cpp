@@ -20,8 +20,8 @@ Queue *ptrQ = &circularQueue;
 static void process_client(TCPSocket *client)
 {
     char buff[255];
-	setClientFd(client->fd());
-	printf("new connection established fd = %d \n",client->fd());
+    setClientFd(client->fd());
+    printf("new connection established fd = %d \n",client->fd());
 
     client->setblocking(false);
     // create epoll instance
@@ -42,8 +42,8 @@ static void process_client(TCPSocket *client)
         perror("epoll_ctl");
         abort();
     }
-	while (1)
-	{
+    while (1)
+    {
         int nevents = epoll_wait(epfd, events, 1, 10);
         if (nevents < 0)
         {
@@ -52,8 +52,7 @@ static void process_client(TCPSocket *client)
         }
         if (nevents == 0)
         {
-            fprintf(stdout, "104 timeout %s\n", Timestamp::current().to_string());
-		    DLT634_5104_SLAVE_Clock(0);
+        DLT634_5104_SLAVE_Clock(0);
             continue;
         }
 
@@ -73,18 +72,18 @@ static void process_client(TCPSocket *client)
                     fprintf(stderr, "connection closed by peer\n");
                     break;
                 }
-	            printf("----------------------- \n");
-	            printf("104 slave %d \n",nread);
-	            ptrQ->EnqueueAll(buff, nread);
-	        } 
+                printf("----------------------- \n");
+                printf("104 slave %d \n",nread);
+                ptrQ->EnqueueAll(buff, nread);
+            } 
         }
 
         if (i < nevents)
             break;
-	}
+    }
 
     ::close(epfd);
-	setClientFd(-1);
+    setClientFd(-1);
 }
 
 void* thread_main_104(void*)
@@ -98,28 +97,28 @@ void* thread_main_104(void*)
     TCPSocket tcpConnect;//网络套接字建立连接
     tcpConnect.setReuseAddr(true);
     if (!tcpConnect.bind("0.0.0.0",2404)) 
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
     if (!tcpConnect.listen()) 
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
-	while (1) 
-	{
-    	TCPSocket *client = tcpConnect.accept();
-    	if(client == NULL)
-    	{
-    	    printf("client falied connect");
-			return 0;
-    	}
-    	else
-    	{
-			process_client(client);
-    	}
-		delete client;
-	}
+    while (1) 
+    {
+        TCPSocket *client = tcpConnect.accept();
+        if(client == NULL)
+        {
+            printf("client falied connect");
+            return 0;
+        }
+        else
+        {
+            process_client(client);
+        }
+        delete client;
+    }
     return 0;
 }
 

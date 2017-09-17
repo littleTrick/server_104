@@ -37,11 +37,11 @@ typedef struct
 {
     uint8_t Milliseconds_L;   // D7-D0
     uint8_t Milliseconds_H;   // D7-D0
-    uint8_t Minutes;					// D5-D0
-    uint8_t Hours;						// D4-D0
-    uint8_t DayofWeekMonth;		// WEEK(D7-D5)MONTH(D4-D0)
-    uint8_t Months;						// D3-D0
-    uint8_t Years;						// D6-D0
+    uint8_t Minutes;                    // D5-D0
+    uint8_t Hours;                        // D4-D0
+    uint8_t DayofWeekMonth;        // WEEK(D7-D5)MONTH(D4-D0)
+    uint8_t Months;                        // D3-D0
+    uint8_t Years;                        // D6-D0
 }_DLT634_5101MASTER_CP56Time2a_t;
 
 typedef struct 
@@ -51,7 +51,7 @@ typedef struct
         uint8_t Length;
         union
         {
-            uint8_t priority;	
+            uint8_t priority;    
             uint8_t Lock_ID;
         }symbol;
     }status;
@@ -68,7 +68,7 @@ typedef struct
 
     union
     {
-        uint8_t	buff[256-sizeof(struct STATUS)-sizeof(struct HEAD)];
+        uint8_t    buff[256-sizeof(struct STATUS)-sizeof(struct HEAD)];
         
         struct
         {
@@ -80,21 +80,21 @@ typedef struct
         struct
         {
             uint8_t InfoAddr_L;
-            uint8_t InfoAddr_H;	
+            uint8_t InfoAddr_H;    
             _DLT634_5101MASTER_CP56Time2a_t CP56Time2a;
         }C_103;
 
         struct
         {
             uint8_t InfoAddr_L;
-            uint8_t InfoAddr_H;	
+            uint8_t InfoAddr_H;    
             uint8_t QRP; 
         }C_105;
 
         struct
         {
             uint8_t InfoAddr_L;
-            uint8_t InfoAddr_H;	
+            uint8_t InfoAddr_H;    
             uint8_t COI; 
         }C_70;
 
@@ -103,7 +103,7 @@ typedef struct
             uint8_t InfoAddr_L;
             uint8_t InfoAddr_H;
             uint8_t FBP_L;
-            uint8_t FBP_H;				
+            uint8_t FBP_H;                
         }C_104;
 
         union
@@ -113,7 +113,7 @@ typedef struct
                 struct
                 {
                     uint8_t InfoAddr_L;
-                    uint8_t InfoAddr_H;	
+                    uint8_t InfoAddr_H;    
                     uint8_t Value; 
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD))/3];
             }SQ0;
@@ -136,7 +136,7 @@ typedef struct
                 struct
                 {
                     uint8_t InfoAddr_L;
-                    uint8_t InfoAddr_H;	
+                    uint8_t InfoAddr_H;    
                     uint8_t Value; 
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD))/3];
             }SQ0;
@@ -144,7 +144,7 @@ typedef struct
             struct
             {
                 uint8_t InfoAddr_L;
-                uint8_t InfoAddr_H;	
+                uint8_t InfoAddr_H;    
                 struct
                 {
                     uint8_t Value; 
@@ -168,7 +168,7 @@ typedef struct
             struct
             {
                 uint8_t InfoAddr_L;
-                uint8_t InfoAddr_H;	
+                uint8_t InfoAddr_H;    
                 struct
                 {
                     uint8_t Value; 
@@ -184,7 +184,7 @@ typedef struct
                 struct
                 {
                     uint8_t InfoAddr_L;
-                    uint8_t InfoAddr_H;	
+                    uint8_t InfoAddr_H;    
                     uint8_t Value; 
                     _DLT634_5101MASTER_CP56Time2a_t CP56Time2a;
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD))/10];
@@ -193,7 +193,7 @@ typedef struct
             struct
             {
                 uint8_t InfoAddr_L;
-                uint8_t InfoAddr_H;	
+                uint8_t InfoAddr_H;    
                 struct
                 {
                     uint8_t Value; 
@@ -218,10 +218,10 @@ typedef struct
             struct
             {
                 uint8_t InfoAddr_L;
-                uint8_t InfoAddr_H;	
+                uint8_t InfoAddr_H;    
                 struct
                 {
-                    uint32_t Value;									
+                    uint32_t Value;                                    
                     uint8_t QDS;
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-2)/5];
             }SQ1;
@@ -260,7 +260,7 @@ typedef struct
                 {
                     uint8_t InfoAddr_L;
                     uint8_t InfoAddr_H;
-                    uint32_t Value;	
+                    uint32_t Value;    
                     uint8_t QDS;
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD))/7];
             }SQ0;
@@ -271,7 +271,7 @@ typedef struct
                 uint8_t InfoAddr_H;
                 struct
                 {
-                    uint32_t Value;	
+                    uint32_t Value;    
                     uint8_t QDS;
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-2)/5];
             }SQ1;
@@ -283,15 +283,15 @@ typedef struct
             uint8_t InfoAddr_H;
             uint8_t SCO_L;
             uint8_t SCO_H;
-        }C_45;	
+        }C_45;    
 
         struct
         {
             uint8_t InfoAddr_L;
-            uint8_t InfoAddr_H;	
+            uint8_t InfoAddr_H;    
             uint8_t DCO_L;
             uint8_t DCO_H;
-        }C_46;	
+        }C_46;    
 
         struct
         {
@@ -301,7 +301,7 @@ typedef struct
         struct
         {
             uint8_t InfoAddr_L;
-            uint8_t InfoAddr_H;	
+            uint8_t InfoAddr_H;    
             uint8_t SN_L;
             uint8_t SN_H;
         }C_200;
@@ -317,7 +317,7 @@ typedef struct
             struct
             {
                 uint8_t InfoAddr_L;
-                uint8_t InfoAddr_H;	
+                uint8_t InfoAddr_H;    
                 uint8_t SN1_L;
                 uint8_t SN1_H;
                 uint8_t SN2_L;
@@ -333,13 +333,13 @@ typedef struct
             {
                 uint8_t SN1_L;
                 uint8_t SN1_H;
-                uint32_t Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-2)/4];		
+                uint32_t Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-2)/4];        
             }Down;
 
             struct
             {
                 uint8_t SN_L;
-                uint8_t SN_H;	
+                uint8_t SN_H;    
                 uint8_t PI_L;
                 uint8_t PI_H;
                 struct
@@ -348,7 +348,7 @@ typedef struct
                     uint8_t InfoAddr_H;
                     uint8_t Tag;
                     uint8_t Len;
-                    uint32_t Value;	
+                    uint32_t Value;    
                 }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-4)/8];
             }Up;
         }C_202;
@@ -356,7 +356,7 @@ typedef struct
         union
         {
             uint8_t SN_L;
-            uint8_t SN_H;	
+            uint8_t SN_H;    
             uint8_t PI_L;
             uint8_t PI_H;
             struct
@@ -365,7 +365,7 @@ typedef struct
                 uint8_t InfoAddr_H;
                 uint8_t Tag;
                 uint8_t Len;
-                uint32_t Value;	
+                uint32_t Value;    
             }Array[(256-sizeof(struct STATUS)-sizeof(struct HEAD)-4)/8];
         }C_203;
 
@@ -378,51 +378,51 @@ typedef struct
 
 typedef struct 
 {
-//link	
+//link    
     enum
-	{
-        RXDSTART = 0,	          // 寻找起始标志状态
-        RXDHEAD,	              // 寻找报文头
+    {
+        RXDSTART = 0,              // 寻找起始标志状态
+        RXDHEAD,                  // 寻找报文头
         RXDCONTINUE             // 接收后续报文
-	}RxdStatus;           			// 接收状态
-	
-	uint16_t TxdHead;	      				// 发送缓冲区头指针
-	uint16_t TxdTail;	     					// 发送缓冲区尾指针
-	uint8_t TxdBuf[_DLT634_5101MASTER_LPDUSIZE];     	// 发送缓冲区
-	
-	uint16_t RxdHead;	      				// 接收数据区头指针
-    uint16_t RxdTail;       				// 接收数据区尾指针
-	uint16_t RxdLength;     				// 接收一帧数据长度
-	uint8_t RxdBuf[_DLT634_5101MASTER_LPDUSIZE];			// 接收缓冲区
-	
-	uint16_t TxdTail_Pri;
-	uint8_t TxdBuf_Pri[_DLT634_5101MASTER_LPDUSIZE]; // 发送缓冲区，暂存发送的数据，重发时用
-	
+    }RxdStatus;                       // 接收状态
+    
+    uint16_t TxdHead;                          // 发送缓冲区头指针
+    uint16_t TxdTail;                             // 发送缓冲区尾指针
+    uint8_t TxdBuf[_DLT634_5101MASTER_LPDUSIZE];         // 发送缓冲区
+    
+    uint16_t RxdHead;                          // 接收数据区头指针
+    uint16_t RxdTail;                       // 接收数据区尾指针
+    uint16_t RxdLength;                     // 接收一帧数据长度
+    uint8_t RxdBuf[_DLT634_5101MASTER_LPDUSIZE];            // 接收缓冲区
+    
+    uint16_t TxdTail_Pri;
+    uint8_t TxdBuf_Pri[_DLT634_5101MASTER_LPDUSIZE]; // 发送缓冲区，暂存发送的数据，重发时用
+    
 //app
-	uint8_t Devid;	  								//发送设备id
-	uint32_t TimeOutTick_Devid; 			//设备占用计时器
-	
-	DLT634_5101MASTER_PASDU *StoreDATA1IN;              //待发送缓冲区1级数据入指针
-	DLT634_5101MASTER_PASDU *StoreDATA1OUT;             //待发送缓冲区1级数据出指针
-	DLT634_5101MASTER_PASDU StoreDATA1Buf[_DLT634_5101MASTER_STOREDATA1NUM];     	// 1级数据待发送缓冲区
-	DLT634_5101MASTER_PASDU ST_Temp;              //存储数据处理
-	
-	DLT634_5101MASTER_PASDU TX_Temp;              //发送数据处理
-	DLT634_5101MASTER_PASDU RX_Temp;              //接受数据处理
-	
-	uint32_t LinkFlag;              //回复链路数据标志
-	uint32_t Data1Flag;             //应用数据标志
-	
-	uint32_t ClockCounter;  				//程序运行周期控制
-	uint32_t TimeOutTick_Pri; 			//超时节拍计时器
-	uint32_t RetryCount;						//超时记数器
-	
-	uint32_t TimeOutTick_AskSta; 			//召唤链路节拍计时器
-	uint32_t TimeOutTick_AllData; 			//全数据节拍计时器
-	uint32_t TimeOutTick_LinkTest; 			//测试帧节拍计时器
-	uint32_t TimeOutTick_LinkIdle; 			//链路空闲计时器
-	
-	uint8_t SendConCode;	  // 发送的控制码FCB位记录
+    uint8_t Devid;                                      //发送设备id
+    uint32_t TimeOutTick_Devid;             //设备占用计时器
+    
+    DLT634_5101MASTER_PASDU *StoreDATA1IN;              //待发送缓冲区1级数据入指针
+    DLT634_5101MASTER_PASDU *StoreDATA1OUT;             //待发送缓冲区1级数据出指针
+    DLT634_5101MASTER_PASDU StoreDATA1Buf[_DLT634_5101MASTER_STOREDATA1NUM];         // 1级数据待发送缓冲区
+    DLT634_5101MASTER_PASDU ST_Temp;              //存储数据处理
+    
+    DLT634_5101MASTER_PASDU TX_Temp;              //发送数据处理
+    DLT634_5101MASTER_PASDU RX_Temp;              //接受数据处理
+    
+    uint32_t LinkFlag;              //回复链路数据标志
+    uint32_t Data1Flag;             //应用数据标志
+    
+    uint32_t ClockCounter;                  //程序运行周期控制
+    uint32_t TimeOutTick_Pri;             //超时节拍计时器
+    uint32_t RetryCount;                        //超时记数器
+    
+    uint32_t TimeOutTick_AskSta;             //召唤链路节拍计时器
+    uint32_t TimeOutTick_AllData;             //全数据节拍计时器
+    uint32_t TimeOutTick_LinkTest;             //测试帧节拍计时器
+    uint32_t TimeOutTick_LinkIdle;             //链路空闲计时器
+    
+    uint8_t SendConCode;      // 发送的控制码FCB位记录
 
 }DLT634_5101MASTER_APPINFO;
 #pragma pack(pop)
@@ -497,13 +497,13 @@ static uint8_t DLT634_5101_MASTER_CheckFram68Valid(uint8_t pdrv)
     
     pBuf = (DLT634_5101Master_App[pdrv].RxdBuf + DLT634_5101Master_App[pdrv].RxdHead);
 
-	  // 报头校验
+      // 报头校验
     if ((pBuf[0] != pBuf[3]) || (pBuf[1] != pBuf[2]))
     {
         return(0);
     }
 
-	  // 公共地址校验
+      // 公共地址校验
     if (DLT634_5101Master_Pad[pdrv].LinkAddrSize == 1)
     {
         if ((pBuf[5] != DLT634_5101Master_Pad[pdrv].SourceAddr) && (pBuf[5] != 0xff))
@@ -544,19 +544,19 @@ static uint8_t DLT634_5101_MASTER_CheckFram10Valid(uint8_t pdrv)
 
     pBuf = &DLT634_5101Master_App[pdrv].RxdBuf[DLT634_5101Master_App[pdrv].RxdHead];
 
-	  // 固定帧长数据的校验和检测
-    if (pBuf[2+DLT634_5101Master_Pad[pdrv].LinkAddrSize] != (DLT634_5101_MASTER_CKS(pdrv, pBuf)&0xFF))	
+      // 固定帧长数据的校验和检测
+    if (pBuf[2+DLT634_5101Master_Pad[pdrv].LinkAddrSize] != (DLT634_5101_MASTER_CKS(pdrv, pBuf)&0xFF))    
     {
         return (0);
     }
 
-	  // 固定帧长数据的结束帧检测
+      // 固定帧长数据的结束帧检测
     if (pBuf[3+DLT634_5101Master_Pad[pdrv].LinkAddrSize] != _DLT634_5101MASTER_ENDCODE)
     {
         return (0);
     }
 
-	  // 固定帧数据公共地址检测
+      // 固定帧数据公共地址检测
     if (DLT634_5101Master_Pad[pdrv].LinkAddrSize == 1)
     {
         addr = pBuf[2];
@@ -565,7 +565,7 @@ static uint8_t DLT634_5101_MASTER_CheckFram10Valid(uint8_t pdrv)
     {
         addr = pBuf[2] | ((pBuf[3]<<8));
     }
-		
+        
     if (addr != DLT634_5101Master_Pad[pdrv].SourceAddr)
     {
         return (0);
@@ -634,7 +634,7 @@ static void DLT634_5101_MASTER_DecodeFrame10(uint8_t pdrv)
     {
         switch (control & _DLT634_5101MASTER_FUNCODE)
         {
-            case _DLT634_5101MASTER_S_FUN0:	// 确认
+            case _DLT634_5101MASTER_S_FUN0:    // 确认
                 DLT634_5101Master_App[pdrv].LinkFlag |= _DLT634_5101MASTER_SENDABLE;
                 DLT634_5101Master_App[pdrv].TimeOutTick_Pri = 0; // 链路有数据就可以不重发
                 break;
@@ -666,28 +666,28 @@ static void DLT634_5101_MASTER_DecodeFrame10(uint8_t pdrv)
 ** 日　  期: 
 ** ---------------------------------------------------------------------------*/
 static uint8_t DLT634_5101_MASTER_StoreIN(uint8_t pdrv,DLT634_5101MASTER_PASDU *buf)
-{	
-	DLT634_5101MASTER_PASDU *temp;
-	
-	temp = DLT634_5101Master_App[pdrv].StoreDATA1IN;
-	if(++temp >= DLT634_5101Master_App[pdrv].StoreDATA1Buf + _DLT634_5101MASTER_STOREDATA1NUM)
-	{
-		temp = DLT634_5101Master_App[pdrv].StoreDATA1Buf;
-	}
-	
-	if(temp == DLT634_5101Master_App[pdrv].StoreDATA1OUT)
-	{
-		return(FALSE);
-	}
-	
-	memcpy(DLT634_5101Master_App[pdrv].StoreDATA1IN,buf,sizeof(DLT634_5101MASTER_PASDU));	
+{    
+    DLT634_5101MASTER_PASDU *temp;
+    
+    temp = DLT634_5101Master_App[pdrv].StoreDATA1IN;
+    if(++temp >= DLT634_5101Master_App[pdrv].StoreDATA1Buf + _DLT634_5101MASTER_STOREDATA1NUM)
+    {
+        temp = DLT634_5101Master_App[pdrv].StoreDATA1Buf;
+    }
+    
+    if(temp == DLT634_5101Master_App[pdrv].StoreDATA1OUT)
+    {
+        return(FALSE);
+    }
+    
+    memcpy(DLT634_5101Master_App[pdrv].StoreDATA1IN,buf,sizeof(DLT634_5101MASTER_PASDU));    
 
-	if(++DLT634_5101Master_App[pdrv].StoreDATA1IN >= DLT634_5101Master_App[pdrv].StoreDATA1Buf + _DLT634_5101MASTER_STOREDATA1NUM)
-	{
-		DLT634_5101Master_App[pdrv].StoreDATA1IN = DLT634_5101Master_App[pdrv].StoreDATA1Buf;
-	}
-		
-	return(TRUE);
+    if(++DLT634_5101Master_App[pdrv].StoreDATA1IN >= DLT634_5101Master_App[pdrv].StoreDATA1Buf + _DLT634_5101MASTER_STOREDATA1NUM)
+    {
+        DLT634_5101Master_App[pdrv].StoreDATA1IN = DLT634_5101Master_App[pdrv].StoreDATA1Buf;
+    }
+        
+    return(TRUE);
 }
 
 /* -----------------------------------------------------------------------------
@@ -714,7 +714,7 @@ static uint8_t DLT634_5101_MASTER_StoreIN(uint8_t pdrv,DLT634_5101MASTER_PASDU *
 ** 日　  期: 
 ** ---------------------------------------------------------------------------*/
 static void DLT634_5101_MASTER_AppProcess(uint8_t pdrv,uint8_t Control)
-{		
+{        
     //整理成02版报文，便于控制和传输
     memset((uint8_t *)&DLT634_5101Master_App[pdrv].RX_Temp,0,sizeof(DLT634_5101MASTER_PASDU));
     DLT634_5101Master_App[pdrv].RX_Temp.status.Length = DLT634_5101Master_App[pdrv].RxdBuf[1] -1 -DLT634_5101Master_Pad[pdrv].LinkAddrSize;
@@ -723,15 +723,15 @@ static void DLT634_5101_MASTER_AppProcess(uint8_t pdrv,uint8_t Control)
     {
         DLT634_5101Master_App[pdrv].RX_Temp.Head.COT_H = 0;
         memcpy((uint8_t *)&DLT634_5101Master_App[pdrv].RX_Temp.Head.PubAddr_L,&DLT634_5101Master_App[pdrv].RxdBuf[5+DLT634_5101Master_Pad[pdrv].LinkAddrSize+2+DLT634_5101Master_Pad[pdrv].ASDUCotSize]
-        ,DLT634_5101Master_App[pdrv].RX_Temp.status.Length-2-DLT634_5101Master_Pad[pdrv].ASDUCotSize);	
+        ,DLT634_5101Master_App[pdrv].RX_Temp.status.Length-2-DLT634_5101Master_Pad[pdrv].ASDUCotSize);    
         DLT634_5101Master_App[pdrv].RX_Temp.status.Length = DLT634_5101Master_App[pdrv].RX_Temp.status.Length - DLT634_5101Master_Pad[pdrv].ASDUCotSize + 2;
     }
     if(DLT634_5101Master_Pad[pdrv].ASDUAddrSize == 1)
     {
         DLT634_5101Master_App[pdrv].RX_Temp.Head.PubAddr_H = 0;
         memcpy((uint8_t *)&DLT634_5101Master_App[pdrv].RX_Temp.Data.buff[0],&DLT634_5101Master_App[pdrv].RxdBuf[5+DLT634_5101Master_Pad[pdrv].LinkAddrSize+2+DLT634_5101Master_Pad[pdrv].ASDUCotSize+DLT634_5101Master_Pad[pdrv].ASDUAddrSize]
-        ,DLT634_5101Master_App[pdrv].RX_Temp.status.Length-2-DLT634_5101Master_Pad[pdrv].ASDUCotSize-DLT634_5101Master_Pad[pdrv].ASDUAddrSize);	
-        DLT634_5101Master_App[pdrv].RX_Temp.status.Length = DLT634_5101Master_App[pdrv].RX_Temp.status.Length - DLT634_5101Master_Pad[pdrv].ASDUAddrSize + 2;		
+        ,DLT634_5101Master_App[pdrv].RX_Temp.status.Length-2-DLT634_5101Master_Pad[pdrv].ASDUCotSize-DLT634_5101Master_Pad[pdrv].ASDUAddrSize);    
+        DLT634_5101Master_App[pdrv].RX_Temp.status.Length = DLT634_5101Master_App[pdrv].RX_Temp.status.Length - DLT634_5101Master_Pad[pdrv].ASDUAddrSize + 2;        
     }
     DLT634_5101Master_App[pdrv].RX_Temp.status.Length += sizeof(DLT634_5101Master_App[pdrv].RX_Temp.status);
     
@@ -815,7 +815,7 @@ static void DLT634_5101_MASTER_AppProcess(uint8_t pdrv,uint8_t Control)
             case _DLT634_5101MASTER_F_SR_NA_1: // 软件升级
                 DLT634_5101Master_App[pdrv].RX_Temp.status.symbol.Lock_ID = DLT634_5101Master_App[pdrv].Devid;
                 DLT634_5101_MASTER_F_SR(pdrv, (uint8_t *)&DLT634_5101Master_App[pdrv].RX_Temp);
-                break;			
+                break;            
 
             default: // 类型标识有错误或不支持
                 break;
@@ -952,14 +952,14 @@ static void DLT634_5101_MASTER_SearchValidFrame(uint8_t pdrv)
                 {
                     if ((DLT634_5101Master_App[pdrv].RxdBuf[DLT634_5101Master_App[pdrv].RxdHead+length+4] == (DLT634_5101_MASTER_CKS(pdrv, DLT634_5101Master_App[pdrv].RxdBuf+DLT634_5101Master_App[pdrv].RxdHead)&0xFF))//校验正确
                             && (DLT634_5101Master_App[pdrv].RxdBuf[DLT634_5101Master_App[pdrv].RxdHead+length+4+1] == _DLT634_5101MASTER_ENDCODE)) // 结束码正确
- 					          {
+                               {
                         if ( DLT634_5101Master_App[pdrv].RxdHead > 0 )
                         {
                             memcpy(DLT634_5101Master_App[pdrv].RxdBuf,DLT634_5101Master_App[pdrv].RxdBuf+DLT634_5101Master_App[pdrv].RxdHead,DLT634_5101Master_App[pdrv].RxdTail-DLT634_5101Master_App[pdrv].RxdHead);//报文与缓冲区对齐
                             DLT634_5101Master_App[pdrv].RxdTail -= DLT634_5101Master_App[pdrv].RxdHead;
                             DLT634_5101Master_App[pdrv].RxdHead = 0;
                         }
-												/* 头指针后移到报文后 */
+                                                /* 头指针后移到报文后 */
                         DLT634_5101Master_App[pdrv].RxdHead += (DLT634_5101Master_App[pdrv].RxdBuf[1]+6);
                         DLT634_5101Master_App[pdrv].RxdStatus = RXDSTART;
 
@@ -986,7 +986,7 @@ static void DLT634_5101_MASTER_SearchValidFrame(uint8_t pdrv)
                 }
                 DLT634_5101Master_App[pdrv].RxdHead += 4 + DLT634_5101Master_Pad[pdrv].LinkAddrSize;
                 DLT634_5101Master_App[pdrv].RxdStatus = RXDSTART;
-			
+            
                 DLT634_5101_MASTER_DecodeFrame10(pdrv);
                 break;
             }
@@ -1026,7 +1026,7 @@ static void DLT634_5101_MASTER_ReadMISIData(uint8_t pdrv)
     else
     {
         DLT634_5101Master_App[pdrv].RxdHead = 0;
-		    DLT634_5101Master_App[pdrv].RxdTail = 0;
+            DLT634_5101Master_App[pdrv].RxdTail = 0;
     }
     
     count = DLT634_5101_MASTER_ReadData(pdrv,(uint8_t *)&DLT634_5101Master_App[pdrv].RxdBuf[DLT634_5101Master_App[pdrv].RxdTail], _DLT634_5101MASTER_LPDUSIZE);
@@ -1058,8 +1058,8 @@ static uint8_t DLT634_5101_MASTER_WriteDataToMISI(uint8_t pdrv)
    
     SendLen = DLT634_5101_MASTER_WriteData(pdrv ,DLT634_5101Master_App[pdrv].TxdBuf + DLT634_5101Master_App[pdrv].TxdHead, DLT634_5101Master_App[pdrv].TxdTail - DLT634_5101Master_App[pdrv].TxdHead);
 
-  	DLT634_5101Master_App[pdrv].TimeOutTick_LinkIdle = DLT634_5101Master_Pad[pdrv].LinkIdleValue;
-	
+      DLT634_5101Master_App[pdrv].TimeOutTick_LinkIdle = DLT634_5101Master_Pad[pdrv].LinkIdleValue;
+    
     DLT634_5101Master_App[pdrv].TxdHead += SendLen;
     if (DLT634_5101Master_App[pdrv].TxdHead >= DLT634_5101Master_App[pdrv].TxdTail) // 该次任务数据已经发完
     {
@@ -1093,7 +1093,7 @@ static void DLT634_5101_MASTER_SlaveFrame10Packet(uint8_t pdrv, uint8_t Function
 {
     uint8_t *pBuf;
     uint8_t i = 0;
-									
+                                    
     pBuf = DLT634_5101Master_App[pdrv].TxdBuf + DLT634_5101Master_App[pdrv].TxdTail;
     pBuf[0] = _DLT634_5101MASTER_STARTCODE10;
     pBuf[1] = Function&0x0f;
@@ -1168,38 +1168,38 @@ static void DLT634_5101_MASTER_MasterFrame10Packet(uint8_t pdrv, uint8_t Functio
 ** ---------------------------------------------------------------------------*/
 static void DLT634_5101_MASTER_Link10Process(uint8_t pdrv)
 { 
-	if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_REQSTATUS)
-	{
-		DLT634_5101_MASTER_SlaveFrame10Packet(pdrv, _DLT634_5101MASTER_S_FUN11);
-		DLT634_5101_MASTER_WriteDataToMISI(pdrv);
-		DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_REQSTATUS);
-		return;
-	}
-	
-	if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_RECONFIRM)
-	{
-		DLT634_5101_MASTER_SlaveFrame10Packet(pdrv, _DLT634_5101MASTER_S_FUN0);
-		DLT634_5101_MASTER_WriteDataToMISI(pdrv);
-		DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_RECONFIRM);
-		return;
-	}
-	
-	if((DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_ASKSTATUS)&&(!(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_INITEND)))
-	{
-		DLT634_5101_MASTER_MasterFrame10Packet(pdrv, _DLT634_5101MASTER_M_FUN9);
-		DLT634_5101_MASTER_WriteDataToMISI(pdrv);
-		DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_ASKSTATUS);
-		DLT634_5101Master_App[pdrv].TimeOutTick_AskSta = DLT634_5101Master_Pad[pdrv].AskStaOutValue;
-		return;
-	}
-	
-	if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_ASKRELINK)
-	{
-		DLT634_5101_MASTER_MasterFrame10Packet(pdrv, _DLT634_5101MASTER_M_FUN0);
-		DLT634_5101_MASTER_WriteDataToMISI(pdrv);
-		DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_ASKRELINK);
-		return;
-	}	
+    if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_REQSTATUS)
+    {
+        DLT634_5101_MASTER_SlaveFrame10Packet(pdrv, _DLT634_5101MASTER_S_FUN11);
+        DLT634_5101_MASTER_WriteDataToMISI(pdrv);
+        DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_REQSTATUS);
+        return;
+    }
+    
+    if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_RECONFIRM)
+    {
+        DLT634_5101_MASTER_SlaveFrame10Packet(pdrv, _DLT634_5101MASTER_S_FUN0);
+        DLT634_5101_MASTER_WriteDataToMISI(pdrv);
+        DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_RECONFIRM);
+        return;
+    }
+    
+    if((DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_ASKSTATUS)&&(!(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_INITEND)))
+    {
+        DLT634_5101_MASTER_MasterFrame10Packet(pdrv, _DLT634_5101MASTER_M_FUN9);
+        DLT634_5101_MASTER_WriteDataToMISI(pdrv);
+        DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_ASKSTATUS);
+        DLT634_5101Master_App[pdrv].TimeOutTick_AskSta = DLT634_5101Master_Pad[pdrv].AskStaOutValue;
+        return;
+    }
+    
+    if(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_ASKRELINK)
+    {
+        DLT634_5101_MASTER_MasterFrame10Packet(pdrv, _DLT634_5101MASTER_M_FUN0);
+        DLT634_5101_MASTER_WriteDataToMISI(pdrv);
+        DLT634_5101Master_App[pdrv].LinkFlag &= (~_DLT634_5101MASTER_ASKRELINK);
+        return;
+    }    
 }
 
 /* -----------------------------------------------------------------------------
@@ -1310,28 +1310,28 @@ static void DLT634_5101_MASTER_Data1Process(uint8_t pdrv)
             DLT634_5101Master_App[pdrv].StoreDATA1OUT = DLT634_5101Master_App[pdrv].StoreDATA1Buf;
         }
         return;
-    }		
-		
-	  if (DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_CALLALLDATA) // 召唤全数据
+    }        
+        
+      if (DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_CALLALLDATA) // 召唤全数据
     {
         DLT634_5101_MASTER_ReadAllDataProcess(pdrv);
-				DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_CALLALLDATA);
+                DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_CALLALLDATA);
         return;
     }
-		
-		if ((DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_READTIME)&&(DLT634_5101Master_App[pdrv].TimeOutTick_Devid == 0)) // 对时
+        
+        if ((DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_READTIME)&&(DLT634_5101Master_App[pdrv].TimeOutTick_Devid == 0)) // 对时
     {
         DLT634_5101_MASTER_ReadTime(pdrv);
-				DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_READTIME);
+                DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_READTIME);
         return;
     }
 
-	  if (DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_LINKTEST) // 测试命令
+      if (DLT634_5101Master_App[pdrv].Data1Flag & _DLT634_5101MASTER_LINKTEST) // 测试命令
     {
         DLT634_5101_MASTER_LinkTestProcess(pdrv);
-				DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_LINKTEST);
+                DLT634_5101Master_App[pdrv].Data1Flag &= (~_DLT634_5101MASTER_LINKTEST);
         return;
-    }		
+    }        
 }
 
 /* -----------------------------------------------------------------------------
@@ -1373,30 +1373,30 @@ static void DLT634_5101_MASTER_MasterFrame68Packet(uint8_t pdrv, uint8_t Functio
     {
         pBuf[5+i] = ((DLT634_5101Master_Pad[pdrv].SourceAddr >> (8*i)) & 0xff);
     }
-		
+        
     memcpy(&pBuf[5+2], &DLT634_5101Master_App[pdrv].TX_Temp.Head, DLT634_5101Master_App[pdrv].TX_Temp.status.Length - sizeof(DLT634_5101Master_App[pdrv].TX_Temp.status));
-			
+            
     for (i = 0; i < 2; i++)
     {
         pBuf[11+i] = ((DLT634_5101Master_Pad[pdrv].ASDUAddr >> (8*i)) & 0xff);
     }
-		
-    length = 6 + pBuf[2]; // 全部报文长度	
+        
+    length = 6 + pBuf[2]; // 全部报文长度    
     memcpy(&ptemp,pBuf,length);
     if(DLT634_5101Master_Pad[pdrv].LinkAddrSize == 1)
     {
         length--;
-        memcpy(&pBuf[6],&ptemp[7],length-3);	
+        memcpy(&pBuf[6],&ptemp[7],length-3);    
     }
     if(DLT634_5101Master_Pad[pdrv].ASDUCotSize == 1)
     {
         length--;
-        memcpy(&pBuf[9],&ptemp[11],length-7);	
+        memcpy(&pBuf[9],&ptemp[11],length-7);    
     }
     if(DLT634_5101Master_Pad[pdrv].ASDUAddrSize == 1)
     {
         length--;
-        memcpy(&pBuf[10],&ptemp[13],length-9);	
+        memcpy(&pBuf[10],&ptemp[13],length-9);    
     }
     pBuf[length-2] = DLT634_5101_MASTER_CKS(pdrv, pBuf)&0xFF;
     pBuf[length-1] = _DLT634_5101MASTER_ENDCODE;
@@ -1453,7 +1453,7 @@ static void DLT634_5101_MASTER_Link68Process(uint8_t pdrv)
 ** 日　  期: 
 ** ---------------------------------------------------------------------------*/
 static void DLT634_5101_MASTER_SendProcess(uint8_t pdrv)
-{   	
+{       
     if(DLT634_5101Master_App[pdrv].LinkFlag&0x000000ff)
     {
         DLT634_5101_MASTER_Link10Process(pdrv);
@@ -1488,7 +1488,7 @@ void DLT634_5101_MASTER_LinkOnTimer(uint8_t pdrv)
 {
     if(DLT634_5101Master_App[pdrv].TimeOutTick_Devid)
     {DLT634_5101Master_App[pdrv].TimeOutTick_Devid--;}
-		
+        
     if (DLT634_5101Master_App[pdrv].TimeOutTick_Pri) // 单位是秒
     {
         DLT634_5101Master_App[pdrv].TimeOutTick_Pri--;
@@ -1514,7 +1514,7 @@ void DLT634_5101_MASTER_LinkOnTimer(uint8_t pdrv)
                 DLT634_5101Master_App[pdrv].LinkFlag = 0;
             }
         }
-    }	
+    }    
 
     if (!DLT634_5101Master_App[pdrv].TimeOutTick_LinkIdle)
     {
@@ -1580,23 +1580,23 @@ void DLT634_5101_MASTER_LinkOnTimer(uint8_t pdrv)
 ** ---------------------------------------------------------------------------*/
 uint8_t DLT634_5101_MASTER_REPLY(uint8_t pdrv, uint8_t *pbuf)//回复
 { 
-	uint8_t res = FALSE;
-	
-	memcpy(&DLT634_5101Master_App[pdrv].ST_Temp, pbuf,_DLT634_5101MASTER_LPDUSIZE);
-	
-	if(((DLT634_5101Master_App[pdrv].TimeOutTick_Devid == 0)||(DLT634_5101Master_App[pdrv].Devid == (DLT634_5101Master_App[pdrv].ST_Temp.status.symbol.Lock_ID))
-		||(DLT634_5101Master_App[pdrv].StoreDATA1OUT == DLT634_5101Master_App[pdrv].StoreDATA1IN))&&(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_INITEND))
-	{
-		DLT634_5101Master_App[pdrv].TimeOutTick_Devid = DLT634_5101Master_Pad[pdrv].DevidValue;
-		DLT634_5101Master_App[pdrv].Devid = DLT634_5101Master_App[pdrv].ST_Temp.status.symbol.Lock_ID;
-	}
-	else
-	{
-		return(res);
-	}
-	
-	switch (DLT634_5101Master_App[pdrv].ST_Temp.Head.TypeID)
-	{
+    uint8_t res = FALSE;
+    
+    memcpy(&DLT634_5101Master_App[pdrv].ST_Temp, pbuf,_DLT634_5101MASTER_LPDUSIZE);
+    
+    if(((DLT634_5101Master_App[pdrv].TimeOutTick_Devid == 0)||(DLT634_5101Master_App[pdrv].Devid == (DLT634_5101Master_App[pdrv].ST_Temp.status.symbol.Lock_ID))
+        ||(DLT634_5101Master_App[pdrv].StoreDATA1OUT == DLT634_5101Master_App[pdrv].StoreDATA1IN))&&(DLT634_5101Master_App[pdrv].LinkFlag&_DLT634_5101MASTER_INITEND))
+    {
+        DLT634_5101Master_App[pdrv].TimeOutTick_Devid = DLT634_5101Master_Pad[pdrv].DevidValue;
+        DLT634_5101Master_App[pdrv].Devid = DLT634_5101Master_App[pdrv].ST_Temp.status.symbol.Lock_ID;
+    }
+    else
+    {
+        return(res);
+    }
+    
+    switch (DLT634_5101Master_App[pdrv].ST_Temp.Head.TypeID)
+    {
         //控制方向过程信息
         case _DLT634_5101MASTER_C_IC_NA_1: // 总召
             res = DLT634_5101_MASTER_StoreIN(pdrv,&DLT634_5101Master_App[pdrv].ST_Temp);
@@ -1630,12 +1630,12 @@ uint8_t DLT634_5101_MASTER_REPLY(uint8_t pdrv, uint8_t *pbuf)//回复
 
         case _DLT634_5101MASTER_F_SR_NA_1: // 软件升级
             res = DLT634_5101_MASTER_StoreIN(pdrv,&DLT634_5101Master_App[pdrv].ST_Temp);
-            break;			
+            break;            
 
         default: // 类型标识有错误或不支持
             break;
-	}
-	return(res);
+    }
+    return(res);
 }
 
 /* -----------------------------------------------------------------------------
@@ -1657,9 +1657,9 @@ uint8_t DLT634_5101_MASTER_REPLY(uint8_t pdrv, uint8_t *pbuf)//回复
 ** ---------------------------------------------------------------------------*/
 void DLT634_5101_MASTER_Clock(uint8_t pdrv)
 {
-	DLT634_5101Master_App[pdrv].ClockCounter++;
-	if (DLT634_5101Master_App[pdrv].ClockCounter >= DLT634_5101Master_Pad[pdrv].ClockTimers)
-	{
+    DLT634_5101Master_App[pdrv].ClockCounter++;
+    if (DLT634_5101Master_App[pdrv].ClockCounter >= DLT634_5101Master_Pad[pdrv].ClockTimers)
+    {
         DLT634_5101Master_App[pdrv].ClockCounter = 0;
                                             
         // 查询MISI接收缓冲区
@@ -1669,7 +1669,7 @@ void DLT634_5101_MASTER_Clock(uint8_t pdrv)
             
         // 链路层定时器
         DLT634_5101_MASTER_LinkOnTimer(pdrv);
-	}
+    }
 }
 
 

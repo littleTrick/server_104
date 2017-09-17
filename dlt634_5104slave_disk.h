@@ -25,7 +25,7 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef	_DLT634_5104SLAVE_APP_H_
+#ifndef    _DLT634_5104SLAVE_APP_H_
 #define _DLT634_5104SLAVE_APP_H_
 
 #ifdef __cplusplus
