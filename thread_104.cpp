@@ -1,5 +1,4 @@
 #include "thread_104.h"
-
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +7,6 @@
 #include <unistd.h>
 #include "data_cache.h"
 #include "tcpsocket.h"
-#include "mock_serialport.h"
 #include "dlt634_5104slave_app.h"
 #include "dlt634_5104slave_disk.h"
 #include "queue.h"
@@ -35,7 +33,7 @@ static void process_client(TCPSocket *client)
     // add epoll events
     struct epoll_event events[2];
     events[0].data.fd = client->fd();
-    events[0].events = EPOLLIN | EPOLLRDHUP;
+    events[0].events = EPOLLIN | EPOLLRDHUP;//EPOLLIN:data in EPOLLRDHUP: disconnect by client
 
     if (epoll_ctl(epfd, EPOLL_CTL_ADD, client->fd(), &events[0]))
     {
@@ -44,7 +42,7 @@ static void process_client(TCPSocket *client)
     }
     while (1)
     {
-        int nevents = epoll_wait(epfd, events, 1, 10);
+        int nevents = epoll_wait(epfd, events, 1, 10); //wait for event,10ms
         if (nevents < 0)
         {
             perror("epoll_wait");
@@ -90,9 +88,7 @@ void* thread_main_104(void*)
 {
     printf("104 thread id %lu\n", (unsigned long)pthread_self());
 
-    DLT634_5104_SlaveInit();//１０４从站初始化与定时启动
-
-    DatabaseInit();//数据缓存区初始化
+    DLT634_5104_SlaveInit();//１０４从站初始化
 
     TCPSocket tcpConnect;//网络套接字建立连接
     tcpConnect.setReuseAddr(true);

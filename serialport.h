@@ -32,7 +32,6 @@ public:
     const std::string &name() const {
         return name_;
     }
-
 private:
     // disable copy and assignment
     SerialPort(const SerialPort &);

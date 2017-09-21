@@ -12,7 +12,6 @@
 #include "data_cache.h"
 #include "tcpsocket.h"
 #include "serialport.h"
-#include "mock_serialport.h"
 #include "dlt634_5101master_app.h"
 #include "dlt634_5101master_disk.h"
 #include "queue.h"
@@ -25,11 +24,8 @@ void* thread_main_101(void *)
 {
     printf("101 thread id %lu\n",(unsigned long)pthread_self());
 
-#if 1
     SerialPort serialPort("/dev/ttyS2");
-#else
-    MockSerialPort serialPort(0);
-#endif
+
     if (!serialPort.Open()) {
         return 0;
     }
@@ -37,7 +33,7 @@ void* thread_main_101(void *)
     serialPort.SetParity(false);
     setSerialFd(serialPort.fd());
 
-    // 101主站初始化与定时运行
+    // 101主站初始化
     DLT634_5101_MasterTask();
 
     // create epoll instance
@@ -61,13 +57,13 @@ void* thread_main_101(void *)
     char buff[255];
     while (1)
     {
-        int nevents = epoll_wait(epfd, events, 1, 100);
+        int nevents = epoll_wait(epfd, events, 1, 100);//100ms
         if (nevents < 0)
         {
             perror("epoll_wait");
             break;
         }
-        if (nevents == 0)
+        if (nevents == 0) //timeout
         {
             DLT634_5101_MASTER_Clock(0);
             continue;
