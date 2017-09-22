@@ -8,7 +8,7 @@
 **          confidential material which is the property of Company Name tech. 
 **    
 ** -------------------------------- File Info ----------------------------------
-** File name:               dlt634_5101master_disk.h
+** File name:               dlt634_5101slave_disk.h
 ** Descriptions:            The application layer of DL/T634.5101_2002
 **
 ** -----------------------------------------------------------------------------
@@ -25,8 +25,8 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef    _DLT634_5101MASTER_DISK_H_
-#define _DLT634_5101MASTER_DISK_H_
+#ifndef	_DLT634_5101SLAVE_DISK_H_
+#define _DLT634_5101SLAVE_DISK_H_
 
 #ifdef __cplusplus
 extern "C"{
@@ -34,38 +34,30 @@ extern "C"{
 
 /* INCLUDE FILES -------------------------------------------------------------*/
 #include <stdint.h>
-#include "string.h"
-
-
-
-
-/* PUBLIC VARIABLE -----------------------------------------------------------*/
-
-//typedef enum
-//{
-//    MASTER_101_DEV0 = 0 //底层串口设备０
-//}DLT634_5101_DISK;
-
 
 /* PUBLIC FUNCTION DECLARATION -----------------------------------------------*/
-extern uint16_t DLT634_5101_MASTER_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
-extern uint16_t DLT634_5101_MASTER_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
-extern void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_C_SR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_C_CS(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_F_FR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_F_SR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_SOE(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_FEvent(uint8_t pdrv, uint8_t *pbuf);
-extern uint8_t DLT634_5101_MASTER_C_REPLY(uint8_t drvid,uint8_t *pbuf);
+extern uint16_t DLT634_5101_SLAVE_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
+extern uint16_t DLT634_5101_SLAVE_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
 
+extern void DLT634_5101_SLAVE_C_IC(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_C_SC(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_C_CS(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_C_SR(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_F_FR(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_F_SR(uint8_t pdrv, uint8_t *pbuf);
+extern uint8_t DLT634_5101_SLAVE_H_SOE(uint8_t pdrv);
+extern void DLT634_5101_SLAVE_R_SOE(uint8_t pdrv, uint8_t *pbuf);
+extern uint8_t DLT634_5101_SLAVE_H_NVA(uint8_t pdrv);
+extern void DLT634_5101_SLAVE_R_NVA(uint8_t pdrv, uint8_t *pbuf);
+extern uint8_t DLT634_5101_SLAVE_H_FEvent(uint8_t pdrv);
+extern void DLT634_5101_SLAVE_R_FEvent(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_R_YXDATA(uint8_t pdrv,uint16_t addr,uint16_t num, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_R_YCDATA(uint8_t pdrv,uint16_t addr,uint16_t num, uint8_t *pbuf);
+extern uint8_t DLT634_5101_SLAVE_C_REPLY(uint8_t drvid,uint8_t *pbuf);
 
-//extern void DLT634_5101_MasterTask(void* arg);
-extern void DLT634_5101_MasterTask();
-extern int getSerialFd();
-extern void setSerialFd(int );
+extern void DLT634_5101_SlaveTask();
+extern int getMasterSPfd();
+extern void setMasterSPfd(int );
 
 #ifdef __cplusplus
 }

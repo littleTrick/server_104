@@ -8,11 +8,11 @@
 **          confidential material which is the property of Company Name tech. 
 **    
 ** -------------------------------- File Info ----------------------------------
-** File name:               dlt634_5101master_disk.h
+** File name:               dlt634_5101slave_app.h
 ** Descriptions:            The application layer of DL/T634.5101_2002
 **
 ** -----------------------------------------------------------------------------
-** Created by:              Mr.j
+** Created by:              Mr.Lee
 ** Created date:            2015.10.25
 ** System:                  Protocol Software System
 ** Version:                 V3.01
@@ -25,8 +25,8 @@
 ** Descriptions:            
 **
 ** ---------------------------------------------------------------------------*/
-#ifndef    _DLT634_5101MASTER_DISK_H_
-#define _DLT634_5101MASTER_DISK_H_
+#ifndef	_DLT634_5101SLAVE_APP_H_
+#define _DLT634_5101SLAVE_APP_H_
 
 #ifdef __cplusplus
 extern "C"{
@@ -34,38 +34,48 @@ extern "C"{
 
 /* INCLUDE FILES -------------------------------------------------------------*/
 #include <stdint.h>
-#include "string.h"
+#include "dlt634_5101slave_config.h"
 
-
-
+#ifndef  FALSE
+#define  FALSE     0
+#define  TRUE      !FALSE
+#endif
 
 /* PUBLIC VARIABLE -----------------------------------------------------------*/
 
-//typedef enum
-//{
-//    MASTER_101_DEV0 = 0 //Â∫ïÂ±Ç‰∏≤Âè£ËÆæÂ§áÔºê
-//}DLT634_5101_DISK;
+typedef struct 
+{
+	uint8_t Port;            //∂Àø⁄
+	uint8_t BalanMode;	    	// 1∆Ω∫‚£¨0∑«∆Ω∫‚
+	uint8_t IEC_DIR;         // ÷’∂À0x80,÷˜’æ0x00
+	
+	uint8_t SourceAddr;	    // ‘¥µÿ÷∑£¨º¥±æª˙µÿ÷∑
+	
+	uint8_t LinkAddrSize;   //¡¥¬∑µÿ÷∑≥§∂»
+	uint8_t ASDUCotSize;    //¥´ÀÕ‘≠“Ú≥§∂»
+	
+	uint8_t ASDUAddr;       //ASDUµÿ÷∑
+	uint8_t ASDUAddrSize;    //ASDUµÿ÷∑≥§∂»
+	uint8_t FixFrmLength;		//πÃ∂®÷°≥§∂»
+	
+	uint32_t ClockTimers;		//µ˜”√≥¨≥ˆ¥Œ ˝£¨≥Ã–Ú÷¥––“ª¥Œ£¨øÿ÷∆‘À––÷‹∆⁄
+	uint32_t TimeOutValue;		//≥¨ ±÷ÿ∑¢º‰∏Ù
+	uint32_t AskStaOutValue; //¡¥¬∑«Î«Ûº‰∏Ù
+	
+	uint16_t YX_AllNum;       //“£–≈◊‹ ˝
+	uint16_t YX_FIRSTADDR;    //“£–≈ ◊µÿ÷∑
+	uint16_t YX_FrameNum;			//“£–≈√ø◊È ˝¡ø
+	uint16_t YC_AllNum;				//“£≤‚◊‹ ˝
+	uint16_t YC_FIRSTADDR;    //“£–≈ ◊µÿ÷∑
+	uint16_t YC_FrameNum;			//“£≤‚√ø◊È ˝¡ø
+	
+}DLT634_5101SLAVE_PAD;
 
+extern DLT634_5101SLAVE_PAD      DLT634_5101Slave_Pad[_DLT634_5101SLAVE_VOLUMES];
 
 /* PUBLIC FUNCTION DECLARATION -----------------------------------------------*/
-extern uint16_t DLT634_5101_MASTER_ReadData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
-extern uint16_t DLT634_5101_MASTER_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t count);
-extern void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_C_SR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_C_CS(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_F_FR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_F_SR(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_YXDATA(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_YCDATA(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_SOE(uint8_t pdrv, uint8_t *pbuf);
-extern void DLT634_5101_MASTER_W_FEvent(uint8_t pdrv, uint8_t *pbuf);
-extern uint8_t DLT634_5101_MASTER_C_REPLY(uint8_t drvid,uint8_t *pbuf);
-
-
-//extern void DLT634_5101_MasterTask(void* arg);
-extern void DLT634_5101_MasterTask();
-extern int getSerialFd();
-extern void setSerialFd(int );
+extern uint8_t DLT634_5101_SLAVE_REPLY(uint8_t pdrv, uint8_t *pbuf);
+extern void DLT634_5101_SLAVE_Clock(uint8_t pdrv);
 
 #ifdef __cplusplus
 }
@@ -75,3 +85,5 @@ extern void setSerialFd(int );
     
 
 /* END OF FILE ---------------------------------------------------------------*/
+
+

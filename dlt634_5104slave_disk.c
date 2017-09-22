@@ -626,13 +626,6 @@ bool DLT634_5104_SLAVE_C_REPLY(uint8_t drvid, uint8_t *pbuf)//其他设备回复
 ** ---------------------------------------------------------------------------*/
 void DLT634_5104_ParaInit(BYTE pdrv)
 {
-    //OS_ERR err;
-          
-//    OSFlagCreate((OS_FLAG_GRP *)&DLT104SlaveApp_Event,
-//                   (CPU_CHAR *)"DLT104SlaveApp_Event",
-//                   (OS_FLAGS)0,
-//                   (OS_ERR *)&err);
-
     DLT634_5104Slave_Pad[pdrv].Port = NET1_ID; // device端口号
 
     DLT634_5104Slave_Pad[pdrv].LinkAddress = 0x01; // salve链路地址

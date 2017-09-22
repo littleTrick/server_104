@@ -3,12 +3,14 @@
 #include <stdint.h>
 #include "dlt634_5104slave_disk.h"
 #include "dlt634_5101master_disk.h"
+#include "dlt634_5101slave_disk.h"
 #include "data_cache.h"
 #include "queue.h"
 #include "types.h"
 
 extern Queue *ptrQ;
 extern Queue *ptr_101master;
+extern Queue *ptr_101slave;
 
 #pragma pack(push,1)
 typedef struct
@@ -141,7 +143,7 @@ void ShutDown()
 ** 修改内容:
 ** 日　  期:
 ** ---------------------------------------------------------------------------*/
-int readSerialPort1(unsigned char *pbuf, unsigned short size)
+int readSlaveSP(unsigned char *pbuf, unsigned short size)
 {
     int len;
     //printf("the queque from serial port is :");
@@ -171,9 +173,9 @@ int readSerialPort1(unsigned char *pbuf, unsigned short size)
 ** 修改内容:
 ** 日　  期:
 ** ---------------------------------------------------------------------------*/
-int writeSerialPort1(const char *data, int sz)
+int writeSlaveSP(const char *data, int sz)
 {
-    printf("I am ready to write to serial port, and the message is : \n");
+    printf("I am ready to write to slave serial port, and the message is : \n");
     int nwrite = write(getSerialFd(),data,sz);
     if(nwrite < 0)
     {
@@ -189,6 +191,44 @@ int writeSerialPort1(const char *data, int sz)
     return nwrite;
 }
 //从主站中读取数据
+//从１０１主站中读取数据
+int readMasterSP(unsigned char *pbuf, unsigned short size)
+{
+    int len;
+    //printf("the queque from serial port is :");
+    for(len = 0; len < size;len++)
+    {
+        if (ptr_101slave->Empty())
+        {
+            break;
+        }
+        *(pbuf++) = ptr_101slave->Dequeue();
+      //  printf("%02X ",*pbuf);
+    }
+    return len;
+}
+
+//写入数据至１０１主站中
+int writeMasterSP(const char *data, int sz)
+{
+    printf("I am ready to write to master serial port, and the message is : \n");
+    int nwrite = write(getMasterSPfd(),data,sz);
+    if(nwrite < 0)
+    {
+        printf("write error serial fd");
+    }
+    int i ;
+    for(i= 0;i < nwrite;i++)
+    {
+        printf("%02X ",data[i]);
+    }
+    printf("\n");
+
+    return nwrite;
+}
+
+
+
 /* -----------------------------------------------------------------------------
 ** 函数名称: Readx
 ** 功能描述: 从设备port读取count个数据
@@ -210,10 +250,13 @@ int Readx(unsigned char *pbuf, unsigned short count, unsigned char port)
     switch (port)
     {
         case USART1_ID:
-            len = readSerialPort1(pbuf, count);
+            len = readSlaveSP(pbuf, count);
             break;
         case NET1_ID:
             len = readTCP(pbuf, count);
+            break;
+        case UART_ID:
+            len = readMasterSP(pbuf, count);
             break;
     }
     return len;
@@ -227,10 +270,13 @@ int WriteX(uint8_t *pbuf, unsigned short count, unsigned char port)
     switch (port)
     {
         case USART1_ID:
-            len = writeSerialPort1((const char*)pbuf, count);
+            len = writeSlaveSP((const char*)pbuf, count);
             break;
         case NET1_ID:
             len = writeTCP((const char*)pbuf, count);
+            break;
+        case UART_ID:
+            len = writeMasterSP((const char *)pbuf,count);
             break;
     }
     return len;
@@ -622,21 +668,24 @@ uint8_t DBSend(uint8_t *pbuf)
     uint8_t res = 0;
     switch(pbuf[1]&0x0f)//Lock_ID
     {
-//        case NULL_ID:
-//            DBAcceptHandle(pbuf);
-//            break;
         case NET1_ID:
             res = DLT634_5104_SLAVE_C_REPLY(NET1_ID, pbuf);
             break;
         case USART1_ID:
             res = DLT634_5101_MASTER_C_REPLY(USART1_ID, pbuf);
+            break;
+        case UART_ID:
+            res = DLT634_5101_SLAVE_C_REPLY(UART_ID, pbuf);
+            break;
+//        case NULL_ID:
+//            DBAcceptHandle(pbuf);
+//            break;
 //        case USART6_ID:
 //            OSQPost((OS_Q *)&DLT101MasterApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO | OS_OPT_POST_NO_SCHED, &err);
 //            OSFlagPost (&DLT101MasterApp_Event, PARAFIX | FTXNEXT, OS_OPT_POST_FLAG_SET, &err);
 //            res = DLT634_5101_MASTER_C_REPLY(USART6_ID, pbuf);
 //            break;
-//        case UART8_ID:
-//            res = DLT634_5101_SLAVE_C_REPLY(UART8_ID, pbuf);
+
 //            OSQPost((OS_Q *)&DLT101SlaveApp_CommQ, pbuf, pbuf[0], OS_OPT_POST_FIFO|OS_OPT_POST_NO_SCHED, &err);
 //            OSFlagPost((OS_FLAG_GRP *)&DLT101SlaveApp_Event, (OS_FLAGS)PARAFIX, (OS_OPT)OS_OPT_POST_FLAG_SET, (OS_ERR *)&err);
 //           break;
@@ -648,4 +697,3 @@ uint8_t DBSend(uint8_t *pbuf)
     }
     return(res);
 }
-
