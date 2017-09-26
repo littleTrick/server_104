@@ -132,15 +132,15 @@ uint16_t DLT634_5101_MASTER_WriteData(uint8_t pdrv, uint8_t *pbuf, uint16_t coun
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/DCO_L/DCO_H
 void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf)//Ò£¿Ø
 { 
-//    switch(pdrv)
-//    {
-//        case 0:
-//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//            DBSend(pbuf);
-//            break;
-//        default:
-//            break;
-//    }
+    switch(pdrv)
+    {
+        case 0:
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+            DBSend(pbuf);
+            break;
+        default:
+            break;
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -161,15 +161,15 @@ void DLT634_5101_MASTER_C_SC(uint8_t pdrv, uint8_t *pbuf)//Ò£¿Ø
 //LENTH/Lock_ID/TypeID/VSQ/COT_L/COT_H/PubAddr_L/PubAddr_H/InfoAddr_L/InfoAddr_H/CP56Time2a
 void DLT634_5101_MASTER_C_CS(uint8_t pdrv, uint8_t *pbuf)//¶ÔÊ±
 { 
-//    switch(pdrv)
-//    {
-//        case 0:
-//            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
-//            DBSend(pbuf);
-//            break;
-//        default:
-//            break;
-//    }
+    switch(pdrv)
+    {
+        case 0:
+            pbuf[1] = (DLT634_5101Master_Pad[pdrv].Port<<4)|(pbuf[1]>>4);
+            DBSend(pbuf);
+            break;
+        default:
+            break;
+    }
 }
 
 /* -----------------------------------------------------------------------------

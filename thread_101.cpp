@@ -29,7 +29,7 @@ void* thread_main_101(void *)
     if (!serialPort.Open()) {
         return 0;
     }
-    serialPort.SetSpeed(B9600);
+    serialPort.SetSpeed(B115200);
     serialPort.SetParity(false);
     setSerialFd(serialPort.fd());
 
